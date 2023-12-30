@@ -6,12 +6,8 @@ import Spinner from '../components/Spinner'
 import {useNavigate } from 'react-router-dom'
 
 function Login() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
-
-  const { email, password } = formData
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -34,12 +30,7 @@ function Login() {
     dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }))
-  }
+ 
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -76,6 +67,7 @@ function Login() {
               name='email'
               placeholder='Enter Your Email'
               value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className='form-group'>
@@ -84,9 +76,9 @@ function Login() {
               className='form-control'
               id='password'
               name='password'
-              value={password}
               placeholder='Enter password'
-              onChange={onChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 

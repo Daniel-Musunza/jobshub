@@ -50,7 +50,7 @@ export const addhackathon = createAsyncThunk(
   async (hackathonData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await hackathonService.addhackathon(hackathonData,token);
+      return await hackathonService.addhackathon(hackathonData, token);
     } catch (error) {
       const message =
         (error.response &&

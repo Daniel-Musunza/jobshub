@@ -21,7 +21,7 @@ const MoreDetails = () => {
   return (
     <div>
        <div class="heading">
-        <h2>More Deatils</h2>
+        <h2>More Details</h2>
     </div>
     <div class="main-container">
         <div class="left-side">

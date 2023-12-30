@@ -18,7 +18,8 @@ const addhackathon = async (hackathonData, token) => {
   const response = await axios.post(API_URL , hackathonData, config)
 
   return response.data
-}
+};
+
 const edithackathon = async (formData, token) => {
   const id = formData.get('id'); // Retrieve the id from formData
 

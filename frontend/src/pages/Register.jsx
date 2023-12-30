@@ -6,14 +6,10 @@ import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
 function Register() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password2: '',
-  })
-
-  const { name, email, password, password2 } = formData
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -74,6 +70,7 @@ function Register() {
               name='name'
               placeholder='Your Name'
               value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className='form-group'>
@@ -84,6 +81,7 @@ function Register() {
               name='email'
               placeholder='Your Email'
               value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           
@@ -94,6 +92,7 @@ function Register() {
               id='password'
               name='password'
               value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder='Enter password'
             />
           </div>
@@ -104,6 +103,7 @@ function Register() {
               id='password2'
               name='password2'
               value={password2}
+              onChange={(e) => setPassword2(e.target.value)}
               placeholder='Confirm password'
             />
           </div>

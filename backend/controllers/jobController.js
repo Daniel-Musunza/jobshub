@@ -25,7 +25,7 @@ const addjob = async (req, res) => {
       // Access the uploaded file via multer
     }
    
-
+    
     // Insert the file data into the database
     const insertjobQuery = `
       INSERT INTO jobs (
@@ -54,6 +54,7 @@ const addjob = async (req, res) => {
     };
 
     res.status(200).json(newjob);
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server Error' });

@@ -15,6 +15,7 @@ const addhackathon = async (req, res) => {
       description
     } = req.body;
 
+   
     if (title) {
       res.status(400).json({ message: 'Please fill in all the required fields' });
       return;
@@ -24,13 +25,9 @@ const addhackathon = async (req, res) => {
 
     // Insert the file data into the database
     const inserthackathonQuery = `
-      INSERT INTO hackathons (
-        title,
-        introduction,
-        description
-      ) VALUES (?, ?, ?)
+      INSERT INTO hackathons (title, introduction, description) 
+      VALUES (?, ?, ?)
     `;
-
 
     const result = await db.query(inserthackathonQuery, [
         title,
