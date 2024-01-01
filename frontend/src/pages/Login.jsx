@@ -57,7 +57,7 @@ function Login() {
           Login
        </h1>
      </section>
-      <section className='form'>
+      <section className='form' style={{padding: 0}}>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
             <input

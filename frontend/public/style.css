@@ -4,8 +4,8 @@
     ---pink:#f0dcd5;
     ---black:#222222;
     ---white:#ffffff;
-    ---lightbrown:#ffba00;
-    ---darkbrown:#c4822b;
+    ---lightbrown:#4bdefb;
+    ---darkbrown:#2b82c4;
     /* ---lightbrown:#a27427;
     ---darkbrown:#704309; */
     ---stoke:#ffe7de;
@@ -135,6 +135,7 @@ margin-right: -20px;
     
     width: 100%;
     display: flex;
+    
    
 }
 .post-jobs{
@@ -163,6 +164,10 @@ margin-right: -20px;
     flex-wrap: wrap;
     width: 70%;
 }
+.cards:hover button {
+    z-index: 999;
+}
+  
 .left-side{
     width: 15%;
 }
@@ -239,7 +244,7 @@ margin-right: -20px;
     cursor: pointer!important;
   }
   h4 span{
-    color: #c4822b;
+    color: #2b82c4;
   }
   .btn {
     width: 140px;
@@ -443,15 +448,58 @@ margin-right: -20px;
     .navbar{
         margin-top: 100px;
     }
+   
 }
-
+@media (min-width:800px) {
+.fi-br-menu-burger{
+    display: none;
+}
+.small{
+    display: none;
+}
+}
 @media (max-width:800px) {
+    .header nav {
+        display: none;
+    }
+    .header .mobile-nav{
+        width: 200px;
+        right: 0;
+        top: -30px;
+        padding: 10px;
+        position: fixed;
+        border-radius: 5px;
+        z-index: 999;
+        background-color: black;
+    }
+    .header .mobile-nav,
+    .header .right-data .profile,
     .navbar{
-        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+    }
+    .header .mobile-nav .right-data button{
+        background-color: var(---pink);
+        width: 150px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        border-radius: 100px;
+        box-shadow: 0px 5px 10px #fff;
     }
     .header .container .logo img{
         width: 100px;
     }
+    .fi-br-menu-burger{
+        position: fixed;
+        z-index: 999;
+        top: 10px;
+        right: 10px;
+      }
+     
     section{
         padding: 10px 16px;
     }
@@ -488,6 +536,11 @@ margin-right: -20px;
     .card{
         width: 100%;
     }
+    
+    .blog {
+        display: flex;
+        flex-direction: column;
+      }
     .card-image img {
         width: 100%;
       }

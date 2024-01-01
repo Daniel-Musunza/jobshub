@@ -6,7 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import Spinner from '../components/Spinner';
 import { useSelector, useDispatch } from 'react-redux'
 import { reset } from '../features/auth/authSlice'
-import { addblog, getblogs } from '../features/blogs/blogSlice';
+import { addblog, getblogs, deleteblog} from '../features/blogs/blogSlice';
 
 const TechBlogs = () => {
 
@@ -30,7 +30,7 @@ const TechBlogs = () => {
     if (isError) {
       console.log(message);
     }
-
+    dispatch(getblogs());
     return () => {
       dispatch(reset());
     };
@@ -61,6 +61,15 @@ const TechBlogs = () => {
     alert("Blog Posted Successfully ...");
     setShowModal(false);
   };
+
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    dispatch(deleteblog(id));
+
+    alert("blog Deleted Successfully ..");
+    dispatch(getblogs());
+  }
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -78,7 +87,7 @@ const TechBlogs = () => {
           </section>
           <section className='form'>
 
-            <form onSubmit={toggleModal} method="POST" enctype="multipart/form-data">
+            <form onSubmit={handleBlogSubmit} method="POST" enctype="multipart/form-data">
               <div className='form-group'>
                 <input
                   type='text'
@@ -119,7 +128,7 @@ const TechBlogs = () => {
                 />
               </div>
 
-              <div className='form-group' style={{marginTop: '50px'}}>
+              <div className='form-group' style={{ marginTop: '50px' }}>
                 <button
                   className='form-control'
                   id="submit"
@@ -141,26 +150,54 @@ const TechBlogs = () => {
 
         </div>
         <div class="cards">
-          <div class="blog">
-            <div class="card-image">
-              <img src="img/job.jpg" alt="" />
+          {blogs.map((blog) => (
+            <div className="blog" key={blog.id}>
+             {user && (
+                <button onClick={(e) => handleDelete(e, blog.id)} style={{color: 'red', background: '#e0ffff', width: '30px', height: '30px', borderRadius: '50px', fontSize: '20px'}}><i class="fa-solid fa-trash-can"></i></button>
+              )}
+              <div className="card-image">
+                <img src={`/uploads/${blog.imageFile}`} alt="" />
+              </div>
+              <div className="card-details">
+                <p className="card-title">{blog.title}</p>
+                <p className="card-body">{blog.introduction}</p>
+                <h4>
+                  Posted on:{" "}
+                  <span>
+                    {new Intl.DateTimeFormat("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }).format(new Date(blog.date))}
+                  </span>
+                </h4>
+                <Link to={`/more-details/${blog.id}/blog`}>
+                  <button className="btn">
+                    More Details
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      height="15px"
+                      width="15px"
+                      className="icon"
+                    >
+                      <path
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
+                        strokeMiterlimit="10"
+                        strokeWidth="1.5"
+                        stroke="#292D32"
+                        d="M8.91016 19.9201L15.4302 13.4001C16.2002 12.6301 16.2002 11.3701 15.4302 10.6001L8.91016 4.08008"
+                      ></path>
+                    </svg>
+                  </button>
+                </Link>
+              </div>
             </div>
-            <div class="card-details">
-              <p class="card-title">Card title</p>
-              <p class="card-body">Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
-              </p>
-              <h4>Posted on: <span>0701/2024</span></h4>
-              <Link to={`/more-details/${1}`}>
-                <button class="btn">
-                  More Details
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15px" width="15px" class="icon">
-                    <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.5" stroke="#292D32" d="M8.91016 19.9201L15.4302 13.4001C16.2002 12.6301 16.2002 11.3701 15.4302 10.6001L8.91016 4.08008"></path>
-                  </svg>
-                </button>
-              </Link>
-            </div>
+          ))}
 
-          </div>
+
         </div>
         <div class="right-side">
 

@@ -63,6 +63,23 @@ export const addhackathon = createAsyncThunk(
   }
 );
 
+export const deletehackathon = createAsyncThunk(
+  'hackathons/delete',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await hackathonService.deletehackathon(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 export const hackathonSlice = createSlice({
   name: 'hackathon',
   initialState,
@@ -116,6 +133,21 @@ export const hackathonSlice = createSlice({
         state.isLoading = false
         state.isError = true
         state.message = action.payload
+      })
+
+      .addCase(deletehackathon.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(deletehackathon.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.hackathons = state.hackathons.filter(hackathon => hackathon.id !== action.payload);
+      })
+      .addCase(deletehackathon.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        console.error('Delete Hackathon Error:', action.payload);
       })
   },
 })

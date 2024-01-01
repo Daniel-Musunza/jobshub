@@ -36,10 +36,27 @@ const editblog = async (formData, token) => {
   }
 };
 
+const deleteblog = async (id, token) => {
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.delete(`${API_URL}/${id}`, config);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const blogService = {
   getblogs,
   addblog,
-  editblog
+  editblog,
+  deleteblog
 }
 
 

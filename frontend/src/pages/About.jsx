@@ -27,9 +27,39 @@ const About = () => {
         <div class="left-side">
 
         </div>
-        <div class="cards">
-            
-        </div>
+        <div className="about">
+      <div className="about-content">
+        <p>
+          Welcome to our website! We are a passionate team dedicated to helping you in your tech journey. Whether you're
+          looking for job opportunities, interested in participating in hackathons, or staying updated with the latest
+          tech news and blogs, we've got you covered!
+        </p>
+      </div>
+
+      <div className="about-section jobs">
+        <h3>Job Opportunities</h3>
+        <p>
+          Explore job opportunities in the tech industry. We connect talented individuals with innovative companies
+          seeking skilled professionals.
+        </p>
+      </div>
+
+      <div className="about-section hackathons">
+        <h3>Participate in Hackathons</h3>
+        <p>
+          Join exciting hackathons to showcase your skills, collaborate with fellow developers, and create innovative
+          solutions to real-world challenges.
+        </p>
+      </div>
+
+      <div className="about-section news-blogs">
+        <h3>Tech News & Blogs</h3>
+        <p>
+          Stay updated with the latest tech news and insightful blogs. Our platform provides valuable information and
+          perspectives on the ever-evolving world of technology.
+        </p>
+      </div>
+    </div>
        <div class="right-side">
 
        </div>

@@ -6,7 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import Spinner from '../components/Spinner';
 import { useSelector, useDispatch } from 'react-redux'
 import { reset } from '../features/auth/authSlice'
-import { addjob, getjobs } from '../features/jobs/jobSlice';
+import { addjob, getjobs, deletejob } from '../features/jobs/jobSlice';
 
 const Dashboard = () => {
 
@@ -31,6 +31,7 @@ const Dashboard = () => {
       console.log(message);
     }
 
+    dispatch(getjobs())
     return () => {
       dispatch(reset());
     };
@@ -61,6 +62,14 @@ const Dashboard = () => {
     setShowModal(false);
   };
 
+  const handleDelete = async (e, id) => {
+    e.preventDefault();
+    dispatch(deletejob(id));
+
+    
+    alert("Job Deleted Successfully ..");
+    dispatch(getjobs());
+  }
   if (isLoading) {
     return <Spinner />;
   }
@@ -143,24 +152,52 @@ const Dashboard = () => {
 
         </div>
         <div class="cards">
-          <div class="card">
-            <div class="card-image">
-              <img src="img/job.jpg" alt="" />
+        {jobs.map((job) => (
+            <div className="card" key={job.id}>
+            {user && (
+                <button onClick={(e) => handleDelete(e, job.id)} style={{color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', position: 'fixed'}}><i class="fa-solid fa-trash-can"></i></button>
+              )}
+              <div className="card-image">
+                <img src={`/uploads/${job.imageFile}`} alt="" />
+              </div>
+              <div className="card-details">
+                <p className="card-title">{job.title}</p>
+                <p className="card-body">{job.introduction}</p>
+                <h4>
+                  Posted on:{" "}
+                  <span>
+                    {new Intl.DateTimeFormat("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }).format(new Date(job.date))}
+                  </span>
+                </h4>
+                <Link to={`/more-details/${job.id}/job`}>
+                  <button className="btn">
+                    More Details
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      height="15px"
+                      width="15px"
+                      className="icon"
+                    >
+                      <path
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
+                        strokeMiterlimit="10"
+                        strokeWidth="1.5"
+                        stroke="#292D32"
+                        d="M8.91016 19.9201L15.4302 13.4001C16.2002 12.6301 16.2002 11.3701 15.4302 10.6001L8.91016 4.08008"
+                      ></path>
+                    </svg>
+                  </button>
+                </Link>
+              </div>
             </div>
-            <p class="card-title">Card title</p>
-            <p class="card-body">
-              Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
-            </p>
-            <h4>Posted on: <span>0701/2024</span></h4>
-            <Link to={`/more-details/${1}`}>
-              <button class="btn">
-                More Details
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15px" width="15px" class="icon">
-                  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.5" stroke="#292D32" d="M8.91016 19.9201L15.4302 13.4001C16.2002 12.6301 16.2002 11.3701 15.4302 10.6001L8.91016 4.08008"></path>
-                </svg>
-              </button>
-            </Link>
-          </div>
+          ))}
         </div>
         <div class="right-side">
 

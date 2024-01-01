@@ -23,7 +23,7 @@ function App() {
             <Route path='/hackathons' element={<Hackathons />} />
             <Route path='/about' element={<About />} />
             <Route path='/contact' element={<Contact />} />
-            <Route path='/more-details/:id' element={<MoreDetails />} />
+            <Route path='/more-details/:id/:type' element={<MoreDetails />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
           </Routes>

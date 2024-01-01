@@ -35,11 +35,26 @@ const editjob = async (formData, token) => {
     throw error;
   }
 };
+const deletejob = async (id, token) => {
 
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.delete(`${API_URL}/${id}`, config);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 const jobService = {
   getjobs,
   addjob,
-  editjob
+  editjob,
+  deletejob
 }
 
 

@@ -19,6 +19,21 @@ const addhackathon = async (hackathonData, token) => {
 
   return response.data
 };
+const deletehackathon = async (id, token) => {
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.delete(`${API_URL}/${id}`, config);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const edithackathon = async (formData, token) => {
   const id = formData.get('id'); // Retrieve the id from formData
@@ -40,7 +55,8 @@ const edithackathon = async (formData, token) => {
 const hackathonService = {
   gethackathons,
   addhackathon,
-  edithackathon
+  edithackathon,
+  deletehackathon
 }
 
 

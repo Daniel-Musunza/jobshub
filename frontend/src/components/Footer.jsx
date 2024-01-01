@@ -6,7 +6,7 @@ function Footer() {
 
 
   return (
-    <section className="footer" id="footer">
+    <section className="footer" id="footer" style={{marginBottom: 0}}>
         <div className="container">
             <div className="logo">
                 <img src="img/logo.png" alt="" />

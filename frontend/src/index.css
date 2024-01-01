@@ -1,6 +1,8 @@
 .form{
     width: 400px;
+    
 }
+
 .register {
     display: flex;
     justify-content: center;
@@ -8,6 +10,159 @@
     flex-direction: column;
 }
 
+/* MoreDetailsContainer.css */
+
+.more-details-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #fff!important;
+}
+
+.more-details-container h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.more-details-container img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.more-details-container p {
+  margin-bottom: 15px;
+}
+
+/* About.css */
+
+.about {
+  padding: 20px;
+  color: #fff;
+}
+
+.about-content,
+.about-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 5px;
+}
+
+.about h2,
+.about-section h3 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.about p,
+.about-section p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  
+}
+
+.jobs {
+  background-color: #f0f8ff; /* Light Blue Background for Jobs Section */
+  color: #000;
+}
+
+.hackathons {
+  color: #000;
+  background-color: #2b82c4; /* Khaki Background for Hackathons Section */
+}
+
+.news-blogs {
+  color: #000;
+  background-color: #e0ffff; /* Light Cyan Background for News & Blogs Section */
+}
+
+/* ContactUs.css */
+
+.contact-us {
+  padding: 20px;
+}
+
+.contact-form {
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.contact-form p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.contact-form form {
+  display: grid;
+  gap: 15px;
+}
+
+.contact-form label {
+  font-size: 16px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.contact-form button {
+  background-color: #2b82c4;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background-color: #4bdefb;
+}
+
+.social-links {
+  margin-top: 30px;
+}
+
+.social-links h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.social-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.social-links li {
+  margin-bottom: 10px;
+}
+
+.social-links a {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 16px;
+}
+
+.social-links a:hover {
+  text-decoration: underline;
+}
 
 .loadingSpinnerContainer {
     position: fixed;
@@ -15,7 +170,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.771);
     z-index: 5000;
     display: flex;
     justify-content: center;
@@ -39,3 +194,4 @@
       transform: rotate(360deg);
     }
   }
+  

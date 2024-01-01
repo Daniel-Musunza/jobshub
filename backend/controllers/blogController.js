@@ -9,22 +9,24 @@ const getblogs = asyncHandler(async (req, res) => {
 
 const addblog = async (req, res) => {
   try {
-    const {
-      title,
-      introduction,
-      description
-    } = req.body;
+    const { title, introduction, description } = req.body;
 
-    if (title) {
+    // Check if title is missing
+    if (!title) {
       res.status(400).json({ message: 'Please fill in all the required fields' });
       return;
     }
+
     let imageFile = null;
-    if(req.file){
-      return imageFile = req.file.filename; 
+    if (req.file) {
+      imageFile = req.file.filename;
       // Access the uploaded file via multer
     }
-   
+
+    const date = new Date(); // Get the current date and time
+
+    // Format the date as a MySQL DATETIME string
+    const formattedDate = date.toISOString().slice(0, 19).replace('T', ' ');
 
     // Insert the file data into the database
     const insertblogQuery = `
@@ -32,16 +34,17 @@ const addblog = async (req, res) => {
         title,
         introduction,
         description,
-        imageFile
-      ) VALUES (?, ?, ?, ?)
+        imageFile,
+        date
+      ) VALUES (?, ?, ?, ?, ?)
     `;
 
-
     const result = await db.query(insertblogQuery, [
-        title,
-        introduction,
-        description,
-        imageFile
+      title,
+      introduction,
+      description,
+      imageFile,
+      formattedDate, // Use the formatted date
     ]);
 
     const newblog = {
@@ -50,7 +53,7 @@ const addblog = async (req, res) => {
       introduction,
       description,
       imageFile: imageFile, // Store the filename as a reference
-      
+      date: formattedDate, // Respond with the formatted date
     };
 
     res.status(200).json(newblog);
@@ -59,6 +62,7 @@ const addblog = async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 };
+
 const editblog = async (req, res) => {
   try {
     const { id } = req.params;
@@ -69,6 +73,8 @@ const editblog = async (req, res) => {
       introduction,
       description,
      } = req.body;
+
+     const date = Date.now();
 
     const findblogQuery = 'SELECT * FROM blogs WHERE id = ?';
     const blog = await db.query(findblogQuery, [id]);
@@ -92,7 +98,8 @@ const editblog = async (req, res) => {
         title = ?,
         introduction = ?,
         description = ?,
-        imageFile = ?
+        imageFile = ?,
+        date = ?
       WHERE id = ?
     `;
 
@@ -102,6 +109,7 @@ const editblog = async (req, res) => {
       introduction,
       description,
       imageFile,
+      date,
       id
     ]);
 
@@ -110,16 +118,44 @@ const editblog = async (req, res) => {
        title,
        introduction,
        description,
-       imageFile: imageFile
+       imageFile: imageFile,
+       date
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server Error' });
   }
 };
+const deleteBlog = asyncHandler(async (req, res) => {
+  const blogId = req.params.id;
+
+  // Check if the job with the given ID exists
+  const checkQuery = 'SELECT * FROM blogs WHERE id = ?';
+  const existingBlog = await db.query(checkQuery, [blogId]);
+
+  if (existingBlog.length === 0) {
+    res.status(404).json({ message: 'Blog not found' });
+    return;
+  }
+
+  // If the job exists, proceed with deletion
+  const deleteQuery = 'DELETE FROM blogs WHERE id = ?';
+  await db.query(deleteQuery, [blogId]);
+
+  res.json({
+    id, 
+    title,
+    introduction,
+    description,
+    imageFile: imageFile,
+    date
+ });
+  res.status(200).json({ message: 'Blog deleted successfully' });
+});
 
 module.exports = {
   getblogs,
   addblog,
-  editblog
+  editblog,
+  deleteBlog
 };

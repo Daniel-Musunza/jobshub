@@ -1,22 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { reset } from '../features/auth/authSlice'
-const MoreDetails = () => {
+import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { reset } from '../features/auth/authSlice';
+import { getjobs } from '../features/jobs/jobSlice';
+import { gethackathons } from '../features/hackathons/hackathonSlice';
+import { getblogs } from '../features/blogs/blogSlice';
 
-  // Move the declaration of 'navigate' here before using it in the useEffect
+const MoreDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
-  useEffect(() => {
-    if (isError) {
-      console.log(message);
-    }
+  const { jobs } = useSelector((state) => state.jobs);
+  const { hackathons } = useSelector((state) => state.hackathons);
+  const { blogs } = useSelector((state) => state.blogs);
+  const { id, type } = useParams();
+  const [item, setItem] = useState(null);
 
-    return () => {
-      dispatch(reset());
+  const handleSetItem = async () => {
+    try {
+      let newItem;
+
+      if (type == 'job') {
+        newItem = jobs.find((job) => job.id == parseInt(id));
+      } else if (type == 'hackathon') {
+        newItem = hackathons.find((hackathon) => hackathon.id == parseInt(id));
+      } else if (type == 'blog') {
+        newItem = blogs.find((blog) => blog.id == parseInt(id));
+      }
+
+      setItem(newItem);
+    } catch (error) {
+      console.error('Error setting item:', error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(getblogs());
+      await dispatch(gethackathons());
+      await dispatch(getjobs());
+      await handleSetItem();
     };
-  }, [user, navigate, isError, message, dispatch]);
+
+    fetchData();
+  }, [dispatch, id, type]);
+
 
   return (
     <div>
@@ -27,8 +54,18 @@ const MoreDetails = () => {
         <div class="left-side">
 
         </div>
-        <div class="cards">
-            
+        <div className="more-details-container">
+          {item && (
+            <>
+              <h2>{item.title}</h2>
+              { item.imageFile && (
+                <img src={`/uploads/${item.imageFile}`} alt={item.title} />
+              )}
+              
+              <div>{item.introduction}</div>
+              <div dangerouslySetInnerHTML={{ __html: item.description }} />
+            </>
+          )}
         </div>
        <div class="right-side">
 

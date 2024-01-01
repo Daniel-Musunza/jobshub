@@ -61,6 +61,23 @@ export const addjob = createAsyncThunk(
     }
   }
 );
+export const deletejob = createAsyncThunk(
+  'jobs/delete',
+  async (id, thunkAPI) => {
+    try {// Extract the id from subjectData
+      const token = thunkAPI.getState().auth.user.token;
+      return await jobService.deletejob(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 export const jobSlice = createSlice({
   name: 'job',
   initialState,
@@ -115,6 +132,22 @@ export const jobSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+
+      .addCase(deletejob.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(deletejob.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.jobs = state.jobs.filter(job => job.id !== action.payload);
+      })
+      .addCase(deletejob.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        console.error('Delete Job Error:', action.payload);
+      })
+      
   },
 })
 
