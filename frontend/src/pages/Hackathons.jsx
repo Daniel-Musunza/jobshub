@@ -133,7 +133,8 @@ const Hackathons = () => {
         <div class="left-side">
 
         </div>
-        <div class="cards">
+        {hackathons.length > 0 && (
+          <div class="cards">
           {hackathons.map((hackathon) => (
             <div className="hackathon" key={hackathon.id}>
               {user && (
@@ -177,6 +178,8 @@ const Hackathons = () => {
           ))}
 
         </div>
+        )}
+        
         <div class="right-side">
 
         </div>

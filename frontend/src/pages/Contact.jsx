@@ -54,7 +54,8 @@ const Contact = () => {
             <div class="left-side">
 
             </div>
-            <div class="cards">
+            {messages.length > 0  && (
+              <div class="cards">
               {messages.map((onemessage) => (
                 <div className="hackathon" key={onemessage.id}>
 
@@ -74,6 +75,8 @@ const Contact = () => {
               ))}
 
             </div>
+            )}
+            
             <div class="right-side">
 
             </div>

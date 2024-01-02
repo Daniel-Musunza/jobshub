@@ -151,7 +151,8 @@ const Dashboard = () => {
         <div class="left-side">
 
         </div>
-        <div class="cards">
+        {jobs.length > 0 && (
+          <div class="cards">
         {jobs.map((job) => (
             <div className="card" key={job.id}>
             {user && (
@@ -199,6 +200,8 @@ const Dashboard = () => {
             </div>
           ))}
         </div>
+        )}
+        
         <div class="right-side">
 
         </div>
