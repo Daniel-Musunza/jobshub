@@ -13,7 +13,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'https://jetpulse.vercel.app',
   methods: ['POST', 'GET', 'PUT', 'DELETE'],
 };
 
