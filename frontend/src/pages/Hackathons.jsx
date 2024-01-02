@@ -24,6 +24,8 @@ const Hackathons = () => {
     e.preventDefault();
     setShowModal((prevShowModal) => !prevShowModal);
   };
+
+  
   useEffect(() => {
     if (isError) {
       console.log(message);
