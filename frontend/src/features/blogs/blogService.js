@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/api/blogs/'
+const API_URL = 'https://jet-pulse-api.onrender.com/api/blogs/'
 // Get user blogs
 const getblogs = async () => {
   const response = await axios.get(API_URL)

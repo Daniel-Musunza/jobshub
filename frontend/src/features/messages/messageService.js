@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/api/contacts/'
+const API_URL = 'https://jet-pulse-api.onrender.com/api/contacts/'
 
 const getmessages = async (token) => {
   const config = {

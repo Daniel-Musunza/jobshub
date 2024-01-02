@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/api/users/'
+const API_URL = 'https://jet-pulse-api.onrender.com/api/users/'
 
 const getUsers = async () => {
   const response = await axios.get(API_URL + 'getUsers/')

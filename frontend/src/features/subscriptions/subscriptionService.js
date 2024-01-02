@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/api/contacts/subscribe/'
+const API_URL = 'https://jet-pulse-api.onrender.com/api/contacts/subscribe/'
 
 const subscribe = async (email) => {
 
