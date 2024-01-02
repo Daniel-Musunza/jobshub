@@ -27,17 +27,8 @@ app.use('/api/blogs', require('./routes/blogRoutes'));
 app.use('/api/hackathons', require('./routes/hackathonRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 
-// Serve frontend (assuming frontend build is in the "frontend/build" directory)
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-  app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'))
-  );
-} else {
-  app.get('/', (req, res) => res.send('Please set to production'));
-}
-
+app.get('/', (req, res) => res.send('Please set to production'));
 app.use(errorHandler);
 
 // No need to call db.connect(); anymore
