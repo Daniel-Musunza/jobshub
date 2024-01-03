@@ -31,6 +31,11 @@ font-size: 100%;
 }
 body{
     background-color: #212121;
+    width: 105%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 section{
 padding: 20px 150px;
@@ -134,7 +139,7 @@ margin-right: -20px;
     
     width: 100%;
     display: flex;
-    
+    min-height: 350px!important;
    
 }
 .post-jobs{
@@ -313,7 +318,7 @@ margin-right: -20px;
 /*footer*/
 .footer{
     background-color: black;
-    margin-top: 100px;
+    margin-bottom: 0;
     text-transform: uppercase;
 }
 .footer .container{

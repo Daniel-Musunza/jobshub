@@ -60,7 +60,7 @@ function Register() {
            Register
         </h1>
       </section>
-    <section className='form' style={{padding: 0}}>
+    <section className='form' style={{padding: 0,  minHeight: '380px'}}>
       <form onSubmit={onSubmit}  >
          <div className='form-group'>
             <input
