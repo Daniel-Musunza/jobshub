@@ -56,7 +56,9 @@ const Contact = () => {
             </div>
             {messages.length > 0  && (
               <div class="cards">
-              {messages.map((onemessage) => (
+              {messages
+              .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .map((onemessage) => (
                 <div className="hackathon" key={onemessage.id}>
 
                   <p className="card-title">{onemessage.name}</p>

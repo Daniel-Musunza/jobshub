@@ -151,7 +151,9 @@ const TechBlogs = () => {
         </div>
         {blogs.length > 0 && (
           <div class="cards">
-            {blogs.map((blog) => (
+            {blogs
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .map((blog) => (
               <div className="blog" key={blog.id}>
                 {user && (
                   <button onClick={(e) => handleDelete(e, blog.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', height: '30px', borderRadius: '50px', fontSize: '20px' }}><i class="fa-solid fa-trash-can"></i></button>

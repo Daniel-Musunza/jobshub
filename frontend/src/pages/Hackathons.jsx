@@ -135,7 +135,9 @@ const Hackathons = () => {
         </div>
         {hackathons.length > 0 && (
           <div class="cards">
-          {hackathons.map((hackathon) => (
+          {hackathons
+          .sort((a, b) => new Date(b.date) - new Date(a.date))
+          .map((hackathon) => (
             <div className="hackathon" key={hackathon.id}>
               {user && (
                 <button onClick={(e) => handleDelete(e, hackathon.id)} style={{color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', zIndex: '999'}}><i class="fa-solid fa-trash-can"></i></button>

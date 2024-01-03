@@ -153,7 +153,9 @@ const Dashboard = () => {
         </div>
         {jobs.length > 0 && (
           <div class="cards">
-        {jobs.map((job) => (
+        {jobs
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .map((job) => (
             <div className="card" key={job.id}>
             {user && (
                 <button onClick={(e) => handleDelete(e, job.id)} style={{color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', position: 'fixed'}}><i class="fa-solid fa-trash-can"></i></button>
