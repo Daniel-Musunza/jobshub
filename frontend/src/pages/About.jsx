@@ -39,7 +39,7 @@ const About = () => {
       <div className="about-section jobs">
         <h3>Job Opportunities</h3>
         <p>
-          Explore job opportunities in the tech industry. We connect talented individuals with innovative companies
+          Explore job opportunities in any industry. We connect talented individuals with innovative companies
           seeking skilled professionals.
         </p>
       </div>
