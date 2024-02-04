@@ -72,14 +72,14 @@ const Hackathons = () => {
   return (
     <div>
 
-      {user && (
+      {user && user.userType=="admin" && (
 
         <div className='post-jobs'>
 
           <section className='heading' >
 
             <h1>
-              Post Hackathon
+              Post Event
             </h1>
           </section>
           <section className='form'>
@@ -127,7 +127,7 @@ const Hackathons = () => {
         </div>
       )}
       <div class="heading">
-        <h2>Hackathons</h2>
+        <h2>Events</h2>
       </div>
       <div class="main-container">
         <div class="left-side">
@@ -136,10 +136,10 @@ const Hackathons = () => {
         {hackathons.length > 0 && (
           <div class="cards">
           {hackathons
-          .sort((a, b) => new Date(b.date) - new Date(a.date))
+          // .sort((a, b) => new Date(b.date) - new Date(a.date))
           .map((hackathon) => (
             <div className="hackathon" key={hackathon.id}>
-              {user && (
+              {user && user.userType=="admin" && (
                 <button onClick={(e) => handleDelete(e, hackathon.id)} style={{color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', zIndex: '999'}}><i class="fa-solid fa-trash-can"></i></button>
               )}
               <p className="card-title">{hackathon.title}</p>

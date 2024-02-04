@@ -11,6 +11,7 @@ import Hackathons from './pages/Hackathons'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import MoreDetails from './pages/MoreDetails'
+import ProfileView from './pages/ProfileView'
 function App() {
   return (
     <>
@@ -26,6 +27,7 @@ function App() {
             <Route path='/more-details/:id/:type' element={<MoreDetails />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path='/profile' element={<ProfileView />} />
           </Routes>
           <Footer />
         </div>

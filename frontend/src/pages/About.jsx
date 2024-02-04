@@ -30,9 +30,7 @@ const About = () => {
         <div className="about">
       <div className="about-content">
         <p>
-          Welcome to our website! We are a passionate team dedicated to helping you in your tech journey. Whether you're
-          looking for job opportunities, interested in participating in hackathons, or staying updated with the latest
-          tech news and blogs, we've got you covered!
+        Welcome to our website! We are a passionate team dedicated to helping you in your tech journey. Whether you're looking for job opportunities, searching for a casual worker or a professional employee, or interested in participating in tech events, we've got you covered!
         </p>
       </div>
 
@@ -45,20 +43,20 @@ const About = () => {
       </div>
 
       <div className="about-section hackathons">
-        <h3>Participate in Hackathons</h3>
+        <h3>Participate in Tech Events</h3>
         <p>
-          Join exciting hackathons to showcase your skills, collaborate with fellow developers, and create innovative
+          Join exciting tech events to showcase your skills, collaborate with fellow developers, and create innovative
           solutions to real-world challenges.
         </p>
       </div>
 
       <div className="about-section news-blogs">
-        <h3>Tech News & Blogs</h3>
-        <p>
-          Stay updated with the latest tech news and insightful blogs. Our platform provides valuable information and
-          perspectives on the ever-evolving world of technology.
-        </p>
-      </div>
+  <h3>Personalized Profile</h3>
+  <p>
+    Enhance your profile with your contact information, preferences for casual jobs, and desired professional roles.
+  </p>
+</div>
+
     </div>
        <div class="right-side">
 

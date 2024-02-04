@@ -9,7 +9,7 @@ const getjobs = asyncHandler(async (req, res) => {
 
 const addjob = async (req, res) => {
   try {
-    const { title, introduction, description } = req.body;
+    const { title, email, introduction, description } = req.body;
 
     // Check if title is missing
     if (!title) {
@@ -32,15 +32,17 @@ const addjob = async (req, res) => {
     const insertjobQuery = `
       INSERT INTO jobs (
         title,
+        email,
         introduction,
         description,
         imageFile,
         date
-      ) VALUES (?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?)
     `;
 
     const result = await db.query(insertjobQuery, [
       title,
+      email,
       introduction,
       description,
       imageFile,
@@ -50,6 +52,7 @@ const addjob = async (req, res) => {
     const newjob = {
       id: result.insertId,
       title,
+      email,
       introduction,
       description,
       imageFile: imageFile, // Store the filename as a reference
@@ -82,6 +85,7 @@ const deleteJob = asyncHandler(async (req, res) => {
   res.json({
     id, 
     title,
+    email,
     introduction,
     description,
     imageFile: imageFile,
@@ -98,6 +102,7 @@ const editjob = async (req, res) => {
     const { 
       title,
       introduction,
+      email,
       description
      } = req.body;
      const date = Date.now();

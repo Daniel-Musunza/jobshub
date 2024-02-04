@@ -44,7 +44,7 @@ function Register() {
         };
 
         dispatch(register(userData));
-        navigate('/');
+        navigate('/profile');
  
     }
   };

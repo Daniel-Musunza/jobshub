@@ -11,9 +11,9 @@ dotenv.config();
 
 const app = express();
 
-
-const corsOptions = {
-  origin: 'https://jetpulse.vercel.app',
+// origin: 'https://jetpulse.vercel.app',
+const corsOptions = {  
+  origin: 'http://localhost:3000',
   methods: ['POST', 'GET', 'PUT', 'DELETE'],
 };
 
@@ -23,7 +23,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/jobs', require('./routes/jobRoutes'));
 app.use('/api/contacts', require('./routes/contactRoutes'));
-app.use('/api/blogs', require('./routes/blogRoutes'));
 app.use('/api/hackathons', require('./routes/hackathonRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 

@@ -8,16 +8,16 @@ const generateToken = (id) => {
   return jwt.sign({ id }, "abc123", {
     expiresIn: '30d',
   });
-  
+
 };
 
 // @desc    Register new user
 // @route   POST /api/users/register
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  
+
   try {
-    const { name, email, password} = req.body;
+    const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
       res.status(400);
@@ -91,6 +91,14 @@ const loginUser = asyncHandler(async (req, res) => {
       res.json({
         id: user.id,
         name: user.name,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        userType: user.userType,
+        description: user.description,
+        location: user.location,
+        casualJobs: user.casualJobs,
+        proffessionalJobs: user.proffessionalJobs,
+        profileImage: user.profileImage,
         token,
       });
     } else {
@@ -102,6 +110,7 @@ const loginUser = asyncHandler(async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 // @desc    Get user data
 // @route   GET /api/users/me
@@ -139,13 +148,27 @@ const getUsers = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
   try {
-    const { id } = req.params;
-    const { admin, approved } = req.body;
+    const { id, name, email, phoneNumber, userType, description, location, casualJobs, proffessionalJobs } = req.body;
 
-    const updateUserQuery = 'UPDATE users SET admin = ?, approved = ? WHERE id = ?';
-    await db.query(updateUserQuery, [admin, approved, id]);
+    let imageFile = null;
+    if (req.file) {
+      imageFile = req.file.filename;
+      // Access the uploaded file via multer
+    }
 
-    res.json({ message: 'User updated successfully' });
+    const updateUserQuery = `UPDATE users 
+    SET name = ?, 
+    email = ?, 
+    phoneNumber = ?, 
+    userType = ?, 
+    description = ?, 
+    location = ?, 
+    casualJobs = ?, 
+    proffessionalJobs = ?, 
+    profileImage = ? 
+    WHERE id = ?`;
+    await db.query(updateUserQuery, [name, email, phoneNumber, userType, description, location, casualJobs, proffessionalJobs, imageFile, id]);
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server Error' });
@@ -154,7 +177,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
 
 
-  
+
 // };
 console.log(generateToken);
 module.exports = {
