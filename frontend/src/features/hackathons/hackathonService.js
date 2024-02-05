@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:5000/api/hackathons/'
+const API_URL = 'https://jet-pulse-api.onrender.com/api/hackathons/'
 // Get user hackathons
 const gethackathons = async () => {
   const response = await axios.get(API_URL)

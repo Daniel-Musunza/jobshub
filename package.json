@@ -4,7 +4,7 @@
   "description": "jobsetter app",
   "main": "index.js",
   "scripts": {
-    "index": "nodemon backend/index.js",
+    "index": "node backend/index.js",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run index\" \"npm run client\"",
     "postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
