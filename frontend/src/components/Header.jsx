@@ -68,26 +68,26 @@ function Header() {
         <div className="right-data">
           {user ? (
             <div className='profile' style={{ display: 'flex' }} onClick={toggleProfile}>
-              {user.profileImage ?(
-             <img
-             src={`/uploads/${user.profileImage}`}
-             style={{
-               width: '50px',
-               height: '50px', // Ensure the height matches the width for a perfect circle
-               marginRight: '20px',
-               borderRadius: '50%', // Make it circular
-               cursor: 'pointer',
-               objectFit: 'cover', // Maintain aspect ratio and cover the entire area
-             }}
-             alt="Profile Image"
-           />
-           
+              {user.profileImage ? (
+                <img
+                  src={`/uploads/${user.profileImage}`}
+                  style={{
+                    width: '50px',
+                    height: '50px', // Ensure the height matches the width for a perfect circle
+                    marginRight: '20px',
+                    borderRadius: '50%', // Make it circular
+                    cursor: 'pointer',
+                    objectFit: 'cover', // Maintain aspect ratio and cover the entire area
+                  }}
+                  alt="Profile Image"
+                />
+
               ) : (
                 <i class="fa-solid fa-user" style={{ color: '#fff', fontSize: '40px', marginRight: '20px', cursor: 'pointer' }} ></i>
 
               )}
 
-             
+
             </div>
           ) : (
             <>
@@ -103,14 +103,26 @@ function Header() {
           <div className="right-data" style={{ marginTop: '50px', marginBottom: '0px' }}>
             <button onClick={closeMenu} style={{ width: '80px', marginBottom: '0px' }}>close</button>
           </div>
-          
+
           <div className="navbar" style={{ background: 'black', alignItems: 'center', justifyContent: 'center' }}>
-          {user && (
-            <>
-            <h4>{user && user.name}</h4>
-            <Link to="/profile" style={{ color: '#fff' }}>Profile View</Link>
-            </>
-          )}
+            {user && (
+              <>
+                <img
+                  src={`/uploads/${user.profileImage}`}
+                  style={{
+                    width: '50px',
+                    height: '50px', // Ensure the height matches the width for a perfect circle
+                    marginRight: '20px',
+                    borderRadius: '50%', // Make it circular
+                    cursor: 'pointer',
+                    objectFit: 'cover', // Maintain aspect ratio and cover the entire area
+                  }}
+                  alt="Profile Image"
+                />
+                <h4>{user && user.name}</h4>
+                <Link to="/profile" style={{ color: '#fff' }}>Profile View</Link>
+              </>
+            )}
             <Link to="/" style={{ color: '#fff' }}>Jobs</Link>
             <Link to="/tech-blogs" style={{ color: '#fff' }}>Workers</Link>
             <Link to="/hackathons" style={{ color: '#fff' }}>Events</Link>
@@ -120,7 +132,7 @@ function Header() {
           <div className="right-data">
             {user ? (
               <div className='profile' style={{ display: 'flex' }}>
-                
+
                 <button onClick={onLogout}>Log Out</button>
               </div>
             ) : (
@@ -131,7 +143,7 @@ function Header() {
             )}
 
           </div>
-         
+
         </div>
       )}
       {showProfile && (
@@ -139,10 +151,10 @@ function Header() {
           <div className="right-data" style={{ marginTop: '50px', marginBottom: '0px' }}>
             <button onClick={closeProfile} style={{ width: '80px', marginBottom: '0px' }}>close</button>
           </div>
-         
-            <h4>{user && user.name}</h4>
-            <Link to="/profile" style={{ color: '#fff' }}>Profile View</Link>
-            <button onClick={onLogout}>Log Out</button>
+
+          <h4>{user && user.name}</h4>
+          <Link to="/profile" style={{ color: '#fff' }}>Profile View</Link>
+          <button onClick={onLogout}>Log Out</button>
         </div>
       )}
     </section>

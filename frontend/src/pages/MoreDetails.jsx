@@ -101,7 +101,7 @@ const MoreDetails = () => {
                   <a href={`tel: ${item.phoneNumber}`}>
                     <i class="fa-solid fa-phone"></i> {item.phoneNumber}
                   </a>
-                  <a href={`whatsapp:${item.phoneNumber}`}>
+                  <a href={`https://api.whatsapp.com/send?phone=${item.phoneNumber}`}>
                     <i class="fa-brands fa-square-whatsapp"></i>
                   </a>
                 </div>

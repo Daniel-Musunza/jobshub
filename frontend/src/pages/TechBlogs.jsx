@@ -91,7 +91,7 @@ const TechBlogs = () => {
                         <a href={`tel: ${blog.phoneNumber}`}>
                           <i class="fa-solid fa-phone"></i> {blog.phoneNumber}
                         </a>
-                        <a href={`whatsapp:${blog.phoneNumber}`}>
+                        <a href={`https://api.whatsapp.com/send?phone=${blog.phoneNumber}`}>
                           <i class="fa-brands fa-square-whatsapp"></i>
                         </a>
                       </div>
