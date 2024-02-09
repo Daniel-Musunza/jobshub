@@ -41,6 +41,8 @@ function Login() {
     }
 
     dispatch(login(userData))
+
+    toast("Success")
   }
 
   if (isLoading) {

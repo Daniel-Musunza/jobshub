@@ -73,6 +73,7 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 
+
 // @desc    Authenticate a user
 // @route   POST /api/users/login
 // @access  Public
@@ -99,6 +100,7 @@ const loginUser = asyncHandler(async (req, res) => {
         casualJobs: user.casualJobs,
         proffessionalJobs: user.proffessionalJobs,
         profileImage: user.profileImage,
+        link: user.link,
         token,
       });
     } else {
@@ -148,32 +150,71 @@ const getUsers = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
   try {
-    const { id, name, email, phoneNumber, userType, description, location, casualJobs, proffessionalJobs } = req.body;
+    const { id, name, email, phoneNumber, userType, description, location, casualJobs, proffessionalJobs, link } = req.body;
 
     let imageFile = null;
+    let updateUserQuery;
+
     if (req.file) {
       imageFile = req.file.filename;
-      // Access the uploaded file via multer
+      updateUserQuery = `UPDATE users 
+        SET name = ?, 
+        email = ?, 
+        phoneNumber = ?, 
+        userType = ?, 
+        description = ?, 
+        location = ?, 
+        casualJobs = ?, 
+        proffessionalJobs = ?, 
+        profileImage = ? ,
+        link = ? 
+        WHERE id = ?`;
+      await db.query(updateUserQuery, [name, email, phoneNumber, userType, description, location, casualJobs, proffessionalJobs, imageFile, link, id]);
+    } else {
+      updateUserQuery = `UPDATE users 
+        SET name = ?, 
+        email = ?, 
+        phoneNumber = ?, 
+        userType = ?, 
+        description = ?, 
+        location = ?, 
+        casualJobs = ?, 
+        proffessionalJobs = ?,
+        link = ?  
+        WHERE id = ?`;
+      await db.query(updateUserQuery, [name, email, phoneNumber, userType, description, location, casualJobs, proffessionalJobs, link, id]);
     }
 
-    const updateUserQuery = `UPDATE users 
-    SET name = ?, 
-    email = ?, 
-    phoneNumber = ?, 
-    userType = ?, 
-    description = ?, 
-    location = ?, 
-    casualJobs = ?, 
-    proffessionalJobs = ?, 
-    profileImage = ? 
-    WHERE id = ?`;
-    await db.query(updateUserQuery, [name, email, phoneNumber, userType, description, location, casualJobs, proffessionalJobs, imageFile, id]);
+    // Fetch user data after update
+    const userQuery = `SELECT * FROM users WHERE id = ?`;
+    const [user] = await db.query(userQuery, [id]);
+
+    // Generate token (assuming you have a function for that)
+    const token = generateToken(user.id);
+
+    // Send JSON response with user data and token
+    res.json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      userType: user.userType,
+      description: user.description,
+      location: user.location,
+      casualJobs: user.casualJobs,
+      proffessionalJobs: user.proffessionalJobs,
+      profileImage: user.profileImage,
+      link: user.link,
+      token,
+    });
 
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server Error' });
   }
 });
+
+
 
 
 

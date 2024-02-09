@@ -73,6 +73,9 @@ const MoreDetails = () => {
               )}
               <h3>{item.name}</h3>
               <p>{item.location}</p>
+              {item.link &&(
+                <p>CV/LinkedIn/Portfolio Link: <a href={item.link}>{item.link}</a></p>
+              )}
 
 
               {type == 'job' ? (
@@ -111,19 +114,18 @@ const MoreDetails = () => {
 
               {item.casualJobs && (
                 <>
-                  <h4>Casual Jobs can do:</h4>
-                  <hr />
-                  <p>{item.casualJobs}</p>
+                  <h4><span style={{color: '#2b82c4'}}>Casual Jobs can do:</span>  <p>{item.casualJobs}</p></h4>
+                 
 
                 </>
               )}
               {item.proffessionalJobs && (
                 <>
-                  <h4>Proffessionality</h4>
-                  <hr />
-                  <p>{item.proffessionalJobs}</p>
+                  <h4><span style={{color: '#2b82c4'}}>Proffessionality: </span> <p>{item.proffessionalJobs}</p></h4>
+                 
                 </>
               )}
+               <h4><span style={{color: '#2b82c4'}}>About </span> </h4>
               <div>{item.introduction} </div>
               <div dangerouslySetInnerHTML={{ __html: item.description }} />
             </>

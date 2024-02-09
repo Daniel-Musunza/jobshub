@@ -20,7 +20,7 @@ function App() {
           <Header />
           <Routes>
             <Route path='/' element={<Dashboard />} />
-            <Route path='/tech-blogs' element={<TechBlogs />} />
+            <Route path='/profiles' element={<TechBlogs />} />
             <Route path='/hackathons' element={<Hackathons />} />
             <Route path='/about' element={<About />} />
             <Route path='/contact' element={<Contact />} />

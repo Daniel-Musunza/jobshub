@@ -10,7 +10,6 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
-
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -24,7 +23,7 @@ function Register() {
     }
     if (isSuccess || user) {
      
-        navigate('/');
+        navigate('/profile');
  
     }
     dispatch(reset());
@@ -36,7 +35,6 @@ function Register() {
     if (password !== password2) {
       toast.error('Passwords do not match');
     } else {
-     
         const userData = {
           name,
           email,
@@ -44,7 +42,8 @@ function Register() {
         };
 
         dispatch(register(userData));
-        navigate('/profile');
+
+        toast("successs ...")
  
     }
   };

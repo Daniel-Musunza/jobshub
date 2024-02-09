@@ -21,12 +21,12 @@ const Dashboard = () => {
   const [description, setDescription] = useState('');
   const [introduction, setIntroduction] = useState('');
   const [imageFile, setImageFile] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [filteredJobs, setFilteredJobs] = useState([]);
 
 
   useEffect(() => {
     if (isError) {
-      console.log(message);
+      toast.error(message);
     }
 
     dispatch(getjobs())
@@ -52,13 +52,11 @@ const Dashboard = () => {
     formData.append('introduction', introduction);
     formData.append('imageFile', imageFile);
 
-    console.log(formData); // Check the formData to verify that the file is appended correctly
 
     // Now you can dispatch your API call with the formData
     dispatch(addjob(formData));
 
-    alert("Job Posted Successfully ...");
-    setShowModal(false);
+    toast("Job Posted Successfully ...");
   };
 
   const handleDelete = async (e, id) => {
@@ -66,9 +64,23 @@ const Dashboard = () => {
     dispatch(deletejob(id));
 
 
-    alert("Job Deleted Successfully ..");
+    toast("Job Deleted Successfully ..");
     dispatch(getjobs());
   }
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+  
+    const regex = new RegExp(title, 'i'); // 'i' flag for case-insensitive matching
+    const newJobs = jobs.filter((job) => regex.test(job.title));
+  
+    if (newJobs.length === 0) {
+      toast("Zero Results");
+    }
+    setFilteredJobs(newJobs);
+  };
+  
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -151,10 +163,115 @@ const Dashboard = () => {
 
         </div>
       )}
-      <div class="heading">
+      <div class="heading" style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>Job Listings</h2>
-      </div>
+        <form style={{ display: 'flex', flexWrap: 'wrap' }} onSubmit={handleSearch}>
+          <div className='form-group' style={{ padding: '10px' }}>
+            <input
+              type='text'
+              className='form-control'
+              id='title'
+              name='title'
+              placeholder='Filter by Job title'
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
 
+
+          <div className='form-group' style={{ padding: '10px' }}>
+            <button type="submit" className="btn " style={{ background: '#2b82c4' }}>
+              Search
+            </button>
+          </div>
+        </form>
+      </div>
+      {filteredJobs.length > 0 && (
+        <div class="main-container">
+          <div class="left-side">
+
+          </div>
+
+          <div class="cards">
+            {filteredJobs
+              // .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .map((job) => (
+                <div className="card" key={job.id}>
+                  {user && user.userType == "admin" && (
+                    <button onClick={(e) => handleDelete(e, job.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', position: 'fixed' }}><i class="fa-solid fa-trash-can"></i></button>
+                  )}
+                  <div className="card-image">
+                    <img src={`/uploads/${job.imageFile}`} alt="" />
+                  </div>
+                  <div className="card-details">
+                    <p className="card-title">{job.title}</p>
+                    <p className="card-body">{job.introduction}</p>
+                    <h4>
+                      Posted on:{" "}
+                      <span>
+                        {new Intl.DateTimeFormat("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }).format(new Date(job.date))}
+                      </span>
+                    </h4>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <Link to={`/more-details/${job.id}/job`}>
+                        <button className="btn">
+                          More Details
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            height="15px"
+                            width="15px"
+                            className="icon"
+                          >
+                            <path
+                              strokeLinejoin="round"
+                              strokeLinecap="round"
+                              strokeMiterlimit="10"
+                              strokeWidth="1.5"
+                              stroke="#292D32"
+                              d="M8.91016 19.9201L15.4302 13.4001C16.2002 12.6301 16.2002 11.3701 15.4302 10.6001L8.91016 4.08008"
+                            ></path>
+                          </svg>
+                        </button>
+                      </Link>
+                      <a href={`mailto: ${job.email}`}><button className="btn">
+                        Apply Now
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          height="15px"
+                          width="15px"
+                          className="icon"
+                        >
+                          <path
+                            strokeLinejoin="round"
+                            strokeLinecap="round"
+                            strokeMiterlimit="10"
+                            strokeWidth="1.5"
+                            stroke="#292D32"
+                            d="M8.91016 19.9201L15.4302 13.4001C16.2002 12.6301 16.2002 11.3701 15.4302 10.6001L8.91016 4.08008"
+                          ></path>
+                        </svg>
+                      </button></a>
+
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+
+
+          <div class="right-side">
+
+          </div>
+        </div>
+      )}
       <div class="main-container">
         <div class="left-side">
 

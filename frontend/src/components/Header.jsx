@@ -59,7 +59,7 @@ function Header() {
       <nav>
         <div className="navbar" style={{ background: 'black', alignItems: 'center', justifyContent: 'center' }}>
           <Link to="/" style={{ color: '#fff' }}>Jobs</Link>
-          <Link to="/tech-blogs" style={{ color: '#fff' }}>Workers</Link>
+          <Link to="/profiles" style={{ color: '#fff' }}>Workers</Link>
           <Link to="/hackathons" style={{ color: '#fff' }}>Events</Link>
           <Link to="/about" style={{ color: '#fff' }}>About Us</Link>
           <Link to="/contact" style={{ color: '#fff' }}>Contact Us</Link>
@@ -92,7 +92,7 @@ function Header() {
           ) : (
             <>
               <button> <Link to="/login"> Log In</Link></button>
-              <button> <Link to="/register"> Register</Link></button>
+               <Link to="/register" style={{paddingLeft: '10px'}}> Get Started</Link>
             </>
           )}
 
@@ -124,7 +124,7 @@ function Header() {
               </>
             )}
             <Link to="/" style={{ color: '#fff' }}>Jobs</Link>
-            <Link to="/tech-blogs" style={{ color: '#fff' }}>Workers</Link>
+            <Link to="/profiles" style={{ color: '#fff' }}>Workers</Link>
             <Link to="/hackathons" style={{ color: '#fff' }}>Events</Link>
             <Link to="/about" style={{ color: '#fff' }}>About Us</Link>
             <Link to="/contact" style={{ color: '#fff' }}>Contact Us</Link>

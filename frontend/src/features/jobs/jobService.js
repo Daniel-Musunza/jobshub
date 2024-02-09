@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'https://jet-pulse-api.onrender.com/api/jobs/'
+const API_URL = 'http://localhost:5000/api/jobs/'
 // Get user jobs
 const getjobs = async () => {
   const response = await axios.get(API_URL)

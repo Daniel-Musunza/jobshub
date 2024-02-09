@@ -24,7 +24,7 @@ function Footer() {
             <div className="navbar">
               <nav>
                   <Link to="/">Jobs</Link>
-                  <Link to="/tech-blogs">Workers</Link>
+                  <Link to="/profiles">Workers</Link>
                   <Link to="/hackathons">Events</Link>
                   <Link to="/about">About Us</Link>
                   <Link to="/contact">Contact Us</Link>
