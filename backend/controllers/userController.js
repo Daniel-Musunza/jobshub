@@ -156,7 +156,8 @@ const updateUser = asyncHandler(async (req, res) => {
     let updateUserQuery;
 
     if (req.file) {
-      imageFile = req.file.filename;
+      imageFile = req.file.buffer;
+
       updateUserQuery = `UPDATE users 
         SET name = ?, 
         email = ?, 

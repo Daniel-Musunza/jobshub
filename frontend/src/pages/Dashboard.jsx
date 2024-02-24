@@ -201,7 +201,7 @@ const Dashboard = () => {
                     <button onClick={(e) => handleDelete(e, job.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', position: 'fixed' }}><i class="fa-solid fa-trash-can"></i></button>
                   )}
                   <div className="card-image">
-                    <img src={`/uploads/${job.imageFile}`} alt="" />
+                    <img src={URL.createObjectURL(new Blob([new Uint8Array(job.imageFile.data)],{type: 'image/jpeg', }))} alt="" />
                   </div>
                   <div className="card-details">
                     <p className="card-title">{job.title}</p>
@@ -286,7 +286,7 @@ const Dashboard = () => {
                     <button onClick={(e) => handleDelete(e, job.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', position: 'fixed' }}><i class="fa-solid fa-trash-can"></i></button>
                   )}
                   <div className="card-image">
-                    <img src={`/uploads/${job.imageFile}`} alt="" />
+                    <img src={URL.createObjectURL(new Blob([new Uint8Array(job.imageFile.data)],{type: 'image/jpeg', }))} alt="" />
                   </div>
                   <div className="card-details">
                     <p className="card-title">{job.title}</p>

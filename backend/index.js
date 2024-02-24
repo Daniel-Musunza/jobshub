@@ -11,9 +11,10 @@ dotenv.config();
 
 const app = express();
 
-// origin: 'https://jetpulse.vercel.app',
+
 const corsOptions = {  
-  origin: 'http://localhost:3000',
+  origin: 'https://jetpulse.qualityasoftwares.com',
+  // origin: 'http://localhost:3000',
   methods: ['POST', 'GET', 'PUT', 'DELETE'],
 };
 
@@ -27,7 +28,7 @@ app.use('/api/hackathons', require('./routes/hackathonRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 
 
-app.get('/', (req, res) => res.send('Please set to production'));
+app.get('/', (req, res) => res.send('Jet pulse API'));
 app.use(errorHandler);
 
 // No need to call db.connect(); anymore

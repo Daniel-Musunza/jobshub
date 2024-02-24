@@ -58,10 +58,10 @@ const MoreDetails = () => {
             <>
               <h2>{item.title}</h2>
               {item.imageFile && (
-                <img src={`/uploads/${item.imageFile}`} alt={item.title} />
+                <img src={URL.createObjectURL(new Blob([new Uint8Array(item.imageFile.data)],{type: 'image/jpeg', }))} alt={item.title} />
               )}
               {item.profileImage && (
-                <img src={`/uploads/${item.profileImage}`} alt="" 
+                <img src={URL.createObjectURL(new Blob([new Uint8Array(item.profileImage.data)],{type: 'image/jpeg', }))} alt="" 
                 style={{
                   width: '100px',
                   height: '100px', // Ensure the height matches the width for a perfect circle

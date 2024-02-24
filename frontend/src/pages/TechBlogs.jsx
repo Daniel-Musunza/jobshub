@@ -109,7 +109,7 @@ const TechBlogs = () => {
                 <div className="card" key={blog.id}>
 
                   <div className="card-image">
-                    <img src={`/uploads/${blog.profileImage}`} alt="Profile Image"
+                    <img src={URL.createObjectURL(new Blob([new Uint8Array(blog.profileImage.data)],{type: 'image/jpeg', }))} alt="Profile Image"
                       style={{
                         width: '100%',
                         height: '250px',
@@ -178,7 +178,7 @@ const TechBlogs = () => {
                 <div className="card" key={blog.id}>
 
                   <div className="card-image">
-                    <img src={`/uploads/${blog.profileImage}`} alt="Profile Image"
+                    <img src={URL.createObjectURL(new Blob([new Uint8Array(blog.profileImage.data)],{type: 'image/jpeg', }))} alt="Profile Image"
                       style={{
                         width: '100%',
                         height: '250px',

@@ -87,7 +87,7 @@ const ProfileView = () => {
         <section className='form'>
 
           {user.profileImage && (
-            <img src={`/uploads/${user.profileImage}`} alt=""
+            <img ssrc={URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)],{type: 'image/jpeg', }))} alt=""
               style={{
                 width: '100px',
                 height: '100px', // Ensure the height matches the width for a perfect circle

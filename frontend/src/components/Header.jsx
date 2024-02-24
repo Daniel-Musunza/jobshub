@@ -70,7 +70,7 @@ function Header() {
             <div className='profile' style={{ display: 'flex' }} onClick={toggleProfile}>
               {user.profileImage ? (
                 <img
-                  src={`/uploads/${user.profileImage}`}
+                src={URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)],{type: 'image/jpeg', }))}
                   style={{
                     width: '50px',
                     height: '50px', // Ensure the height matches the width for a perfect circle
@@ -92,7 +92,7 @@ function Header() {
           ) : (
             <>
               <button> <Link to="/login"> Log In</Link></button>
-               <Link to="/register" style={{paddingLeft: '10px'}}> Get Started</Link>
+              <b><Link to="/register" style={{paddingLeft: '10px'}}> Get Started</Link></b> 
             </>
           )}
 
@@ -138,7 +138,7 @@ function Header() {
             ) : (
               <>
                 <button> <Link to="/login"> Log In</Link></button>
-                <button> <Link to="/register"> Register</Link></button>
+                <b><Link to="/register" style={{paddingLeft: '10px'}}> Get Started</Link></b> 
               </>
             )}
 

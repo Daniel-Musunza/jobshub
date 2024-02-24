@@ -19,7 +19,7 @@ const addjob = async (req, res) => {
 
     let imageFile = null;
     if (req.file) {
-      imageFile = req.file.filename;
+      imageFile = req.file.buffer;
       // Access the uploaded file via multer
     }
 
