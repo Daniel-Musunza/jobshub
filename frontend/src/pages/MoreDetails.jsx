@@ -39,9 +39,9 @@ const MoreDetails = () => {
       await dispatch(getjobs());
       await handleSetItem();
     };
-
     fetchData();
-  }, [dispatch, id, type]);
+
+  }, [navigate, dispatch, handleSetItem]);
 
 
   return (

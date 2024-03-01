@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-const API_URL = 'https://jetpulseapi.qualityasoftwares.com/api/contacts/subscribe/'
+// const API_URL = 'https://jetpulseapi.qualityasoftwares.com/api/contacts/subscribe/'
+
+const API_URL = 'http://localhost:5000/api/contacts/subscribe/'
 
 const subscribe = async (email) => {
 

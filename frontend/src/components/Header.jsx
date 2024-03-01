@@ -100,7 +100,7 @@ function Header() {
       </nav>
       {showMenu && (
         <div className='mobile-nav' onClick={closeMenu}>
-          <div className="right-data" style={{ marginTop: '50px', marginBottom: '0px' }}>
+          <div className="right-data" style={{ marginBottom: '0px' }}>
             <button onClick={closeMenu} style={{ width: '80px', marginBottom: '0px' }}>close</button>
           </div>
 
@@ -108,7 +108,7 @@ function Header() {
             {user && (
               <>
                 <img
-                  src={`/uploads/${user.profileImage}`}
+                    src={URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)],{type: 'image/jpeg', }))}
                   style={{
                     width: '50px',
                     height: '50px', // Ensure the height matches the width for a perfect circle
@@ -128,7 +128,7 @@ function Header() {
             <Link to="/hackathons" style={{ color: '#fff' }}>Events</Link>
             <Link to="/about" style={{ color: '#fff' }}>About Us</Link>
             <Link to="/contact" style={{ color: '#fff' }}>Contact Us</Link>
-          </div>
+         
           <div className="right-data">
             {user ? (
               <div className='profile' style={{ display: 'flex' }}>
@@ -138,17 +138,17 @@ function Header() {
             ) : (
               <>
                 <button> <Link to="/login"> Log In</Link></button>
-                <b><Link to="/register" style={{paddingLeft: '10px'}}> Get Started</Link></b> 
+                <button style={{ marginTop: '20px' }}><Link to="/register" > Get Started</Link></button> 
               </>
             )}
 
           </div>
-
+          </div>
         </div>
       )}
       {showProfile && (
         <div className='profile-menu' onClick={closeProfile}>
-          <div className="right-data" style={{ marginTop: '50px', marginBottom: '0px' }}>
+          <div className="right-data" style={{ marginBottom: '0px' }}>
             <button onClick={closeProfile} style={{ width: '80px', marginBottom: '0px' }}>close</button>
           </div>
 

@@ -13,8 +13,8 @@ const app = express();
 
 
 const corsOptions = {  
-  origin: 'https://jetpulse.qualityasoftwares.com',
-  // origin: 'http://localhost:3000',
+  // origin: 'https://jetpulse.qualityasoftwares.com',
+  origin: 'http://localhost:3000',
   methods: ['POST', 'GET', 'PUT', 'DELETE'],
 };
 

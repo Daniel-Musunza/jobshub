@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const API_URL = 'http://localhost:5000/api/users/'
-const API_URL = 'https://jetpulseapi.qualityasoftwares.com/api/users/'
+const API_URL = 'http://localhost:5000/api/users/'
+// const API_URL = 'https://jetpulseapi.qualityasoftwares.com/api/users/'
 const getUsers = async () => {
   const response = await axios.get(API_URL + 'getUsers/')
 

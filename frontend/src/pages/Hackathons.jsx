@@ -93,7 +93,7 @@ const Hackathons = () => {
                 <input
                   type='text'
                   className='form-control'
-                  placeholder="Hackathon Title"
+                  placeholder="Event Title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />

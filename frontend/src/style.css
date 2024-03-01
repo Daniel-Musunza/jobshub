@@ -41,9 +41,7 @@ h4{
     color: #2b82c4!important;
 }
 section{
-padding: 20px 150px;
-margin-right: -20px;
-
+padding: 20px, 150px;
 }
 /*body*/
 /*header*/
@@ -475,8 +473,9 @@ margin-right: -20px;
     }
     .header .mobile-nav{
         width: 250px;
+        height: 60vh;
         right: 0;
-        top: -30px;
+        top: 70px;
         padding: 10px;
         position: fixed;
         border-radius: 5px;

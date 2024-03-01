@@ -14,24 +14,24 @@ const ProfileView = () => {
   const dispatch = useDispatch();
   const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
 
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
-  const [location, setLocation] = useState(user.location);
-  const [description, setDescription] = useState(user.description);
-  const [casualJobs, setCasualJobs] = useState(user.casualJobs);
-  const [proffessionalJobs, setProffessionalJobs] = useState(user.proffessionalJobs);
+  const [name, setName] = useState(user?.name);
+  const [email, setEmail] = useState(user?.email);
+  const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber);
+  const [location, setLocation] = useState(user?.location);
+  const [description, setDescription] = useState(user?.description);
+  const [casualJobs, setCasualJobs] = useState(user?.casualJobs);
+  const [proffessionalJobs, setProffessionalJobs] = useState(user?.proffessionalJobs);
   const [imageFile, setImageFile] = useState(null);
-  const [link, setLink] = useState(user.link);
+  const [link, setLink] = useState(user?.link);
 
   useEffect(() => {
     if (isError) {
       toast.error(message);
     }
 
-    return () => {
-      dispatch(reset());
-    };
+   if(!user){
+    navigate('/');
+   }
   }, [user, navigate, isError, message, dispatch]);
 
   const handleDescriptionChange = (value) => {
@@ -87,7 +87,7 @@ const ProfileView = () => {
         <section className='form'>
 
           {user.profileImage && (
-            <img ssrc={URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)],{type: 'image/jpeg', }))} alt=""
+            <img src={URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)],{type: 'image/jpeg', }))} alt=""
               style={{
                 width: '100px',
                 height: '100px', // Ensure the height matches the width for a perfect circle
