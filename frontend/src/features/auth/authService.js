@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:5000/api/users/'
-// const API_URL = 'https://jetpulseapi.qualityasoftwares.com/api/users/'
+// const API_URL = 'http://localhost:5000/api/users/'
+const API_URL = 'https://njookaziapi.qualityasoftwares.com/api/users/'
 const getUsers = async () => {
   const response = await axios.get(API_URL + 'getUsers/')
 
@@ -43,7 +43,16 @@ const login = async (userData) => {
 
   return response.data
 }
+const forgotpassword = async (userData) => {
+  const response = await axios.post(API_URL + 'forgotpassword', userData)
 
+  return response.data
+}
+const passwordreset = async (userData) => {
+  const response = await axios.post(API_URL + 'passwordreset', userData)
+
+  return response.data
+}
 // Logout user
 const logout = () => {
   localStorage.removeItem('user')
@@ -52,6 +61,8 @@ const logout = () => {
 const authService = {
   register,
   logout,
+  forgotpassword,
+  passwordreset,
   login,
   getUsers,
   updateUser

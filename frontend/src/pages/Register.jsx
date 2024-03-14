@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
@@ -59,7 +59,8 @@ function Register() {
            Register
         </h1>
       </section>
-    <section className='form' style={{padding: 0,  minHeight: '380px',  padding: '20px'}}>
+    <section className='form' style={{minHeight: '380px',  padding: '20px'}}>
+      <h4>Already have an account ? <Link to='/login'>Sign In</Link></h4>
       <form onSubmit={onSubmit}  >
          <div className='form-group'>
             <input

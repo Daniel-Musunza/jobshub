@@ -34,7 +34,8 @@ flex-direction: column;
 } */
 .form{
     width: 400px;
-    
+ border-radius: 5px; 
+ padding: 20px;  
 }
 
 .register {
@@ -73,12 +74,23 @@ flex-direction: column;
 
 .about {
   padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 60%;
+  margin: auto;
   color: #fff;
 }
-
+@media (max-width:800px) {
+  .about {
+    width: 100%;
+    margin: 10px;
+  }
+}
 .about-content,
 .about-section {
-  max-width: 800px;
+  width: 100%;
   margin: 0 auto;
   padding: 20px;
   margin-bottom: 30px;

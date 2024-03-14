@@ -32,16 +32,30 @@ const MoreDetails = () => {
     }
   };
 
-  useEffect(() => {
+  useEffect(async() => {
     const fetchData = async () => {
       await dispatch(fetchUsers());
       await dispatch(gethackathons());
       await dispatch(getjobs());
-      await handleSetItem();
+      
     };
     fetchData();
 
+    await handleSetItem();
+
   }, [navigate, dispatch, handleSetItem]);
+
+  function formatPhoneNumber(phoneNumber) {
+    // Remove leading '0' or '254'
+    let cleanedNumber = phoneNumber.replace(/^0+|^(254)/, '');
+    
+    // Prepend '+254' to the number if it doesn't start with '+'
+    if (!cleanedNumber.startsWith('+')) {
+        cleanedNumber = '+254' + cleanedNumber;
+    }
+
+    return cleanedNumber;
+}
 
 
   return (
@@ -101,10 +115,10 @@ const MoreDetails = () => {
                 </button></a>
               ) : type == 'profile' ? (
                 <div className='contact-detail'>
-                  <a href={`tel: ${item.phoneNumber}`}>
-                    <i class="fa-solid fa-phone"></i> {item.phoneNumber}
+                  <a href={`tel: ${formatPhoneNumber(item.phoneNumber)}`}>
+                    <i class="fa-solid fa-phone"></i> {formatPhoneNumber(item.phoneNumber)}
                   </a>
-                  <a href={`https://api.whatsapp.com/send?phone=${item.phoneNumber}`}>
+                  <a href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(item.phoneNumber)}`}>
                     <i class="fa-brands fa-square-whatsapp"></i>
                   </a>
                 </div>

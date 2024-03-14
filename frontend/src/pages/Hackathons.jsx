@@ -139,7 +139,7 @@ const Hackathons = () => {
               className='form-control'
               id='title'
               name='title'
-              placeholder='Filter by Job title'
+              placeholder='Filter by Event title'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -168,7 +168,7 @@ const Hackathons = () => {
                 <button onClick={(e) => handleDelete(e, hackathon.id)} style={{color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', zIndex: '999'}}><i class="fa-solid fa-trash-can"></i></button>
               )}
               <p className="card-title">{hackathon.title}</p>
-              <p className="card-body">{hackathon.introduction}</p>
+              <p className="card-body">{hackathon.introduction.length > 150 ? hackathon.introduction.slice(0, 150) + '...' : hackathon.introduction}</p>
               <h4>
                 Posted on:{" "}
                 <span>
@@ -212,7 +212,7 @@ const Hackathons = () => {
         </div>
       </div>
         )}
-      <div class="main-container">
+      <div class="main-container m-container">
         <div class="left-side">
 
         </div>
@@ -226,7 +226,8 @@ const Hackathons = () => {
                 <button onClick={(e) => handleDelete(e, hackathon.id)} style={{color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', zIndex: '999'}}><i class="fa-solid fa-trash-can"></i></button>
               )}
               <p className="card-title">{hackathon.title}</p>
-              <p className="card-body">{hackathon.introduction}</p>
+              <p className="card-body">{hackathon.introduction.length > 70 ? hackathon.introduction.slice(0, 70) + '...' : hackathon.introduction}</p>
+
               <h4>
                 Posted on:{" "}
                 <span>

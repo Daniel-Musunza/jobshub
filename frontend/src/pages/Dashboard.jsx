@@ -5,7 +5,6 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Spinner from '../components/Spinner';
 import { useSelector, useDispatch } from 'react-redux'
-import { reset } from '../features/auth/authSlice'
 import { addjob, getjobs, deletejob } from '../features/jobs/jobSlice';
 
 const Dashboard = () => {
@@ -24,15 +23,9 @@ const Dashboard = () => {
   const [filteredJobs, setFilteredJobs] = useState([]);
 
 
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
-
-    dispatch(getjobs())
-    return () => {
-      dispatch(reset());
-    };
+  useEffect(async() => {
+   
+    await dispatch(getjobs())
   }, [user, navigate, isError, message, dispatch]);
 
   const handleDescriptionChange = (value) => {
@@ -205,7 +198,8 @@ const Dashboard = () => {
                   </div>
                   <div className="card-details">
                     <p className="card-title">{job.title}</p>
-                    <p className="card-body">{job.introduction}</p>
+                    <p className="card-body">{job.introduction.length > 70 ? job.introduction.slice(0, 70) + '...' : job.introduction}</p>
+
                     <h4>
                       Posted on:{" "}
                       <span>
@@ -272,7 +266,7 @@ const Dashboard = () => {
           </div>
         </div>
       )}
-      <div class="main-container">
+      <div class="main-container m-container">
         <div class="left-side">
 
         </div>
@@ -290,7 +284,8 @@ const Dashboard = () => {
                   </div>
                   <div className="card-details">
                     <p className="card-title">{job.title}</p>
-                    <p className="card-body">{job.introduction}</p>
+                    <p className="card-body">{job.introduction.length > 70 ? job.introduction.slice(0, 70) + '...' : job.introduction}</p>
+
                     <h4>
                       Posted on:{" "}
                       <span>

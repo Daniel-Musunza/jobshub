@@ -24,7 +24,7 @@ function Footer() {
             <div className="navbar">
               <nav>
                   <Link to="/">Jobs</Link>
-                  <Link to="/profiles">Workers</Link>
+                  <Link to="/profiles">Profiles</Link>
                   <Link to="/hackathons">Events</Link>
                   <Link to="/about">About Us</Link>
                   <Link to="/contact">Contact Us</Link>
@@ -38,7 +38,7 @@ function Footer() {
                     type="email" 
                     name="email" 
                     id="email" 
-                    placeholder="email"
+                    placeholder="example@gmail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     />

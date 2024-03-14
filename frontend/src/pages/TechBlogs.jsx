@@ -4,8 +4,7 @@ import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Spinner from '../components/Spinner';
-import { useSelector, useDispatch } from 'react-redux'
-import { reset } from '../features/auth/authSlice'
+import { useSelector, useDispatch } from 'react-redux';
 import { fetchUsers } from '../features/auth/authSlice';
 
 const TechBlogs = () => {
@@ -21,16 +20,10 @@ const TechBlogs = () => {
   const [filteredProfiles, setProfiles] = useState([]);
 
   useEffect(() => {
-    if (isError) {
-      toast.error(message)
-    }
-
+ 
     dispatch(fetchUsers());
 
-    return () => {
-      dispatch(reset());
-    };
-
+   
   }, [user, navigate, isError, message, dispatch]);
 
   const handleSearch = (e) => {
@@ -57,17 +50,29 @@ const TechBlogs = () => {
     setProfiles(filteredProfiles);
   };
   
+  function formatPhoneNumber(phoneNumber) {
+    // Remove leading '0' or '254'
+    let cleanedNumber = phoneNumber.replace(/^0+|^(254)/, '');
+    
+    // Prepend '+254' to the number if it doesn't start with '+'
+    if (!cleanedNumber.startsWith('+')) {
+        cleanedNumber = '+254' + cleanedNumber;
+    }
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+    return cleanedNumber;
+}
+
+
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
   return (
     <div>
 
       <div class="heading" style={{ display: 'flex', flexDirection: 'column' }}>
-        <h2>Workers' Profiles</h2>
+        <h2>Profiles</h2>
         <form style={{ display: 'flex', flexWrap: 'wrap' }} onSubmit={handleSearch}>
-          <div className='form-group' style={{ padding: '10px' }}>
+          <div className='form-group profile-input' style={{ padding: '10px' }}>
             <input
               type='text'
               className='form-control'
@@ -78,7 +83,7 @@ const TechBlogs = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
-          <div className='form-group' style={{ padding: '10px' }}>
+          <div className='form-group profile-input' style={{ padding: '10px' }}>
             <input
               type='text'
               className='form-control'
@@ -90,8 +95,8 @@ const TechBlogs = () => {
             />
           </div>
 
-          <div className='form-group' style={{ padding: '10px' }}>
-            <button type="submit" className="btn " style={{ background: '#2b82c4' }}>
+          <div className='form-group profile-button' style={{ padding: '10px' }}>
+            <button type="submit" className="btn" style={{ background: '#2b82c4' }}>
               Search
             </button>
           </div>
@@ -121,8 +126,8 @@ const TechBlogs = () => {
                     <p className="card-title">{blog.name}</p>
                     <p className="card-body">{blog.location}</p>
                     <hr />
-                    <p className="card-title">Services:</p>
-                    <p className="card-body">{blog.casualJobs}</p>
+                    <p className="card-title">Casual Services:</p>
+                    <p className="card-body">{blog.casualJobs.length > 70 ? blog.casualJobs.slice(0, 70) + '...' : blog.casualJobs}</p>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <Link to={`/more-details/${blog.id}/profile`}>
                         <button className="btn">
@@ -147,10 +152,10 @@ const TechBlogs = () => {
                         </button>
                       </Link>
                       <div className='contact-detail'>
-                        <a href={`tel: ${blog.phoneNumber}`}>
-                          <i class="fa-solid fa-phone"></i> {blog.phoneNumber}
+                        <a href={`tel: ${formatPhoneNumber(blog.phoneNumber)}`}>
+                          <i class="fa-solid fa-phone"></i> {formatPhoneNumber(blog.phoneNumber)}
                         </a>
-                        <a href={`https://api.whatsapp.com/send?phone=${blog.phoneNumber}`}>
+                        <a href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(blog.phoneNumber)}`}>
                           <i class="fa-brands fa-square-whatsapp"></i>
                         </a>
                       </div>
@@ -167,7 +172,7 @@ const TechBlogs = () => {
           </div>
         </div>
       )}
-      <div class="main-container">
+      <div class="main-container m-container">
         <div class="left-side">
 
         </div>
@@ -190,8 +195,9 @@ const TechBlogs = () => {
                     <p className="card-title">{blog.name}</p>
                     <p className="card-body">{blog.location}</p>
                     <hr />
-                    <p className="card-title">Services:</p>
-                    <p className="card-body">{blog.casualJobs}</p>
+                    <p className="card-title">Casual Services:</p>
+                    <p className="card-body">{blog.casualJobs.length > 70 ? blog.casualJobs.slice(0, 70) + '...' : blog.casualJobs}</p>
+                    
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <Link to={`/more-details/${blog.id}/profile`}>
                         <button className="btn">
@@ -216,10 +222,10 @@ const TechBlogs = () => {
                         </button>
                       </Link>
                       <div className='contact-detail'>
-                        <a href={`tel: ${blog.phoneNumber}`}>
-                          <i class="fa-solid fa-phone"></i> {blog.phoneNumber}
+                        <a href={`tel: ${formatPhoneNumber(blog.phoneNumber)}`}>
+                          <i class="fa-solid fa-phone"></i> {formatPhoneNumber(blog.phoneNumber)}
                         </a>
-                        <a href={`https://api.whatsapp.com/send?phone=${blog.phoneNumber}`}>
+                        <a href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(blog.phoneNumber)}`}>
                           <i class="fa-brands fa-square-whatsapp"></i>
                         </a>
                       </div>

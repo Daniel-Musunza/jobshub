@@ -50,7 +50,7 @@ function Header() {
 
       <div className="logo" style={{ marginLeft: '20px' }}>
         <a href="#">
-          <img src="/img/logo.png" alt="" width="80px" />
+          <img src="img/logo.png" alt="" width="80px" />
         </a>
       </div>
       <i className="fi fi-br-menu-burger" style={{ color: '#fff', fontSize: '40px', marginRight: '20px' }} onClick={toggleMenu}></i>
@@ -59,7 +59,7 @@ function Header() {
       <nav>
         <div className="navbar" style={{ background: 'black', alignItems: 'center', justifyContent: 'center' }}>
           <Link to="/" style={{ color: '#fff' }}>Jobs</Link>
-          <Link to="/profiles" style={{ color: '#fff' }}>Workers</Link>
+          <Link to="/profiles" style={{ color: '#fff' }}>Profiles</Link>
           <Link to="/hackathons" style={{ color: '#fff' }}>Events</Link>
           <Link to="/about" style={{ color: '#fff' }}>About Us</Link>
           <Link to="/contact" style={{ color: '#fff' }}>Contact Us</Link>
@@ -70,7 +70,7 @@ function Header() {
             <div className='profile' style={{ display: 'flex' }} onClick={toggleProfile}>
               {user.profileImage ? (
                 <img
-                src={URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)],{type: 'image/jpeg', }))}
+                  src={URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)], { type: 'image/jpeg', }))}
                   style={{
                     width: '50px',
                     height: '50px', // Ensure the height matches the width for a perfect circle
@@ -90,25 +90,26 @@ function Header() {
 
             </div>
           ) : (
-            <>
-              <button> <Link to="/login"> Log In</Link></button>
-              <b><Link to="/register" style={{paddingLeft: '10px'}}> Get Started</Link></b> 
-            </>
+            <div style={{ display: 'flex' }}>
+
+              <Link to="/login" className='link button' style={{ zIndex: 1000 }}> <span> Log In</span></Link>
+              <Link to="/register" className='link button' style={{ marginLeft: '-30px' }}><span style={{ marginLeft: '30px' }}>  Register</span></Link>
+            </div>
           )}
 
         </div>
       </nav>
       {showMenu && (
         <div className='mobile-nav' onClick={closeMenu}>
-          <div className="right-data" style={{ marginBottom: '0px' }}>
-            <button onClick={closeMenu} style={{ width: '80px', marginBottom: '0px' }}>close</button>
+          <div className="right-data" style={{ marginBottom: '0px' }}  >
+            <button onClick={closeMenu} style={{ width: '80px', marginBottom: '0px' }} className='button'>close</button>
           </div>
 
           <div className="navbar" style={{ background: 'black', alignItems: 'center', justifyContent: 'center' }}>
             {user && (
               <>
                 <img
-                    src={URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)],{type: 'image/jpeg', }))}
+                  src={URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)], { type: 'image/jpeg', }))}
                   style={{
                     width: '50px',
                     height: '50px', // Ensure the height matches the width for a perfect circle
@@ -124,30 +125,31 @@ function Header() {
               </>
             )}
             <Link to="/" style={{ color: '#fff' }}>Jobs</Link>
-            <Link to="/profiles" style={{ color: '#fff' }}>Workers</Link>
+            <Link to="/profiles" style={{ color: '#fff' }}>Profiles</Link>
             <Link to="/hackathons" style={{ color: '#fff' }}>Events</Link>
             <Link to="/about" style={{ color: '#fff' }}>About Us</Link>
             <Link to="/contact" style={{ color: '#fff' }}>Contact Us</Link>
-         
-          <div className="right-data">
-            {user ? (
-              <div className='profile' style={{ display: 'flex' }}>
 
-                <button onClick={onLogout}>Log Out</button>
-              </div>
-            ) : (
-              <>
-                <button> <Link to="/login"> Log In</Link></button>
-                <button style={{ marginTop: '20px' }}><Link to="/register" > Get Started</Link></button> 
-              </>
-            )}
+            <div className="right-data">
+              {user ? (
+                <div className='profile' style={{ display: 'flex' }}>
 
-          </div>
+                  <button onClick={onLogout} className='button'>Log Out</button>
+                </div>
+              ) : (
+                <>
+                 
+              <Link to="/login" className='link button' > <span> Log In</span></Link>
+              <Link to="/register" className='link button' style={{marginTop: '10px'}}><span >  Register</span></Link>
+                </>
+              )}
+
+            </div>
           </div>
         </div>
       )}
       {showProfile && (
-        <div className='profile-menu' onClick={closeProfile}>
+        <div className='profile-menu'  onClick={closeProfile}>
           <div className="right-data" style={{ marginBottom: '0px' }}>
             <button onClick={closeProfile} style={{ width: '80px', marginBottom: '0px' }}>close</button>
           </div>

@@ -13,10 +13,14 @@ const app = express();
 
 
 const corsOptions = {  
-  // origin: 'https://jetpulse.qualityasoftwares.com',
-  origin: 'http://localhost:3000',
-  methods: ['POST', 'GET', 'PUT', 'DELETE'],
+  origin: [
+    'https://njookazi.qualityasoftwares.com',
+    'http://localhost:3000',
+    'https://jetpulse.vercel.app'
+  ],
+  methods: ['POST', 'GET', 'PUT', 'DELETE']
 };
+
 
 app.use(cors(corsOptions));
 app.use(express.json());

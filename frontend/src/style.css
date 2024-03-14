@@ -31,11 +31,12 @@ font-size: 100%;
 }
 body{
     background-color: #212121;
-    width: 105%;
+    width: 100%;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 h4{
     color: #2b82c4!important;
@@ -51,7 +52,7 @@ padding: 20px, 150px;
     z-index: 999;
     width: 100%;
     margin-left: 0;
-    padding-left: 0;
+    padding-right: 20px;
     display: flex;
     justify-content: space-between;
     text-transform: uppercase;
@@ -91,10 +92,11 @@ padding: 20px, 150px;
     margin-right: 20px;
     display: none;
 }
-.header  nav .right-data button{
+.header  nav .right-data .button{
     background-color: var(---pink);
     width: 150px;
     height: 40px;
+    margin-top: -15px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -103,14 +105,14 @@ padding: 20px, 150px;
     border-radius: 100px;
     box-shadow: 0px 5px 10px #fff;
 }
-.header  nav .right-data button a,
+.header  nav .right-data .button span,
 .navbar a 
 {
     font-size: 16px;
     font-weight: 800;
     color: black;
 }
-.header  nav .right-data button a:hover{
+.header  nav .right-data .button span:hover{
     background: linear-gradient(90deg,var(---lightbrown), var(---darkbrown));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -140,8 +142,11 @@ padding: 20px, 150px;
     
     width: 100%;
     display: flex;
-    min-height: 350px!important;
    
+}
+.m-container{
+    min-height: 80vh;
+    margin-bottom: 20px;
 }
 .post-jobs{
     width: 70%;
@@ -185,7 +190,7 @@ padding: 20px, 150px;
 .card {
     padding: 20px;
     width: 330px;
-    min-height: 370px;
+    height: 550px;
     border-radius: 20px;
     background: #212121;
     box-shadow: 5px 5px 8px #1b1b1b,
@@ -207,7 +212,7 @@ padding: 20px, 150px;
   .hackathon{
     padding: 20px;
     width: 330px;
-    min-height: 200px;
+    height: 250px;
     border-radius: 20px;
     background: #212121;
     box-shadow: 5px 5px 8px #1b1b1b,
@@ -473,7 +478,7 @@ padding: 20px, 150px;
     }
     .header .mobile-nav{
         width: 250px;
-        height: 60vh;
+        height: 80vh;
         right: 0;
         top: 70px;
         padding: 10px;
@@ -488,7 +493,7 @@ padding: 20px, 150px;
         display: flex;
         flex-direction: column;
     }
-    .header  .right-data button{
+    .header  .right-data .button{
         background-color: var(---pink);
         width: 150px;
         height: 40px;
@@ -546,7 +551,8 @@ padding: 20px, 150px;
     .contact-us{
         width: 100%; 
     }
-    .card{
+    .card,
+    .hackathon{
         width: 100%;
     }
     
@@ -559,6 +565,15 @@ padding: 20px, 150px;
       }
     .footer .container .logo img{
         max-width: 100px;
+    }
+    .profile-input{
+        width: 50%;
+    }
+    .profile-button{
+        width: 100%;
+    }
+    .profile-button button{
+        width: 100%!important;
     }
 }
 

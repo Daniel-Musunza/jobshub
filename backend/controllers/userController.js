@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const nodemailer = require("nodemailer");
 const asyncHandler = require('express-async-handler');
 const db = require('../config/db'); // Your MySQL connection
 
@@ -113,6 +114,86 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+const forgotPassword = asyncHandler(async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Check for user email
+    const getUserQuery = 'SELECT * FROM users WHERE email = ?';
+    const users = await db.query(getUserQuery, [email]);
+
+    if (users.length === 1) {
+      const user = users[0];
+      const transporter = nodemailer.createTransport({
+
+        host: 'sbg106.truehost.cloud',
+        port: 465,
+        secure: true,
+        auth: {
+          user: 'info@qualityasoftwares.com',
+          pass: 'W8*3Zlv]xBs2R3' // Avoid hardcoding passwords directly in code
+        }
+      });
+
+      console.log("to:" + email);
+
+      const mailOptions = {
+        from: 'Njoo Kazi <info@qualityasoftwares.com>', // Sender name and email
+        to: email,
+        subject: 'Password Reset',
+        html: `Dear ${user.name}, Kindly Reset your Njoo Kazi Password here <a href="http://localhost:3000/passwordreset/${email}">Reset Password</a>` // Enhance email content as needed
+      };
+
+      try {
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent');
+        res.status(200).json(mailOptions);
+        return 'Email sent';
+      } catch (error) {
+        console.error('Error sending email:', error);
+        throw new functions.https.HttpsError('internal', 'Failed to send email');
+      }
+    } else {
+      res.status(400).json({ message: 'Invalid Email' });
+      throw new Error('Invalid Email');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+const passwordreset = asyncHandler(async (req, res) => {
+
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      res.status(400);
+      throw new Error('Please add all fields');
+    }
+
+    // Check if user exists
+    const checkUserQuery = 'SELECT * FROM users WHERE email = ?';
+    const existingUser = await db.query(checkUserQuery, [email]);
+
+    if (!existingUser.length > 0) {
+      res.status(400);
+      throw new Error('User does not exists');
+    }
+
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    updateUserQuery = `UPDATE users 
+    SET password = ?
+    WHERE email= ?`;
+    await db.query(updateUserQuery, [hashedPassword, email]);
+    res.status(200).json();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 // @desc    Get user data
 // @route   GET /api/users/me
@@ -225,6 +306,8 @@ console.log(generateToken);
 module.exports = {
   registerUser,
   loginUser,
+  forgotPassword,
+  passwordreset,
   getMe,
   getUsers,
   updateUser,

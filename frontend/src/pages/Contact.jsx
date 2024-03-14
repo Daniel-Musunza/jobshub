@@ -122,19 +122,19 @@ const Contact = () => {
               <h3>Connect with Us:</h3>
               <ul>
                 <li>
-                  <a href="https://www.facebook.com/jetpulse" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.facebook.com/njookazi" target="_blank" rel="noopener noreferrer">
                     Facebook
                   </a>
                 </li>
                 <li>
-                  <a href="https://twitter.com/jetpulse" target="_blank" rel="noopener noreferrer">
+                  <a href="https://twitter.com/njookazi" target="_blank" rel="noopener noreferrer">
                     Twitter
                   </a>
                 </li>
                 <li>
                   <strong>WhatsApp:</strong>{' '}
-                  <a href="https://api.whatsapp.com/send?phone=254794711950" target="_blank" rel="noopener noreferrer">
-                    +254 794 711 950
+                  <a href="https://api.whatsapp.com/send?phone=254795755494" target="_blank" rel="noopener noreferrer">
+                    +254 795 755 494
                   </a>
                 </li>
               </ul>

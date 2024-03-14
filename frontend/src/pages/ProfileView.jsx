@@ -163,7 +163,7 @@ const ProfileView = () => {
               />
             </div>
             <div className='form-group'>
-              <label htmlFor="answerFile">Upload Image</label>
+              <label htmlFor="answerFile">Upload Profile Picture</label>
 
               <input
                 className='form-control'
@@ -174,7 +174,7 @@ const ProfileView = () => {
               />
             </div>
 
-            <div className='editor'>
+            <div className='editor' style={{ marginBottom: '50px' }}>
               <ReactQuill
                 value={description}
                 placeholder="Write the Description here ( For images and Links Just Paste)"

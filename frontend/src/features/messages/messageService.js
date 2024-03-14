@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const API_URL = 'https://jetpulseapi.qualityasoftwares.com/api/contacts/'
-const API_URL = 'http://localhost:5000/api/contacts/'
+const API_URL = 'https://njookaziapi.qualityasoftwares.com/api/contacts/'
+// const API_URL = 'http://localhost:5000/api/contacts/'
 
 const getmessages = async (token) => {
   const config = {

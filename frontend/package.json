@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "homepage": "https://jetpulse.qualityasoftwares.com/",
+  "homepage": "https://njookazi.qualityasoftwares.com/",
   "dependencies": {
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.14.14",

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { login, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
-import {useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -18,11 +18,11 @@ function Login() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message)
+      toast.error("Failed to login. please check your credentials");
     }
 
     if (isSuccess || user) {
-      
+      toast.success("Success...")
       navigate('/');
 
     }
@@ -30,19 +30,20 @@ function Login() {
     dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
- 
+
 
   const onSubmit = (e) => {
     e.preventDefault()
+    try {
+      const userData = {
+        email,
+        password,
+      }
 
-    const userData = {
-      email,
-      password,
+      dispatch(login(userData));
+    } catch (error) {
+      console.log(error)
     }
-
-    dispatch(login(userData))
-
-    toast("Success")
   }
 
   if (isLoading) {
@@ -51,15 +52,16 @@ function Login() {
 
   return (
     <div className="register">
-      
+
 
       <section className='heading' >
-       
-       <h1>
+
+        <h1>
           Login
-       </h1>
-     </section>
-      <section className='form' style={{padding: 0, minHeight: '380px'}}>
+        </h1>
+      </section>
+      <section className='form' style={{ padding: '20px', minHeight: '380px' }}>
+      <h4>Don't have an account yet? <Link to='/register'>Register</Link></h4>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
             <input
@@ -89,11 +91,11 @@ function Login() {
               Submit
             </button>
           </div>
-          
+          <h4><Link to='/forgotpassword'>Forgot Password</Link></h4>
         </form>
       </section>
     </div>
-   
+
   )
 }
 

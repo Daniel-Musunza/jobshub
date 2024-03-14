@@ -60,8 +60,29 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
       error.toString()
     return thunkAPI.rejectWithValue(message)
   }
+});
+export const forgotpassword = createAsyncThunk('auth/forgotpassword', async (user, thunkAPI) => {
+  try {
+    return await authService.forgotpassword(user)
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+});
+export const passwordreset = createAsyncThunk('auth/passwordreset', async (user, thunkAPI) => {
+  try {
+    return await authService.passwordreset(user)
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
 })
-
 export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout()
 })
@@ -134,6 +155,30 @@ export const authSlice = createSlice({
         state.isError = true
         state.message = action.payload
         state.user = null
+      })
+      .addCase(forgotpassword.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(forgotpassword.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+      })
+      .addCase(forgotpassword.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(passwordreset.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(passwordreset.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+      })
+      .addCase(passwordreset.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null
