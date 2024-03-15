@@ -47,7 +47,7 @@ const Dashboard = () => {
 
 
     // Now you can dispatch your API call with the formData
-    dispatch(addjob(formData));
+    await dispatch(addjob(formData));
 
     toast("Job Posted Successfully ...");
   };

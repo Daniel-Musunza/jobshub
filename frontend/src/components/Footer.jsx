@@ -28,11 +28,11 @@ function Footer() {
                   <Link to="/hackathons">Events</Link>
                   <Link to="/about">About Us</Link>
                   <Link to="/contact">Contact Us</Link>
+                  
               </nav>
             </div>
             <div className="search">
-                <h1>subscribe the</h1>
-                  <h1> newsletter</h1>
+                <h3>subscribe the newsletter</h3>
                 <div className="input">
                     <input 
                     type="email" 
@@ -44,6 +44,7 @@ function Footer() {
                     />
                     <i class="fa-solid fa-share" onClick={handleSubscribe}></i>
                 </div>
+                <a href="img/terms.pdf">Terms of Service</a>
             </div>
         </div>
     </section>

@@ -184,12 +184,7 @@ const TechBlogs = () => {
 
                   <div className="card-image">
                     <img src={URL.createObjectURL(new Blob([new Uint8Array(blog.profileImage.data)],{type: 'image/jpeg', }))} alt="Profile Image"
-                      style={{
-                        width: '100%',
-                        height: '250px',
-                        cursor: 'pointer',
-                        objectFit: 'cover', // Maintain aspect ratio and cover the entire area
-                      }} />
+                       />
                   </div>
                   <div className="card-details">
                     <p className="card-title">{blog.name}</p>
