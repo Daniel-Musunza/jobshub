@@ -36,7 +36,7 @@ const editjob = async (formData, token) => {
     throw error;
   }
 };
-const deletejob = async (id, token) => {
+const deletejob = async ( id, token) => {
 
   const config = {
     headers: {

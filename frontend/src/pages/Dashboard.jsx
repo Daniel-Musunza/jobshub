@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useMemo} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Spinner from '../components/Spinner';
 import { useSelector, useDispatch } from 'react-redux'
-import { addjob, getjobs, deletejob } from '../features/jobs/jobSlice';
+import { addjob, deletejob } from '../features/jobs/jobSlice';
+import jobService from '../features/jobs/jobService';
+
 
 const Dashboard = () => {
 
@@ -13,7 +16,11 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { jobs, isLoading, isError, isSuccess, message } = useSelector((state) => state.jobs);
+
+  const { data: jobs, isLoading, isSuccess} = useQuery(
+		'jobs', // The query key
+		jobService.getjobs // Fetch function
+	  );
 
   const [title, setTitle] = useState('');
   const [email, setEmail] = useState('');
@@ -23,15 +30,11 @@ const Dashboard = () => {
   const [filteredJobs, setFilteredJobs] = useState([]);
 
 
-  useEffect(async() => {
-   
-    await dispatch(getjobs())
-  }, [user, navigate, isError, message, dispatch]);
-
   const handleDescriptionChange = (value) => {
 
     setDescription(value); // Update the state with the new content
   };
+
   const handleJobSubmit = async (e) => {
     e.preventDefault();
 
@@ -48,24 +51,31 @@ const Dashboard = () => {
 
     // Now you can dispatch your API call with the formData
     await dispatch(addjob(formData));
-
-    toast("Job Posted Successfully ...");
+    if(isSuccess){
+      toast("Job Posted Successfully ...");
+    }else{
+      toast.error("Failed to Post !")
+    }
+    
   };
 
   const handleDelete = async (e, id) => {
     e.preventDefault();
-    dispatch(deletejob(id));
+ 
+    await dispatch(deletejob(id));
+    if(isSuccess){
+      toast("Job Deleted Successfully ...");
+    }else{
+      toast.error("Failed to delete!")
+    }
 
-
-    toast("Job Deleted Successfully ..");
-    dispatch(getjobs());
   }
 
   const handleSearch = (e) => {
     e.preventDefault();
   
     const regex = new RegExp(title, 'i'); // 'i' flag for case-insensitive matching
-    const newJobs = jobs.filter((job) => regex.test(job.title));
+    const newJobs = jobs.filter((job) => regex.test(job?.title));
   
     if (newJobs.length === 0) {
       toast("Zero Results");
@@ -189,16 +199,16 @@ const Dashboard = () => {
             {filteredJobs
               // .sort((a, b) => new Date(b.date) - new Date(a.date))
               .map((job) => (
-                <div className="card" key={job.id}>
+                <div className="card" key={job?.id} style={{height: '500px'}}>
                   {user && user.userType == "admin" && (
-                    <button onClick={(e) => handleDelete(e, job.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', position: 'fixed' }}><i class="fa-solid fa-trash-can"></i></button>
+                    <button onClick={(e) => handleDelete(e, job?.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', position: 'fixed' }}><i class="fa-solid fa-trash-can"></i></button>
                   )}
                   <div className="card-image">
-                    <img src={URL.createObjectURL(new Blob([new Uint8Array(job.imageFile.data)],{type: 'image/jpeg', }))} alt="" />
+                    <img src={URL.createObjectURL(new Blob([new Uint8Array(job?.imageFile.data)],{type: 'image/jpeg', }))} alt="" />
                   </div>
                   <div className="card-details">
-                    <p className="card-title">{job.title}</p>
-                    <p className="card-body">{job.introduction.length > 70 ? job.introduction.slice(0, 70) + '...' : job.introduction}</p>
+                    <p className="card-title">{job?.title}</p>
+                    <p className="card-body">{job?.introduction.length > 70 ? job?.introduction.slice(0, 70) + '...' : job?.introduction}</p>
 
                     <h4>
                       Posted on:{" "}
@@ -207,11 +217,11 @@ const Dashboard = () => {
                           year: "numeric",
                           month: "long",
                           day: "numeric",
-                        }).format(new Date(job.date))}
+                        }).format(new Date(job?.date))}
                       </span>
                     </h4>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Link to={`/more-details/${job.id}/job`}>
+                      <Link to={`/more-details/${job?.id}/job`}>
                         <button className="btn">
                           More Details
                           <svg
@@ -233,7 +243,7 @@ const Dashboard = () => {
                           </svg>
                         </button>
                       </Link>
-                      <a href={`mailto: ${job.email}`}><button className="btn">
+                      <a href={`mailto: ${job?.email}`}><button className="btn">
                         Apply Now
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -275,16 +285,16 @@ const Dashboard = () => {
             {jobs
               // .sort((a, b) => new Date(b.date) - new Date(a.date))
               .map((job) => (
-                <div className="card" key={job.id}>
+                <div className="card" key={job?.id} style={{height: '500px'}}>
                   {user && user.userType == "admin" && (
-                    <button onClick={(e) => handleDelete(e, job.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', position: 'fixed' }}><i class="fa-solid fa-trash-can"></i></button>
+                    <button onClick={(e) => handleDelete(e, job?.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', position: 'fixed' }}><i class="fa-solid fa-trash-can"></i></button>
                   )}
                   <div className="card-image">
-                    <img src={URL.createObjectURL(new Blob([new Uint8Array(job.imageFile.data)],{type: 'image/jpeg', }))} alt="" />
+                    <img src={URL.createObjectURL(new Blob([new Uint8Array(job?.imageFile.data)],{type: 'image/jpeg', }))} alt="" />
                   </div>
                   <div className="card-details">
-                    <p className="card-title">{job.title}</p>
-                    <p className="card-body">{job.introduction.length > 70 ? job.introduction.slice(0, 70) + '...' : job.introduction}</p>
+                    <p className="card-title">{job?.title}</p>
+                    <p className="card-body">{job?.introduction.length > 70 ? job?.introduction.slice(0, 70) + '...' : job?.introduction}</p>
 
                     <h4>
                       Posted on:{" "}
@@ -293,11 +303,11 @@ const Dashboard = () => {
                           year: "numeric",
                           month: "long",
                           day: "numeric",
-                        }).format(new Date(job.date))}
+                        }).format(new Date(job?.date))}
                       </span>
                     </h4>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Link to={`/more-details/${job.id}/job`}>
+                      <Link to={`/more-details/${job?.id}/job`}>
                         <button className="btn">
                           More Details
                           <svg
@@ -319,7 +329,7 @@ const Dashboard = () => {
                           </svg>
                         </button>
                       </Link>
-                      <a href={`mailto: ${job.email}`}><button className="btn">
+                      <a href={`mailto: ${job?.email}`}><button className="btn">
                         Apply Now
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -355,4 +365,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default React.memo(Dashboard);

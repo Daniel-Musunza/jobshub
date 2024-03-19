@@ -6,7 +6,7 @@ const db = require('../config/db'); // Your MySQL connection
 
 // Generate JWT
 const generateToken = (id) => {
-  return jwt.sign({ id }, "abc123", {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '30d',
   });
 
@@ -130,7 +130,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
         port: 465,
         secure: true,
         auth: {
-          user: 'info@qualityasoftwares.com',
+          user: 'admin@kunakazi.co.ke',
           pass: 'W8*3Zlv]xBs2R3' // Avoid hardcoding passwords directly in code
         }
       });
@@ -138,10 +138,10 @@ const forgotPassword = asyncHandler(async (req, res) => {
       console.log("to:" + email);
 
       const mailOptions = {
-        from: 'Njoo Kazi <info@qualityasoftwares.com>', // Sender name and email
+        from: 'Kunakazi <admin@kunakazi.co.ke>', // Sender name and email
         to: email,
         subject: 'Password Reset',
-        html: `Dear ${user.name}, Kindly Reset your Njoo Kazi Password here <a href="http://localhost:3000/passwordreset/${email}">Reset Password</a>` // Enhance email content as needed
+        html: `Dear ${user.name}, Kindly Reset your Kunakazi Password here <a href="https://kunakazi.co.ke/passwordreset/${email}">Reset Password</a>` // Enhance email content as needed
       };
 
       try {

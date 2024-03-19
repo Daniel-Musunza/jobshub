@@ -25,9 +25,9 @@ function Header() {
     };
   }, [user, navigate, isError, message, dispatch]);
 
-  const onLogout = () => {
-    dispatch(logout())
-    dispatch(reset())
+  const onLogout = async() => {
+   await dispatch(logout());
+    await dispatch(reset());
     navigate('/')
   }
 

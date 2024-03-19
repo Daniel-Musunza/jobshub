@@ -89,7 +89,7 @@ const Contact = () => {
       <div class="heading">
         <h2>Contact Us</h2>
       </div>
-      <div class="main-container">
+      <div class="main-container m-container">
         <div class="left-side">
 
         </div>
@@ -122,12 +122,12 @@ const Contact = () => {
               <h3>Connect with Us:</h3>
               <ul>
                 <li>
-                  <a href="https://www.facebook.com/njookazi" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.facebook.com/Kunakazi" target="_blank" rel="noopener noreferrer">
                     Facebook
                   </a>
                 </li>
                 <li>
-                  <a href="https://twitter.com/njookazi" target="_blank" rel="noopener noreferrer">
+                  <a href="https://twitter.com/Kunakazi" target="_blank" rel="noopener noreferrer">
                     Twitter
                   </a>
                 </li>

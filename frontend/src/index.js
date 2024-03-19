@@ -5,14 +5,19 @@ import './style.css';
 import App from './App';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import * as serviceWorker from './serviceWorker';
 
+const queryClient = new QueryClient();
+
 ReactDOM.render(
+  <QueryClientProvider client={queryClient}>
   <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>,
+  </React.StrictMode>
+  </QueryClientProvider>,
   document.getElementById('root')
 );
 

@@ -18,17 +18,6 @@ function Register() {
     (state) => state.auth
   )
 
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
-    if (isSuccess || user) {
-
-      navigate('/profile');
-
-    }
-    dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const handleCheckboxChange = (e) => {
     setAgreeTerms(e.target.checked);
@@ -44,6 +33,7 @@ function Register() {
     if (password !== password2) {
       toast.error('Passwords do not match');
     } else {
+      try{
       const userData = {
         name,
         email,
@@ -53,6 +43,12 @@ function Register() {
       await dispatch(register(userData));
 
       toast("successs ...")
+      navigate('/profile');
+    }catch(error){
+      console.log(error);
+      toast.error("Failed to register");
+    }
+      
 
     }
   };

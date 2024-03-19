@@ -25,9 +25,7 @@ const ProfileView = () => {
   const [link, setLink] = useState(user?.link);
 
   useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
+  
 
    if(!user){
     navigate('/');

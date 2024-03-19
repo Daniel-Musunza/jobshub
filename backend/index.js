@@ -14,7 +14,8 @@ const app = express();
 
 const corsOptions = {  
   origin: [
-    'https://njookazi.qualityasoftwares.com',
+    'https://kunakazi.co.ke',
+    'http://kunakazi.co.ke',
     'http://localhost:3000',
     'https://jetpulse.vercel.app'
   ],

@@ -44,7 +44,7 @@ function Footer() {
                     />
                     <i class="fa-solid fa-share" onClick={handleSubscribe}></i>
                 </div>
-                <a href="img/terms.pdf">Terms of Service</a>
+                <a href="img/terms.pdf" style={{textTransform: 'none'}}>Terms of Service</a>
             </div>
         </div>
     </section>

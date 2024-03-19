@@ -31,15 +31,16 @@ function FooterControl() {
   return <Footer />;
 }
 
+
 function App() {
   const { user } = useSelector((state) => state.auth);
 
   return (
     <>
-      <Router>
-        <div>
-          <Header />
-          <Routes>
+    <Router>
+      <Header /> {/* Render header outside of Routes */}
+      <div>
+        <Routes>
           {/* Routes with footer */}
           <Route path='/' element={<Dashboard />} />
           <Route path='/profiles' element={<TechBlogs />} />
@@ -47,23 +48,25 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/more-details/:id/:type' element={<MoreDetails />} />
+          
           {/* Protect the profile route */}
           <Route path='/profile' element={user ? <ProfileView /> : <Navigate to="/" />} />
-
+  
           {/* Routes without footer */}
           <Route path='/login' element={<Login />} />
           <Route path='/forgotpassword' element={<ForgotPassword />} />
           <Route path='/passwordreset/:email' element={<PasswordReset />} />
           <Route path='/register' element={<Register />} />
-          
+            
           {/* Redirect unmatched routes to dashboard */}
           <Route path='*' element={<Navigate to="/" />} />
         </Routes>
-          <FooterControl />
-        </div>
-      </Router>
-      <ToastContainer />
-    </>
+      </div>
+      <FooterControl /> {/* Render footer outside of Routes */}
+    </Router>
+    <ToastContainer />
+  </>
+  
   );
 }
 

@@ -23,14 +23,14 @@ const About = () => {
       <div class="heading">
         <h2>About Us</h2>
       </div>
-      <div class="main-container">
+      <div class="main-container m-container">
         <div class="left-side">
 
         </div>
         <div className="about">
           <div className="about-content">
             <p>
-              Welcome to our website! We are a passionate team dedicated to helping you get vital opportunities. Whether you're looking for job opportunities, searching for a casual worker or a professional employee, or interested in participating in any kind of  events, we've got you covered!
+              Welcome to our website! We are a passionate team dedicated to helping you find jobs and events to attent. Whether you're looking for job opportunities, searching for a casual worker or a professional employee, or interested in participating in any kind of  events, we've got you covered!
             </p>
           </div>
           <div className="about-section news-blogs">

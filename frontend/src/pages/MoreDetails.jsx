@@ -1,16 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { reset, fetchUsers } from '../features/auth/authSlice';
-import { getjobs } from '../features/jobs/jobSlice';
-import { gethackathons } from '../features/hackathons/hackathonSlice';
+import { useQuery } from 'react-query';
+
+import authService from '../features/auth/authService';
+import jobService from '../features/jobs/jobService';
+import hackathonService from '../features/hackathons/hackathonService';
+
+import Spinner from '../components/Spinner';
 
 const MoreDetails = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { jobs } = useSelector((state) => state.jobs);
-  const { hackathons } = useSelector((state) => state.hackathons);
-  const { users } = useSelector((state) => state.users);
+
+  const { data: users, isLoading, isSuccess} = useQuery(
+		'users', // The query key
+		authService.getUsers // Fetch function
+	  );
+
+  const { data: jobs} = useQuery(
+		'jobs', // The query key
+		jobService.getjobs // Fetch function
+	  );
+  const { data: hackathons} = useQuery(
+		'hackathons', // The query key
+		hackathonService.gethackathons // Fetch function
+	  );
+
+    
   const { id, type } = useParams();
   const [item, setItem] = useState(null);
 
@@ -33,17 +48,11 @@ const MoreDetails = () => {
   };
 
   useEffect(async() => {
-    const fetchData = async () => {
-      await dispatch(fetchUsers());
-      await dispatch(gethackathons());
-      await dispatch(getjobs());
-      
-    };
-    fetchData();
+
 
     await handleSetItem();
 
-  }, [navigate, dispatch, handleSetItem]);
+  }, [handleSetItem]);
 
   function formatPhoneNumber(phoneNumber) {
     // Remove leading '0' or '254'
@@ -58,24 +67,31 @@ const MoreDetails = () => {
 }
 
 
+if (isLoading) {
+  return <Spinner />;
+}
+
   return (
+
     <div>
+
+      
       <div class="heading">
         <h2>More Details</h2>
       </div>
-      <div class="main-container">
+      <div class="main-container m-container">
         <div class="left-side">
 
         </div>
         <div className="more-details-container">
           {item && (
             <>
-              <h2>{item.title}</h2>
-              {item.imageFile && (
-                <img src={URL.createObjectURL(new Blob([new Uint8Array(item.imageFile.data)],{type: 'image/jpeg', }))} alt={item.title} />
+              <h2>{item?.title}</h2>
+              {item?.imageFile && (
+                <img src={URL.createObjectURL(new Blob([new Uint8Array(item?.imageFile.data)],{type: 'image/jpeg', }))} alt={item?.title} />
               )}
-              {item.profileImage && (
-                <img src={URL.createObjectURL(new Blob([new Uint8Array(item.profileImage.data)],{type: 'image/jpeg', }))} alt="" 
+              {item?.profileImage && (
+                <img src={URL.createObjectURL(new Blob([new Uint8Array(item?.profileImage.data)],{type: 'image/jpeg', }))} alt="" 
                 style={{
                   width: '100px',
                   height: '100px', // Ensure the height matches the width for a perfect circle
@@ -85,15 +101,15 @@ const MoreDetails = () => {
                   objectFit: 'cover', // Maintain aspect ratio and cover the entire area
                 }} />
               )}
-              <h3>{item.name}</h3>
-              <p>{item.location}</p>
-              {item.link &&(
-                <p>CV/LinkedIn/Portfolio Link: <a href={item.link}>{item.link}</a></p>
+              <h3>{item?.name}</h3>
+              <p>{item?.location}</p>
+              {item?.link &&(
+                <p>CV/LinkedIn/Portfolio Link: <a href={item?.link}>{item?.link}</a></p>
               )}
 
 
               {type == 'job' ? (
-                <a href={`mailto: ${item.email}`}><button className="btn">
+                <a href={`mailto: ${item?.email}`}><button className="btn">
                   Apply Now
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -115,10 +131,10 @@ const MoreDetails = () => {
                 </button></a>
               ) : type == 'profile' ? (
                 <div className='contact-detail'>
-                  <a href={`tel: ${formatPhoneNumber(item.phoneNumber)}`}>
-                    <i class="fa-solid fa-phone"></i> {formatPhoneNumber(item.phoneNumber)}
+                  <a href={`tel: ${formatPhoneNumber(item?.phoneNumber)}`}>
+                    <i class="fa-solid fa-phone"></i> {formatPhoneNumber(item?.phoneNumber)}
                   </a>
-                  <a href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(item.phoneNumber)}`}>
+                  <a href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(item?.phoneNumber)}`}>
                     <i class="fa-brands fa-square-whatsapp"></i>
                   </a>
                 </div>
@@ -126,22 +142,22 @@ const MoreDetails = () => {
                 <></>
               )}
 
-              {item.casualJobs && (
+              {item?.casualJobs && (
                 <>
-                  <h4><span style={{color: '#2b82c4'}}>Casual Jobs can do:</span>  <p>{item.casualJobs}</p></h4>
+                  <h4><span style={{color: '#2b82c4'}}>Casual Jobs can do:</span>  <p>{item?.casualJobs}</p></h4>
                  
 
                 </>
               )}
-              {item.proffessionalJobs && (
+              {item?.proffessionalJobs && (
                 <>
-                  <h4><span style={{color: '#2b82c4'}}>Proffessionality: </span> <p>{item.proffessionalJobs}</p></h4>
+                  <h4><span style={{color: '#2b82c4'}}>Proffession: </span> <p>{item?.proffessionalJobs}</p></h4>
                  
                 </>
               )}
                <h4><span style={{color: '#2b82c4'}}>About </span> </h4>
-              <div>{item.introduction} </div>
-              <div dangerouslySetInnerHTML={{ __html: item.description }} />
+              <div>{item?.introduction} </div>
+              <div dangerouslySetInnerHTML={{ __html: item?.description }} />
             </>
           )}
         </div>
@@ -149,6 +165,7 @@ const MoreDetails = () => {
 
         </div>
       </div>
+
     </div>
   );
 };

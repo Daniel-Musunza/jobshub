@@ -49,7 +49,7 @@ export const addjob = createAsyncThunk(
   async (jobData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await jobService.addjob(jobData,token);
+      return await jobService.addjob(jobData, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -66,7 +66,7 @@ export const deletejob = createAsyncThunk(
   async (id, thunkAPI) => {
     try {// Extract the id from subjectData
       const token = thunkAPI.getState().auth.user.token;
-      return await jobService.deletejob(id, token);
+      return await jobService.deletejob(id, token );
     } catch (error) {
       const message =
         (error.response &&

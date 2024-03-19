@@ -1,30 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useQuery } from 'react-query';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Spinner from '../components/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUsers } from '../features/auth/authSlice';
+
+import authService from '../features/auth/authService';
 
 const TechBlogs = () => {
 
-  // Move the declaration of 'navigate' here before using it in the useEffect
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const { users, isLoading, isError, isSuccess, message } = useSelector((state) => state.users);
+  const { data: users, isLoading, isSuccess} = useQuery(
+		'users', // The query key
+		authService.getUsers // Fetch function
+	  );
 
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState('');
   const [filteredProfiles, setProfiles] = useState([]);
 
-  useEffect(() => {
- 
-    dispatch(fetchUsers());
-
-   
-  }, [user, navigate, isError, message, dispatch]);
+  
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -63,9 +59,9 @@ const TechBlogs = () => {
 }
 
 
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <div>
 
@@ -111,10 +107,10 @@ const TechBlogs = () => {
           <div class="cards">
             {filteredProfiles
               .map((blog) => (
-                <div className="card" key={blog.id}>
+                <div className="card" key={blog?.id}>
 
                   <div className="card-image">
-                    <img src={URL.createObjectURL(new Blob([new Uint8Array(blog.profileImage.data)],{type: 'image/jpeg', }))} alt="Profile Image"
+                    <img src={URL.createObjectURL(new Blob([new Uint8Array(blog?.profileImage.data)],{type: 'image/jpeg', }))} alt="Profile Image"
                       style={{
                         width: '100%',
                         height: '250px',
@@ -123,13 +119,13 @@ const TechBlogs = () => {
                       }} />
                   </div>
                   <div className="card-details">
-                    <p className="card-title">{blog.name}</p>
-                    <p className="card-body">{blog.location}</p>
+                    <p className="card-title">{blog?.name}</p>
+                    <p className="card-body">{blog?.location}</p>
                     <hr />
                     <p className="card-title">Casual Services:</p>
-                    <p className="card-body">{blog.casualJobs.length > 70 ? blog.casualJobs.slice(0, 70) + '...' : blog.casualJobs}</p>
+                    <p className="card-body">{blog?.casualJobs.length > 70 ? blog?.casualJobs.slice(0, 70) + '...' : blog?.casualJobs}</p>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Link to={`/more-details/${blog.id}/profile`}>
+                      <Link to={`/more-details/${blog?.id}/profile`}>
                         <button className="btn">
                           More Details
                           <svg
@@ -152,10 +148,10 @@ const TechBlogs = () => {
                         </button>
                       </Link>
                       <div className='contact-detail'>
-                        <a href={`tel: ${formatPhoneNumber(blog.phoneNumber)}`}>
-                          <i class="fa-solid fa-phone"></i> {formatPhoneNumber(blog.phoneNumber)}
+                        <a href={`tel: ${formatPhoneNumber(blog?.phoneNumber)}`}>
+                          <i class="fa-solid fa-phone"></i> {formatPhoneNumber(blog?.phoneNumber)}
                         </a>
-                        <a href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(blog.phoneNumber)}`}>
+                        <a href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(blog?.phoneNumber)}`}>
                           <i class="fa-brands fa-square-whatsapp"></i>
                         </a>
                       </div>
@@ -180,21 +176,21 @@ const TechBlogs = () => {
           <div class="cards">
             {users
               .map((blog) => (
-                <div className="card" key={blog.id}>
+                <div className="card" key={blog?.id}>
 
                   <div className="card-image">
-                    <img src={URL.createObjectURL(new Blob([new Uint8Array(blog.profileImage.data)],{type: 'image/jpeg', }))} alt="Profile Image"
+                    <img src={URL.createObjectURL(new Blob([new Uint8Array(blog?.profileImage.data)],{type: 'image/jpeg', }))} alt="Profile Image"
                        />
                   </div>
                   <div className="card-details">
-                    <p className="card-title">{blog.name}</p>
-                    <p className="card-body">{blog.location}</p>
+                    <p className="card-title">{blog?.name}</p>
+                    <p className="card-body">{blog?.location}</p>
                     <hr />
                     <p className="card-title">Casual Services:</p>
-                    <p className="card-body">{blog.casualJobs.length > 70 ? blog.casualJobs.slice(0, 70) + '...' : blog.casualJobs}</p>
+                    <p className="card-body">{blog?.casualJobs.length > 70 ? blog?.casualJobs.slice(0, 70) + '...' : blog?.casualJobs}</p>
                     
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Link to={`/more-details/${blog.id}/profile`}>
+                      <Link to={`/more-details/${blog?.id}/profile`}>
                         <button className="btn">
                           More Details
                           <svg
@@ -217,10 +213,10 @@ const TechBlogs = () => {
                         </button>
                       </Link>
                       <div className='contact-detail'>
-                        <a href={`tel: ${formatPhoneNumber(blog.phoneNumber)}`}>
-                          <i class="fa-solid fa-phone"></i> {formatPhoneNumber(blog.phoneNumber)}
+                        <a href={`tel: ${formatPhoneNumber(blog?.phoneNumber)}`}>
+                          <i class="fa-solid fa-phone"></i> {formatPhoneNumber(blog?.phoneNumber)}
                         </a>
-                        <a href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(blog.phoneNumber)}`}>
+                        <a href={`https://api.whatsapp.com/send?phone=${formatPhoneNumber(blog?.phoneNumber)}`}>
                           <i class="fa-brands fa-square-whatsapp"></i>
                         </a>
                       </div>
