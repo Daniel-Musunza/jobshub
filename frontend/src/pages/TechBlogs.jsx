@@ -11,26 +11,26 @@ import authService from '../features/auth/authService';
 
 const TechBlogs = () => {
 
-  const { data: users, isLoading, isSuccess} = useQuery(
-		'users', // The query key
-		authService.getUsers // Fetch function
-	  );
+  const { data: users, isLoading, isSuccess } = useQuery(
+    'users', // The query key
+    authService.getUsers // Fetch function
+  );
 
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState('');
   const [filteredProfiles, setProfiles] = useState([]);
 
-  
+
 
   const handleSearch = (e) => {
     e.preventDefault();
-  
+
     let filteredProfiles = users;
-  
+
     if (title && location) {
       const titleRegex = new RegExp(title, 'i');
       const locationRegex = new RegExp(location, 'i');
-  
+
       filteredProfiles = users.filter((user) => titleRegex.test(user.casualJobs) && locationRegex.test(user.location));
     } else if (title) {
       const titleRegex = new RegExp(title, 'i');
@@ -39,24 +39,24 @@ const TechBlogs = () => {
       const locationRegex = new RegExp(location, 'i');
       filteredProfiles = users.filter((user) => locationRegex.test(user.location));
     }
-  
+
     if (filteredProfiles.length === 0) {
       toast("Zero Results");
     }
     setProfiles(filteredProfiles);
   };
-  
+
   function formatPhoneNumber(phoneNumber) {
     // Remove leading '0' or '254'
     let cleanedNumber = phoneNumber.replace(/^0+|^(254)/, '');
-    
+
     // Prepend '+254' to the number if it doesn't start with '+'
     if (!cleanedNumber.startsWith('+')) {
-        cleanedNumber = '+254' + cleanedNumber;
+      cleanedNumber = '+254' + cleanedNumber;
     }
 
     return cleanedNumber;
-}
+  }
 
 
   if (isLoading) {
@@ -107,9 +107,9 @@ const TechBlogs = () => {
           <div class="cards">
             {filteredProfiles
               .map((blog) => (
-                <div className="card" key={blog?.id}>
+                <div className="blog" key={blog?.id}>
 
-                  <div className="card-image">
+                  {/* <div className="card-image">
                     <img src={URL.createObjectURL(new Blob([new Uint8Array(blog?.profileImage.data)],{type: 'image/jpeg', }))} alt="Profile Image"
                       style={{
                         width: '100%',
@@ -117,10 +117,13 @@ const TechBlogs = () => {
                         cursor: 'pointer',
                         objectFit: 'cover', // Maintain aspect ratio and cover the entire area
                       }} />
-                  </div>
+                  </div> */}
                   <div className="card-details">
-                    <p className="card-title">{blog?.name}</p>
-                    <p className="card-body">{blog?.location}</p>
+                    <div className="blog-title">
+                      <p className="card-title">{blog?.name}</p>
+                      <p className="card-body">{blog?.location}</p>
+                    </div>
+
                     <hr />
                     <p className="card-title">Casual Services:</p>
                     <p className="card-body">{blog?.casualJobs.length > 70 ? blog?.casualJobs.slice(0, 70) + '...' : blog?.casualJobs}</p>
@@ -172,23 +175,25 @@ const TechBlogs = () => {
         <div class="left-side">
 
         </div>
-        {users.length > 0 && (
+        {users?.length > 0 && (
           <div class="cards">
             {users
               .map((blog) => (
-                <div className="card" key={blog?.id}>
+                <div className="blog" key={blog?.id}>
 
-                  <div className="card-image">
+                  {/* <div className="card-image">
                     <img src={URL.createObjectURL(new Blob([new Uint8Array(blog?.profileImage.data)],{type: 'image/jpeg', }))} alt="Profile Image"
                        />
-                  </div>
+                  </div> */}
                   <div className="card-details">
-                    <p className="card-title">{blog?.name}</p>
-                    <p className="card-body">{blog?.location}</p>
+                    <div className="blog-title">
+                      <p className="card-title">{blog?.name}</p>
+                      <p className="card-body">{blog?.location}</p>
+                    </div>
                     <hr />
                     <p className="card-title">Casual Services:</p>
                     <p className="card-body">{blog?.casualJobs.length > 70 ? blog?.casualJobs.slice(0, 70) + '...' : blog?.casualJobs}</p>
-                    
+
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <Link to={`/more-details/${blog?.id}/profile`}>
                         <button className="btn">

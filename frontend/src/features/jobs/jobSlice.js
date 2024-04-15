@@ -4,8 +4,8 @@ import jobService from './jobService'
 const initialState = {
   jobs: [],
   isError: false,
-  isSuccess: false,
-  isLoading: false,
+  success: false,
+  loading: false,
   message: '',
 }
 
@@ -83,8 +83,8 @@ export const jobSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      state.isLoading = false
-      state.isSuccess = false
+      state.loading = false
+      state.success = false
       state.isError = false
       state.message = ''
     },
@@ -120,29 +120,29 @@ export const jobSlice = createSlice({
       })
 
       .addCase(addjob.pending, (state) => {
-        state.isLoading = true
+        state.loading = true
       })
       .addCase(addjob.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
+        state.loading = false
+        state.success = true
         state.jobs.push(action.payload)
       })
       .addCase(addjob.rejected, (state, action) => {
-        state.isLoading = false
+        state.loading = false
         state.isError = true
         state.message = action.payload
       })
 
       .addCase(deletejob.pending, (state) => {
-        state.isLoading = true
+        state.loading = true
       })
       .addCase(deletejob.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
+        state.loading = false;
+        state.success = true;
         state.jobs = state.jobs.filter(job => job.id !== action.payload);
       })
       .addCase(deletejob.rejected, (state, action) => {
-        state.isLoading = false;
+        state.loading = false;
         state.isError = true;
         state.message = action.payload;
         console.error('Delete Job Error:', action.payload);

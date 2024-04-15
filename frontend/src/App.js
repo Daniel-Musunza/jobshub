@@ -42,8 +42,8 @@ function App() {
       <div>
         <Routes>
           {/* Routes with footer */}
-          <Route path='/' element={<Dashboard />} />
-          <Route path='/profiles' element={<TechBlogs />} />
+          <Route path='/jobs' element={<Dashboard />} />
+          <Route path='/' element={<TechBlogs />} />
           <Route path='/hackathons' element={<Hackathons />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />

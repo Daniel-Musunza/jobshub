@@ -18,9 +18,9 @@ const generateToken = (id) => {
 const registerUser = asyncHandler(async (req, res) => {
 
   try {
-    const { name, email, password } = req.body;
+    const { name, email, casualJobs, phoneNumber, password } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !casualJobs || !phoneNumber) {
       res.status(400);
       throw new Error('Please add all fields');
     }
@@ -40,19 +40,22 @@ const registerUser = asyncHandler(async (req, res) => {
 
     // Insert user into the database
     const insertUserQuery = `
-      INSERT INTO users (name, email, password)
-      VALUES (?, ?, ?)
+      INSERT INTO users (name, email, casualJobs, phoneNumber, password)
+      VALUES (?, ?, ?, ?, ?)
     `;
 
     const insertUserValues = [
       name,
       email,
+      casualJobs, 
+      phoneNumber,
       hashedPassword,
     ];
 
     const result = await db.query(insertUserQuery, insertUserValues);
 
     if (result.affectedRows === 1) {
+      
       const userId = result.insertId;
       const token = generateToken(userId);
 
@@ -60,9 +63,45 @@ const registerUser = asyncHandler(async (req, res) => {
         id: userId,
         name,
         email,
+        casualJobs, 
+        phoneNumber,
         hashedPassword,
         token,
       });
+      const transporter = nodemailer.createTransport({
+
+        host: 'sbg106.truehost.cloud',
+        port: 465,
+        secure: true,
+        auth: {
+          user: 'admin@kunakazi.co.ke',
+          pass: 'W8*3Zlv]xBs2R3' // Avoid hardcoding passwords directly in code
+        }
+      });
+
+
+      const mailOptions = {
+        from: 'Kunakazi <admin@kunakazi.co.ke>', // Sender name and email
+        to: email,
+        subject: 'Welcome to Kunakazi - Optimize Your Profile for Opportunities!',
+        html: `
+        Hi ${name},
+        
+        Welcome to Kunakazi! To boost your chances of landing casual jobs, please update your profile <a href="https://kunakazi.co.ke/profile">UPDATE PROFILE<a>.
+        
+        Best,
+        Kunakazi Team` // Enhance email content as needed
+      };
+
+      try {
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent');
+        res.status(200).json(mailOptions);
+        return 'Email sent';
+      } catch (error) {
+        console.error('Error sending email:', error);
+        throw new functions.https.HttpsError('internal', 'Failed to send email');
+      }
     } else {
       res.status(400).json({ message: 'Invalid user data' });
       throw new Error('Invalid user data');
@@ -72,8 +111,6 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
-
 
 // @desc    Authenticate a user
 // @route   POST /api/users/login
@@ -135,7 +172,6 @@ const forgotPassword = asyncHandler(async (req, res) => {
         }
       });
 
-      console.log("to:" + email);
 
       const mailOptions = {
         from: 'Kunakazi <admin@kunakazi.co.ke>', // Sender name and email
@@ -194,6 +230,7 @@ const passwordreset = asyncHandler(async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 // @desc    Get user data
 // @route   GET /api/users/me
@@ -256,15 +293,14 @@ const updateUser = asyncHandler(async (req, res) => {
       updateUserQuery = `UPDATE users 
         SET name = ?, 
         email = ?, 
-        phoneNumber = ?, 
-        userType = ?, 
+        phoneNumber = ?,
         description = ?, 
         location = ?, 
         casualJobs = ?, 
         proffessionalJobs = ?,
         link = ?  
         WHERE id = ?`;
-      await db.query(updateUserQuery, [name, email, phoneNumber, userType, description, location, casualJobs, proffessionalJobs, link, id]);
+      await db.query(updateUserQuery, [name, email, phoneNumber, description, location, casualJobs, proffessionalJobs, link, id]);
     }
 
     // Fetch user data after update
@@ -297,7 +333,53 @@ const updateUser = asyncHandler(async (req, res) => {
 });
 
 
+const sendEmails = asyncHandler(async (req, res) => {
+  try {
+    const { email } = req.body;
 
+    // Check for user email
+    const getUserQuery = 'SELECT * FROM users WHERE email = ?';
+    const users = await db.query(getUserQuery, [email]);
+
+    if (users.length === 1) {
+      const user = users[0];
+      const transporter = nodemailer.createTransport({
+
+        host: 'sbg106.truehost.cloud',
+        port: 465,
+        secure: true,
+        auth: {
+          user: 'admin@kunakazi.co.ke',
+          pass: 'W8*3Zlv]xBs2R3' // Avoid hardcoding passwords directly in code
+        }
+      });
+
+
+      const mailOptions = {
+        from: 'Kunakazi <admin@kunakazi.co.ke>', // Sender name and email
+        to: email,
+        subject: 'Password Reset',
+        html: `Dear ${user.name}, Kindly Reset your Kunakazi Password here <a href="https://kunakazi.co.ke/passwordreset/${email}">Reset Password</a>` // Enhance email content as needed
+      };
+
+      try {
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent');
+        res.status(200).json(mailOptions);
+        return 'Email sent';
+      } catch (error) {
+        console.error('Error sending email:', error);
+        throw new functions.https.HttpsError('internal', 'Failed to send email');
+      }
+    } else {
+      res.status(400).json({ message: 'Invalid Email' });
+      throw new Error('Invalid Email');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 
 

@@ -1,61 +1,65 @@
-import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { register, reset } from '../features/auth/authSlice'
-import Spinner from '../components/Spinner'
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { register, reset } from '../features/auth/authSlice';
+import Spinner from '../components/Spinner';
 
 function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [casualJobs, setCasualJobs] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(false);
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
-  )
-
+  );
 
   const handleCheckboxChange = (e) => {
     setAgreeTerms(e.target.checked);
   };
 
-
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!agreeTerms) {
-      toast.error("Please agree to terms of service")
-      return
+      toast.error('Please agree to terms of service');
+      return;
     }
     if (password !== password2) {
       toast.error('Passwords do not match');
     } else {
-      try{
       const userData = {
         name,
         email,
+        phoneNumber,
+        casualJobs,
         password
       };
-
       await dispatch(register(userData));
-
-      toast("successs ...")
-      navigate('/profile');
-    }catch(error){
-      console.log(error);
-      toast.error("Failed to register");
-    }
-      
-
     }
   };
-  if (isLoading) {
-    return <Spinner />
-  }
 
+  useEffect(() => {
+    if (isLoading) {
+      return <Spinner />;
+    }
+    if (isError) {
+      console.log('Failed to Register!');
+      toast.error('Failed to Register!');
+    }
+    if (isSuccess || user) {
+      toast.success('Registration Successful!');
+      navigate('/profile');
+      dispatch(reset());
+    }
+  }, [user, isLoading, isError, isSuccess, message, navigate, dispatch]);
+
+  
   return (
     <div className="register">
 
@@ -76,6 +80,7 @@ function Register() {
               placeholder='Your Name'
               value={name}
               onChange={(e) => setName(e.target.value)}
+              required
             />
           </div>
           <div className='form-group'>
@@ -87,9 +92,31 @@ function Register() {
               placeholder='Your Email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
-
+          <div className='form-group'>
+            <input
+              type='phoneNumber'
+              className='form-control'
+              id='phoneNumber'
+              name='phoneNumber'
+              placeholder='Your Phone Number'
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              required
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              type='text'
+              className='form-control'
+              placeholder="List all Casual jobs you want to do"
+              value={casualJobs}
+              onChange={(e) => setCasualJobs(e.target.value)}
+              required
+            />
+          </div>
           <div className='form-group'>
             <input
               type='password'
@@ -99,6 +126,7 @@ function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder='Enter password'
+              required
             />
           </div>
           <div className='form-group'>

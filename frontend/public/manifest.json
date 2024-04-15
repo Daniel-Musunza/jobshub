@@ -1,0 +1,17 @@
+{
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "icons": [
+    {
+      "sizes": "64x64 32x32 24x24 16x16",
+      "src": "img/favicon_io/favicon.ico",
+      "type": "image/x-icon"
+    }
+  ],
+  "name": "Kunakazi",
+  "short_name": "Kunakazi",
+  "start_url": ".",
+  "theme_color": "#000000",
+  "description": "Jobs, Profiles, Events"
+
+}

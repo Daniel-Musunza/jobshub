@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useMemo} from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
@@ -17,11 +17,13 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  const { data: jobs, isLoading, isSuccess} = useQuery(
-		'jobs', // The query key
-		jobService.getjobs // Fetch function
-	  );
-
+  const { data: jobs, isLoading, isSuccess } = useQuery(
+    'jobs', // The query key
+    jobService.getjobs // Fetch function
+  );
+  const { loading, success } = useSelector(
+    (state) => state.jobs
+  )
   const [title, setTitle] = useState('');
   const [email, setEmail] = useState('');
   const [description, setDescription] = useState('');
@@ -48,43 +50,43 @@ const Dashboard = () => {
     formData.append('introduction', introduction);
     formData.append('imageFile', imageFile);
 
-
-    // Now you can dispatch your API call with the formData
-    await dispatch(addjob(formData));
-    if(isSuccess){
+    try {
+      await dispatch(addjob(formData));
       toast("Job Posted Successfully ...");
-    }else{
-      toast.error("Failed to Post !")
+    } catch (error) {
+      toast.error("Failed to Post !");
+      console.log(error);
     }
-    
-  };
+    // Now you can dispatch your API call with the formData
+  }
 
   const handleDelete = async (e, id) => {
     e.preventDefault();
- 
-    await dispatch(deletejob(id));
-    if(isSuccess){
+    try {
+      await dispatch(deletejob(id));
       toast("Job Deleted Successfully ...");
-    }else{
+    } catch (error) {
       toast.error("Failed to delete!")
+      console.log(error);
     }
+
 
   }
 
   const handleSearch = (e) => {
     e.preventDefault();
-  
+
     const regex = new RegExp(title, 'i'); // 'i' flag for case-insensitive matching
     const newJobs = jobs.filter((job) => regex.test(job?.title));
-  
+
     if (newJobs.length === 0) {
       toast("Zero Results");
     }
     setFilteredJobs(newJobs);
   };
-  
 
-  if (isLoading) {
+
+  if (isLoading || loading) {
     return <Spinner />;
   }
 
@@ -197,14 +199,14 @@ const Dashboard = () => {
 
           <div class="cards">
             {filteredJobs
-              // .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .sort((a, b) => new Date(b?.date) - new Date(a?.date))
               .map((job) => (
-                <div className="card" key={job?.id} style={{height: '500px'}}>
+                <div className="card" key={job?.id} style={{ height: '500px' }}>
                   {user && user.userType == "admin" && (
                     <button onClick={(e) => handleDelete(e, job?.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', position: 'fixed' }}><i class="fa-solid fa-trash-can"></i></button>
                   )}
                   <div className="card-image">
-                    <img src={URL.createObjectURL(new Blob([new Uint8Array(job?.imageFile.data)],{type: 'image/jpeg', }))} alt="" />
+                    <img src={URL.createObjectURL(new Blob([new Uint8Array(job?.imageFile.data)], { type: 'image/jpeg', }))} alt="" />
                   </div>
                   <div className="card-details">
                     <p className="card-title">{job?.title}</p>
@@ -280,17 +282,17 @@ const Dashboard = () => {
         <div class="left-side">
 
         </div>
-        {jobs.length > 0 && (
+        {jobs?.length > 0 && (
           <div class="cards">
             {jobs
-              // .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .sort((a, b) => new Date(b?.date) - new Date(a?.date))
               .map((job) => (
-                <div className="card" key={job?.id} style={{height: '500px'}}>
+                <div className="card" key={job?.id} style={{ height: '500px' }}>
                   {user && user.userType == "admin" && (
                     <button onClick={(e) => handleDelete(e, job?.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', position: 'fixed' }}><i class="fa-solid fa-trash-can"></i></button>
                   )}
                   <div className="card-image">
-                    <img src={URL.createObjectURL(new Blob([new Uint8Array(job?.imageFile.data)],{type: 'image/jpeg', }))} alt="" />
+                    <img src={URL.createObjectURL(new Blob([new Uint8Array(job?.imageFile.data)], { type: 'image/jpeg', }))} alt="" />
                   </div>
                   <div className="card-details">
                     <p className="card-title">{job?.title}</p>

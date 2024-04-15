@@ -23,8 +23,8 @@ function Footer() {
             </div>
             <div className="navbar">
               <nav>
-                  <Link to="/">Jobs</Link>
-                  <Link to="/profiles">Profiles</Link>
+                  <Link to="/">Profiles</Link>
+                  <Link to="/jobs">Jobs</Link>
                   <Link to="/hackathons">Events</Link>
                   <Link to="/about">About Us</Link>
                   <Link to="/contact">Contact Us</Link>

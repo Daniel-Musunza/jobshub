@@ -18,13 +18,12 @@ function Login() {
 
   useEffect(() => {
     if (isError) {
-      toast.error("Failed to login. please check your credentials");
+      toast.error(message);
     }
 
     if (isSuccess || user) {
       toast.success("Success...")
       navigate('/');
-
     }
 
     dispatch(reset())

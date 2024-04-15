@@ -25,8 +25,8 @@ function Header() {
     };
   }, [user, navigate, isError, message, dispatch]);
 
-  const onLogout = async() => {
-   await dispatch(logout());
+  const onLogout = async () => {
+    await dispatch(logout());
     await dispatch(reset());
     navigate('/')
   }
@@ -58,8 +58,8 @@ function Header() {
 
       <nav>
         <div className="navbar" style={{ background: 'black', alignItems: 'center', justifyContent: 'center' }}>
-          <Link to="/" style={{ color: '#fff' }}>Jobs</Link>
-          <Link to="/profiles" style={{ color: '#fff' }}>Profiles</Link>
+          <Link to="/" style={{ color: '#fff' }}>Profiles</Link>
+          <Link to="/jobs" style={{ color: '#fff' }}>Jobs</Link>
           <Link to="/hackathons" style={{ color: '#fff' }}>Events</Link>
           <Link to="/about" style={{ color: '#fff' }}>About Us</Link>
           <Link to="/contact" style={{ color: '#fff' }}>Contact Us</Link>
@@ -108,24 +108,48 @@ function Header() {
           <div className="navbar" style={{ background: 'black', alignItems: 'center', justifyContent: 'center' }}>
             {user && (
               <>
-                <img
-                  src={URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)], { type: 'image/jpeg', }))}
-                  style={{
-                    width: '50px',
-                    height: '50px', // Ensure the height matches the width for a perfect circle
-                    marginRight: '20px',
-                    borderRadius: '50%', // Make it circular
-                    cursor: 'pointer',
-                    objectFit: 'cover', // Maintain aspect ratio and cover the entire area
-                  }}
-                  alt="Profile Image"
-                />
+                {user.profileImage ? (
+                  <img
+                    src={URL.createObjectURL(
+                      new Blob([new Uint8Array(user.profileImage.data)], {
+                        type: 'image/jpeg',
+                      })
+                    )}
+                    style={{
+                      width: '50px',
+                      height: '50px', // Ensure the height matches the width for a perfect circle
+                      marginRight: '20px',
+                      borderRadius: '50%', // Make it circular
+                      cursor: 'pointer',
+                      objectFit: 'cover', // Maintain aspect ratio and cover the entire area
+                    }}
+                    alt="Profile Image"
+                  />
+                ) : (
+                  <div
+                    style={{
+                      width: '50px',
+                      height: '50px',
+                      marginRight: '20px',
+                      borderRadius: '50%',
+                      cursor: 'pointer',
+                      backgroundColor: '#ccc',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      fontSize: '24px',
+                    }}
+                  >
+                    {user && user.name && user.name.charAt(0)}
+                  </div>
+                )}
                 <h4>{user && user.name}</h4>
+
                 <Link to="/profile" style={{ color: '#fff' }}>Profile View</Link>
               </>
             )}
-            <Link to="/" style={{ color: '#fff' }}>Jobs</Link>
-            <Link to="/profiles" style={{ color: '#fff' }}>Profiles</Link>
+            <Link to="/" style={{ color: '#fff' }}>Profiles</Link>
+            <Link to="/jobs" style={{ color: '#fff' }}>Jobs</Link>
             <Link to="/hackathons" style={{ color: '#fff' }}>Events</Link>
             <Link to="/about" style={{ color: '#fff' }}>About Us</Link>
             <Link to="/contact" style={{ color: '#fff' }}>Contact Us</Link>
@@ -138,9 +162,9 @@ function Header() {
                 </div>
               ) : (
                 <>
-                 
-              <Link to="/login" className='link button' > <span> Log In</span></Link>
-              <Link to="/register" className='link button' style={{marginTop: '10px'}}><span >  Register</span></Link>
+
+                  <Link to="/login" className='link button' > <span> Log In</span></Link>
+                  <Link to="/register" className='link button' style={{ marginTop: '10px' }}><span >  Register</span></Link>
                 </>
               )}
 
@@ -149,7 +173,7 @@ function Header() {
         </div>
       )}
       {showProfile && (
-        <div className='profile-menu'  onClick={closeProfile}>
+        <div className='profile-menu' onClick={closeProfile}>
           <div className="right-data" style={{ marginBottom: '0px' }}>
             <button onClick={closeProfile} style={{ width: '80px', marginBottom: '0px' }}>close</button>
           </div>

@@ -32,11 +32,6 @@ const ProfileView = () => {
    }
   }, [user, navigate, isError, message, dispatch]);
 
-  const handleDescriptionChange = (value) => {
-
-    setDescription(value); // Update the state with the new content
-  };
-
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
 
@@ -83,8 +78,8 @@ const ProfileView = () => {
           </h1>
         </section>
         <section className='form'>
-
-          {user.profileImage && (
+   
+          {user.profileImage ? (
             <img src={URL.createObjectURL(new Blob([new Uint8Array(user.profileImage.data)],{type: 'image/jpeg', }))} alt=""
               style={{
                 width: '100px',
@@ -94,7 +89,24 @@ const ProfileView = () => {
                 cursor: 'pointer',
                 objectFit: 'cover', // Maintain aspect ratio and cover the entire area
               }} />
-          )}
+            ) : (
+              <div
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  marginRight: '20px',
+                  borderRadius: '50%',
+                  cursor: 'pointer',
+                  backgroundColor: '#ccc',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '40px',
+                }}
+              >
+                {user && user.name && user.name.charAt(0)}
+              </div>
+            )}
 
           <form onSubmit={handleUpdateProfile} method="POST" enctype="multipart/form-data">
             <div className='form-group'>
@@ -146,7 +158,7 @@ const ProfileView = () => {
               <input
                 type='text'
                 className='form-control'
-                placeholder="Your Proffessionality"
+                placeholder="Your Proffession"
                 value={proffessionalJobs}
                 onChange={(e) => setProffessionalJobs(e.target.value)}
               />
@@ -160,7 +172,7 @@ const ProfileView = () => {
                 onChange={(e) => setLink(e.target.value)}
               />
             </div>
-            <div className='form-group'>
+            {/* <div className='form-group'>
               <label htmlFor="answerFile">Upload Profile Picture</label>
 
               <input
@@ -170,18 +182,28 @@ const ProfileView = () => {
                 type="file"
                 onChange={(e) => setImageFile(e.target.files[0])} // Use e.target.files to get the file object
               />
-            </div>
-
-            <div className='editor' style={{ marginBottom: '50px' }}>
+            </div> */}
+            <div className='form-group'>
+                <label htmlFor="introduction">Short Bio</label>
+                <textarea
+                  className='form-control'
+                  name="description"
+                  id="description"
+                  rows="5"
+                  placeholder='Short Bio'
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}></textarea>
+              </div>
+            {/* <div className='editor' style={{ marginBottom: '50px' }}>
               <ReactQuill
                 value={description}
                 placeholder="Write the Description here ( For images and Links Just Paste)"
                 onChange={handleDescriptionChange} // Use the callback to handle content changes
                 className='editor'
-              />
-            </div>
+              /> */}
+            {/* </div> */}
 
-            <div className='form-group' style={{ marginTop: '50px' }}>
+            <div className='form-group' style={{ marginTop: '20px' }}>
               <button
                 className='form-control'
                 id="submit"

@@ -54,31 +54,31 @@ const Contact = () => {
             <div class="left-side">
 
             </div>
-            {messages.length > 0  && (
+            {messages.length > 0 && (
               <div class="cards">
-              {messages
-              // .sort((a, b) => new Date(b.date) - new Date(a.date))
-              .map((onemessage) => (
-                <div className="hackathon" key={onemessage.id}>
+                {messages
+                  // .sort((a, b) => new Date(b.date) - new Date(a.date))
+                  .map((onemessage) => (
+                    <div className="hackathon" key={onemessage.id}>
 
-                  <p className="card-title">{onemessage.name}</p>
-                  <p className="card-body">{onemessage.message}</p>
-                  <h4>
-                    <span>
-                      {new Intl.DateTimeFormat("en-US", {
-                        year: "numeric",
-                        month: "numeric",
-                        day: "numeric",
-                      }).format(new Date(onemessage.date))}
-                    </span>
-                  </h4>
+                      <p className="card-title">{onemessage.name}</p>
+                      <p className="card-body">{onemessage.message}</p>
+                      <h4>
+                        <span>
+                          {new Intl.DateTimeFormat("en-US", {
+                            year: "numeric",
+                            month: "numeric",
+                            day: "numeric",
+                          }).format(new Date(onemessage.date))}
+                        </span>
+                      </h4>
 
-                </div>
-              ))}
+                    </div>
+                  ))}
 
-            </div>
+              </div>
             )}
-            
+
             <div class="right-side">
 
             </div>
@@ -95,7 +95,55 @@ const Contact = () => {
         </div>
         <div className="contact-us">
           <div className="contact-form">
-            <p>Have questions or feedback? Reach out to us!</p>
+          <p>Have questions or feedback? Reach out to us!</p>
+          {/* <h3 className="team">Our Team</h3> */}
+            <div className="team">
+          
+              <div className="team-member">
+                <img src="img/profile.jpg" alt=""
+                  style={{
+                    width: '100px',
+                    height: '100px', // Ensure the height matches the width for a perfect circle
+                    marginRight: '20px',
+                    borderRadius: '50%', // Make it circular
+                    cursor: 'pointer',
+                    objectFit: 'cover', // Maintain aspect ratio and cover the entire area
+                  }} />
+                <h3>Musunza Festus</h3>
+                <h5>C.E.O | software engineer </h5>
+                <a href="tel: +254795755494"><i class="fa-solid fa-phone"></i> +254795755494</a>
+              </div>
+              <div className="team-member">
+                <img src="img/jesse.jfif" alt=""
+                  style={{
+                    width: '100px',
+                    height: '100px', // Ensure the height matches the width for a perfect circle
+                    marginRight: '20px',
+                    borderRadius: '50%', // Make it circular
+                    cursor: 'pointer',
+                    objectFit: 'cover', // Maintain aspect ratio and cover the entire area
+                  }} />
+                <h3>Jesse Mutembei</h3>
+                <h5>C.O.O (Jobs and Profiles)</h5>
+                <a href="tel: +254714006882"> <i class="fa-solid fa-phone"></i> +254714006882</a>
+              </div>
+              <div className="team-member">
+                <img src="img/izo.enc" alt=""
+                  style={{
+                    width: '100px',
+                    height: '100px', // Ensure the height matches the width for a perfect circle
+                    marginRight: '20px',
+                    borderRadius: '50%', // Make it circular
+                    cursor: 'pointer',
+                    objectFit: 'cover', // Maintain aspect ratio and cover the entire area
+                  }} />
+                <h3>Isaac Musau </h3>
+                <h5>C.M.O (Marketing and Events)</h5>
+                <a href="tel: +254714494787"><i class="fa-solid fa-phone"></i> +254714494787</a>
+              </div>
+            </div>
+
+          
             <form onSubmit={handleSubmit}>
               <label htmlFor="name">Your Name:</label>
               <input type="text" id="name" name="name" placeholder="Your name"
@@ -132,6 +180,11 @@ const Contact = () => {
                   </a>
                 </li>
                 <li>
+                  <a href="https://www.linkedin.com/in/Kunakazi" target="_blank" rel="noopener noreferrer">
+                   LinkedIn
+                  </a>
+                </li>
+                <li>
                   <strong>WhatsApp:</strong>{' '}
                   <a href="https://api.whatsapp.com/send?phone=254795755494" target="_blank" rel="noopener noreferrer">
                     +254 795 755 494
@@ -139,6 +192,7 @@ const Contact = () => {
                 </li>
               </ul>
             </div>
+            
           </div>
         </div>
         <div class="right-side">

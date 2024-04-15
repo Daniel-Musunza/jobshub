@@ -15,10 +15,13 @@ const Hackathons = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  const { data: hackathons, isLoading, isSuccess} = useQuery(
-		'hackathons', // The query key
-		hackathonService.gethackathons // Fetch function
-	  );
+  const { loading, success } = useSelector(
+    (state) => state.hackathons
+  )
+  const { data: hackathons, isLoading, isSuccess } = useQuery(
+    'hackathons', // The query key
+    hackathonService.gethackathons // Fetch function
+  );
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [introduction, setIntroduction] = useState('');
@@ -35,30 +38,35 @@ const Hackathons = () => {
   const handleHackathonSubmit = async (e) => {
     e.preventDefault();
 
-
     const formData = {
       title,
       introduction,
       description
     }
-    await dispatch(addhackathon(formData));
 
-    if (isSuccess) {
-      toast("Hachathon Posted Successfully ...");
-    } else {
+    try {
+      await dispatch(addhackathon(formData));
+
+      toast.success("Hackathon Posted Successfully ...");
+    } catch (error) {
       toast.error("Failed to Post !")
+      console.log(error);
     }
+
+
+
 
   };
   const handleDelete = async (e, id) => {
     e.preventDefault();
-    await dispatch(deletehackathon(id));
-
-    if (isSuccess) {
-      toast("hackathon Deleted Successfully ..");
-    } else {
-      toast.error("Failed to Delete !")
+    try{
+      await dispatch(deletehackathon(id));
+      toast.success("hackathon Deleted Successfully ...");
+    }catch(error){
+      toast.error("Failed to Delete !");
+      console.log(error);
     }
+
   }
 
   const handleSearch = (e) => {
@@ -72,7 +80,7 @@ const Hackathons = () => {
     }
     setFilteredEvents(newEvents);
   };
-  if (isLoading) {
+  if (isLoading || loading) {
     return <Spinner />;
   }
   return (
@@ -119,7 +127,7 @@ const Hackathons = () => {
                   className='editor'
                 />
               </div>
-              <div className='form-group' style={{ marginTop: '50px' }}>
+              <div className='form-group' style={{ marginTop: '20px' }}>
                 <button
                   className='form-control'
                   id="submit"
@@ -163,7 +171,7 @@ const Hackathons = () => {
 
           <div class="cards">
             {filteredEvents
-              // .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .sort((a, b) => new Date(b?.date) - new Date(a?.date))
               .map((hackathon) => (
                 <div className="hackathon" key={hackathon?.id}>
                   {user && user.userType == "admin" && (
@@ -218,17 +226,17 @@ const Hackathons = () => {
         <div class="left-side">
 
         </div>
-        {hackathons.length > 0 && (
+        {hackathons?.length > 0 && (
           <div class="cards">
             {hackathons
-              // .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .sort((a, b) => new Date(b?.date) - new Date(a?.date))
               .map((hackathon) => (
                 <div className="hackathon" key={hackathon?.id}>
                   {user && user.userType == "admin" && (
                     <button onClick={(e) => handleDelete(e, hackathon?.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', zIndex: '999' }}><i class="fa-solid fa-trash-can"></i></button>
                   )}
                   <p className="card-title">{hackathon?.title}</p>
-                  <p className="card-body">{hackathon?.introduction.length > 70 ? hackathon?.introduction.slice(0, 70) + '...' : hackathon?.introduction}</p>
+                  <p className="card-body">{hackathon?.introduction.length > 150 ? hackathon?.introduction.slice(0, 150) + '...' : hackathon?.introduction}</p>
 
                   <h4>
                     Posted on:{" "}
