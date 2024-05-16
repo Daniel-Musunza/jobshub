@@ -8,7 +8,6 @@ import Spinner from '../components/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
 
 import authService from '../features/auth/authService';
-
 const TechBlogs = () => {
 
   const { data: users, isLoading, isSuccess } = useQuery(
@@ -19,8 +18,6 @@ const TechBlogs = () => {
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState('');
   const [filteredProfiles, setProfiles] = useState([]);
-
-
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -58,10 +55,8 @@ const TechBlogs = () => {
     return cleanedNumber;
   }
 
+  let fixedArr = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
 
-  if (isLoading) {
-    return <Spinner />;
-  }
   return (
     <div>
 
@@ -171,6 +166,31 @@ const TechBlogs = () => {
           </div>
         </div>
       )}
+      {isLoading && (
+        <>
+          <h3 style={{ textAlign: 'center', color: '#fff' }}>loading...</h3>
+          <div class="main-container m-container">
+            <div class="left-side">
+
+            </div>
+            <div className="cards">
+              {fixedArr.map((item, index) => ( // Added parentheses around JSX expression
+                <div className="blog" key={index}> {/* Changed style border value */}
+
+                </div>
+              ))}
+            </div>
+
+
+
+            <div class="right-side">
+
+            </div>
+
+          </div>
+        </>
+      )}
+
       <div class="main-container m-container">
         <div class="left-side">
 
@@ -237,7 +257,9 @@ const TechBlogs = () => {
         <div class="right-side">
 
         </div>
+
       </div>
+
     </div>
   );
 };

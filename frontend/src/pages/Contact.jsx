@@ -22,7 +22,7 @@ const Contact = () => {
     }
 
     await dispatch(getmessages())
-  
+
   }, [isError, message, dispatch]);
 
   const handleSubmit = (e) => {
@@ -38,9 +38,7 @@ const Contact = () => {
     alert("Message Send Successfully");
   }
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+
   return (
     <div>
       {user && user.userType === "admin" && (
@@ -48,19 +46,26 @@ const Contact = () => {
           <div class="heading">
             <h2>Messages</h2>
           </div>
+          {isLoading && (
+            <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+            <Spinner />
+            <h3 style={{ textAlign: 'center', color: '#fff' }}>loading...</h3>
+            </div>
+          )}
           <div class="main-container">
             <div class="left-side">
 
             </div>
             {messages.length > 0 && (
+
               <div class="cards">
                 {messages
                   // .sort((a, b) => new Date(b.date) - new Date(a.date))
                   .map((onemessage) => (
                     <div className="hackathon" key={onemessage.id}>
 
-                      <p className="card-title">{onemessage.name}</p>
-                      <p className="card-body">{onemessage.message}</p>
+                      <p className="card3-title">{onemessage.name}</p>
+                      <p className="card3-body">{onemessage.message}</p>
                       <h4>
                         <span>
                           {new Intl.DateTimeFormat("en-US", {
@@ -93,10 +98,10 @@ const Contact = () => {
         </div>
         <div className="contact-us">
           <div className="contact-form">
-          <p>Have questions or feedback? Reach out to us!</p>
-          {/* <h3 className="team">Our Team</h3> */}
+            <p>Have questions or feedback? Reach out to us!</p>
+            {/* <h3 className="team">Our Team</h3> */}
             <div className="team">
-          
+
               <div className="team-member">
                 <img src="img/profile.jpg" alt=""
                   style={{
@@ -141,7 +146,7 @@ const Contact = () => {
               </div>
             </div>
 
-          
+
             <form onSubmit={handleSubmit}>
               <label htmlFor="name">Your Name:</label>
               <input type="text" id="name" name="name" placeholder="Your name"
@@ -179,7 +184,7 @@ const Contact = () => {
                 </li>
                 <li>
                   <a href="https://www.linkedin.com/in/Kunakazi" target="_blank" rel="noopener noreferrer">
-                   LinkedIn
+                    LinkedIn
                   </a>
                 </li>
                 <li>
@@ -190,7 +195,7 @@ const Contact = () => {
                 </li>
               </ul>
             </div>
-            
+
           </div>
         </div>
         <div class="right-side">

@@ -48,34 +48,35 @@ const Hackathons = () => {
     }
     setFilteredEvents(newEvents);
   };
-  if (isLoading) {
-    return <Spinner />;
-  }
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
+  let fixedArr = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
   return (
     <div >
 
       <div class="heading" style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>Events</h2>
         {user && (
-            <div className='form-group' style={{ padding: '10px' }}>
-              <Link to="/post-events">
-                <button
-                  className="btn "
-                  style={{
-                    backgroundColor: '#2b82c4',
-                    color: '#FFF'
-                  }}
-                >
-                  Post events
-                </button>
+          <div className='form-group' style={{ padding: '10px' }}>
+            <Link to="/post-events">
+              <button
+                className="btn "
+                style={{
+                  backgroundColor: '#2b82c4',
+                  color: '#FFF'
+                }}
+              >
+                Post events
+              </button>
 
-              </Link>
-            </div>
-          )}
-          
+            </Link>
+          </div>
+        )}
+
         <form style={{ display: 'flex', flexWrap: 'wrap' }} onSubmit={handleSearch}>
 
-         
+
 
           <div className='form-group' style={{ padding: '10px' }}>
             <input
@@ -156,6 +157,30 @@ const Hackathons = () => {
           </div>
         </div>
       )}
+      {isLoading && (
+        <>
+          <h3 style={{ textAlign: 'center', color: '#fff' }}>loading...</h3>
+          <div class="main-container m-container">
+            <div class="left-side">
+
+            </div>
+            <div className="cards">
+              {fixedArr.map((item, index) => ( // Added parentheses around JSX expression
+                <div className="blog" key={index}> {/* Changed style border value */}
+
+                </div>
+              ))}
+            </div>
+
+
+
+            <div class="right-side">
+
+            </div>
+
+          </div>
+        </>
+      )}
       <div class="main-container m-container">
         <div class="left-side">
 
@@ -166,15 +191,15 @@ const Hackathons = () => {
               .sort((a, b) => new Date(b?.date) - new Date(a?.date))
               .map((hackathon) => (
                 <div className="hackathon" key={hackathon?.id}>
-                   {loading ? (
-                    <h3 style={{color: '#fff'}}>deleting ...</h3>
+                  {loading ? (
+                    <h3 style={{ color: '#fff' }}>deleting ...</h3>
                   ) : (
                     <>
-                  {user && user.userType == "admin" && (
-                    
-                    <button onClick={(e) => handleDelete(e, hackathon?.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', zIndex: '999' }}><i class="fa-solid fa-trash-can"></i></button>
-                  )}
-                  </>)}
+                      {user && user.userType == "admin" && (
+
+                        <button onClick={(e) => handleDelete(e, hackathon?.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', zIndex: '999' }}><i class="fa-solid fa-trash-can"></i></button>
+                      )}
+                    </>)}
                   <p className="card3-title">{hackathon?.title}</p>
                   <p className="card3-body">{hackathon?.introduction.length > 150 ? hackathon?.introduction.slice(0, 150) + '...' : hackathon?.introduction}</p>
 

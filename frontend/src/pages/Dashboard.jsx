@@ -56,10 +56,10 @@ const Dashboard = () => {
   };
 
 
-
-  if (isLoading) {
-    return <Spinner />;
-  }
+  let fixedArr = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }}>
@@ -68,23 +68,23 @@ const Dashboard = () => {
       <div class="heading" style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>Job Listings</h2>
         <div className='form-group' style={{ padding: '10px' }}>
-            {user && (
-              <Link to="/post-jobs">
-                <button
-                  className="btn "
-                  style={{
-                    backgroundColor: '#2b82c4',
-                    color: '#FFF'
-                  }}
-                >
-                  Post jobs
-                </button>
+          {user && (
+            <Link to="/post-jobs">
+              <button
+                className="btn "
+                style={{
+                  backgroundColor: '#2b82c4',
+                  color: '#FFF'
+                }}
+              >
+                Post jobs
+              </button>
 
-              </Link>
-            )}
-          </div>
+            </Link>
+          )}
+        </div>
         <form style={{ display: 'flex', flexWrap: 'wrap' }} onSubmit={handleSearch}>
-        
+
           <div className='form-group' style={{ padding: '10px' }}>
             <input
               type='text'
@@ -194,6 +194,31 @@ const Dashboard = () => {
           </div>
         </div>
       )}
+      {isLoading && (
+      <>
+        <h3 style={{ textAlign: 'center', color: '#fff' }}>loading...</h3>
+        <div class="main-container m-container">
+          <div class="left-side">
+
+          </div>
+          <div className="cards">
+            {fixedArr.map((item, index) => ( // Added parentheses around JSX expression
+              <div className="blog" key={index}> {/* Changed style border value */}
+
+              </div>
+            ))}
+          </div>
+
+
+
+          <div class="right-side">
+
+          </div>
+
+        </div>
+      </>
+      )}
+
       <div class="main-container m-container">
         <div class="left-side">
 
@@ -205,7 +230,7 @@ const Dashboard = () => {
               .map((job) => (
                 <div className="card3" key={job?.id} style={{ height: '500px' }}>
                   {loading ? (
-                    <h3 style={{color: '#fff'}}>deleting ...</h3>
+                    <h3 style={{ color: '#fff' }}>deleting ...</h3>
                   ) : (
                     <>
                       {user && user.userType == "admin" && (
