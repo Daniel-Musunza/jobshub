@@ -16,37 +16,37 @@ function Footer() {
   }
 
   return (
-    <section className="footer" id="footer" style={{marginBottom: 0}}>
-        <div className="container">
-            <div className="logo">
-                <img src="img/logo.png" alt="" />
-            </div>
-            <div className="navbar">
-              <nav>
-                  <Link to="/">Profiles</Link>
-                  <Link to="/jobs">Jobs</Link>
-                  <Link to="/hackathons">Events</Link>
-                  <Link to="/about">About Us</Link>
-                  <Link to="/contact">Contact Us</Link>
-                  
-              </nav>
-            </div>
-            <div className="search">
-                <h3>subscribe the newsletter</h3>
-                <div className="input">
-                    <input 
-                    type="email" 
-                    name="email" 
-                    id="email" 
-                    placeholder="example@gmail.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <i class="fa-solid fa-share" onClick={handleSubscribe}></i>
-                </div>
-                <a href="img/terms.pdf" style={{textTransform: 'none'}}>Terms of Service</a>
-            </div>
+    <section className="footer" id="footer" style={{ marginBottom: 0 }}>
+      <div className="container">
+        <div className="logo">
+          <img src="img/logo.png" alt="" />
         </div>
+        <div className="navbar3">
+          <nav>
+            <Link to="/">Home</Link>
+            <Link to="/profiles">Profiles</Link>
+            <Link to="/jobs">Jobs</Link>
+            <Link to="/hackathons">Events</Link>
+            <Link to="/about">About Us</Link>
+            <Link to="/contact">Contact Us</Link>
+          </nav>
+        </div>
+        <div className="search">
+          <h3>subscribe the newsletter</h3>
+          <div className="input">
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="example@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <i class="fa-solid fa-share" onClick={handleSubscribe}></i>
+          </div>
+          <a href="img/terms.pdf" style={{ textTransform: 'none' }}>Terms of Service</a>
+        </div>
+      </div>
     </section>
   )
 }

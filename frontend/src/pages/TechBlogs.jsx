@@ -118,18 +118,18 @@ const TechBlogs = () => {
                         objectFit: 'cover', // Maintain aspect ratio and cover the entire area
                       }} />
                   </div> */}
-                  <div className="card-details">
+                  <div className="card3-details">
                     <div className="blog-title">
-                      <p className="card-title">{blog?.name}</p>
-                      <p className="card-body">{blog?.location}</p>
+                      <p className="card3-title">{blog?.name}</p>
+                      <p className="card3-body">{blog?.location}</p>
                     </div>
 
                     <hr />
-                    <p className="card-title">Casual Services:</p>
-                    <p className="card-body">{blog?.casualJobs.length > 70 ? blog?.casualJobs.slice(0, 70) + '...' : blog?.casualJobs}</p>
+                    <p className="card3-title">Casual Services:</p>
+                    <p className="card3-body">{blog?.casualJobs.length > 70 ? blog?.casualJobs.slice(0, 70) + '...' : blog?.casualJobs}</p>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <Link to={`/more-details/${blog?.id}/profile`}>
-                        <button className="btn">
+                        <button className="card3-btn">
                           More Details
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -185,18 +185,18 @@ const TechBlogs = () => {
                     <img src={URL.createObjectURL(new Blob([new Uint8Array(blog?.profileImage.data)],{type: 'image/jpeg', }))} alt="Profile Image"
                        />
                   </div> */}
-                  <div className="card-details">
+                  <div className="card3-details">
                     <div className="blog-title">
-                      <p className="card-title">{blog?.name}</p>
-                      <p className="card-body">{blog?.location}</p>
+                      <p className="card3-title">{blog?.name}</p>
+                      <p className="card3-body">{blog?.location}</p>
                     </div>
                     <hr />
-                    <p className="card-title">Casual Services:</p>
-                    <p className="card-body">{blog?.casualJobs.length > 70 ? blog?.casualJobs.slice(0, 70) + '...' : blog?.casualJobs}</p>
+                    <p className="card3-title">Casual Services:</p>
+                    <p className="card3-body">{blog?.casualJobs.length > 70 ? blog?.casualJobs.slice(0, 70) + '...' : blog?.casualJobs}</p>
 
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
                       <Link to={`/more-details/${blog?.id}/profile`}>
-                        <button className="btn">
+                        <button className="card3-btn">
                           More Details
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

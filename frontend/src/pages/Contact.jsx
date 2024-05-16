@@ -16,16 +16,14 @@ const Contact = () => {
   const [name, setName] = useState('');
   const [userMessage, setMessage] = useState('');
 
-  useEffect(() => {
+  useEffect(async () => {
     if (isError) {
       console.log(message);
     }
 
-    dispatch(getmessages())
-    return () => {
-      dispatch(reset());
-    };
-  }, [user, navigate, isError, message, dispatch]);
+    await dispatch(getmessages())
+  
+  }, [isError, message, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,7 +43,7 @@ const Contact = () => {
   }
   return (
     <div>
-      {user && (
+      {user && user.userType === "admin" && (
         <div>
           <div class="heading">
             <h2>Messages</h2>
@@ -110,7 +108,7 @@ const Contact = () => {
                     objectFit: 'cover', // Maintain aspect ratio and cover the entire area
                   }} />
                 <h3>Musunza Festus</h3>
-                <h5>C.E.O | software engineer </h5>
+                <h5>Director | software engineer </h5>
                 <a href="tel: +254795755494"><i class="fa-solid fa-phone"></i> +254795755494</a>
               </div>
               <div className="team-member">
@@ -124,7 +122,7 @@ const Contact = () => {
                     objectFit: 'cover', // Maintain aspect ratio and cover the entire area
                   }} />
                 <h3>Jesse Mutembei</h3>
-                <h5>C.O.O (Jobs and Profiles)</h5>
+                <h5>Head of Operations (Jobs and Profiles)</h5>
                 <a href="tel: +254714006882"> <i class="fa-solid fa-phone"></i> +254714006882</a>
               </div>
               <div className="team-member">
@@ -138,7 +136,7 @@ const Contact = () => {
                     objectFit: 'cover', // Maintain aspect ratio and cover the entire area
                   }} />
                 <h3>Isaac Musau </h3>
-                <h5>C.M.O (Marketing and Events)</h5>
+                <h5>Marketing Manager and Events Organizer</h5>
                 <a href="tel: +254714494787"><i class="fa-solid fa-phone"></i> +254714494787</a>
               </div>
             </div>

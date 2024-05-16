@@ -11,15 +11,31 @@ import TechBlogs from './pages/TechBlogs';
 import Hackathons from './pages/Hackathons';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import PostJobs from './pages/PostJobs';
 import MoreDetails from './pages/MoreDetails';
 import ProfileView from './pages/ProfileView';
 import ForgotPassword from './pages/ForgotPassword';
 import PasswordReset from './pages/PasswordReset';
+import PostEvents from './pages/PostEvents';
+import Home from './pages/Home';
+
+function HeaderControl() {
+  const location = useLocation();
+
+  if (
+    location.pathname === '/'
+  ) {
+    return null; // Do not render footer on these pages
+  }
+
+  return <Header />;
+}
 
 function FooterControl() {
   const location = useLocation();
 
   if (
+    location.pathname === '/'||
     location.pathname === '/login' ||
     location.pathname === '/forgotpassword' ||
     location.pathname.startsWith('/passwordreset/') ||
@@ -38,15 +54,18 @@ function App() {
   return (
     <>
     <Router>
-      <Header /> {/* Render header outside of Routes */}
+      <HeaderControl /> {/* Render header outside of Routes */}
       <div>
         <Routes>
           {/* Routes with footer */}
+          <Route path='/' element={<Home />} />
           <Route path='/jobs' element={<Dashboard />} />
-          <Route path='/' element={<TechBlogs />} />
+          <Route path='/profiles' element={<TechBlogs />} />
           <Route path='/hackathons' element={<Hackathons />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
+          <Route path='/post-jobs' element={<PostJobs/>} />
+          <Route path='/post-events' element={<PostEvents />} />
           <Route path='/more-details/:id/:type' element={<MoreDetails />} />
           
           {/* Protect the profile route */}

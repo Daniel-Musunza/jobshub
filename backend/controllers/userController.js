@@ -270,27 +270,7 @@ const updateUser = asyncHandler(async (req, res) => {
   try {
     const { id, name, email, phoneNumber, userType, description, location, casualJobs, proffessionalJobs, link } = req.body;
 
-    let imageFile = null;
-    let updateUserQuery;
-
-    if (req.file) {
-      imageFile = req.file.buffer;
-
-      updateUserQuery = `UPDATE users 
-        SET name = ?, 
-        email = ?, 
-        phoneNumber = ?, 
-        userType = ?, 
-        description = ?, 
-        location = ?, 
-        casualJobs = ?, 
-        proffessionalJobs = ?, 
-        profileImage = ? ,
-        link = ? 
-        WHERE id = ?`;
-      await db.query(updateUserQuery, [name, email, phoneNumber, userType, description, location, casualJobs, proffessionalJobs, imageFile, link, id]);
-    } else {
-      updateUserQuery = `UPDATE users 
+    let updateUserQuery = `UPDATE users 
         SET name = ?, 
         email = ?, 
         phoneNumber = ?,
@@ -300,8 +280,8 @@ const updateUser = asyncHandler(async (req, res) => {
         proffessionalJobs = ?,
         link = ?  
         WHERE id = ?`;
-      await db.query(updateUserQuery, [name, email, phoneNumber, description, location, casualJobs, proffessionalJobs, link, id]);
-    }
+      await db.query(updateUserQuery, [name, email, phoneNumber, userType, description, location, casualJobs, proffessionalJobs, link, id]);
+   
 
     // Fetch user data after update
     const userQuery = `SELECT * FROM users WHERE id = ?`;

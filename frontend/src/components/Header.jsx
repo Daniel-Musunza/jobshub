@@ -50,15 +50,20 @@ function Header() {
 
       <div className="logo" style={{ marginLeft: '20px' }}>
         <a href="#">
-          <img src="img/logo.png" alt="" width="80px" />
+          <img src="img/logo.png" alt="Kunakazi" width="80px" />
         </a>
       </div>
-      <i className="fi fi-br-menu-burger" style={{ color: '#fff', fontSize: '40px', marginRight: '20px' }} onClick={toggleMenu}></i>
 
+        <i
+          className="fi fi-br-menu-burger"
+          style={{ color: '#fff', fontSize: '40px', marginRight: '20px' }}
+          onClick={toggleMenu}
+        ></i>
 
       <nav>
-        <div className="navbar" style={{ background: 'black', alignItems: 'center', justifyContent: 'center' }}>
-          <Link to="/" style={{ color: '#fff' }}>Profiles</Link>
+        <div className="navbar3" style={{ background: 'black', alignItems: 'center', justifyContent: 'center' }}>
+        <Link to="/" style={{ color: '#fff' }}>Home</Link>
+          <Link to="/profiles" style={{ color: '#fff' }}>Profiles</Link>
           <Link to="/jobs" style={{ color: '#fff' }}>Jobs</Link>
           <Link to="/hackathons" style={{ color: '#fff' }}>Events</Link>
           <Link to="/about" style={{ color: '#fff' }}>About Us</Link>
@@ -105,7 +110,7 @@ function Header() {
             <button onClick={closeMenu} style={{ width: '80px', marginBottom: '0px' }} className='button'>close</button>
           </div>
 
-          <div className="navbar" style={{ background: 'black', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="navbar3" style={{ background: 'black', alignItems: 'center', justifyContent: 'center' }}>
             {user && (
               <>
                 {user.profileImage ? (
@@ -148,7 +153,8 @@ function Header() {
                 <Link to="/profile" style={{ color: '#fff' }}>Profile View</Link>
               </>
             )}
-            <Link to="/" style={{ color: '#fff' }}>Profiles</Link>
+            <Link to="/" style={{ color: '#fff' }}>Home</Link>
+            <Link to="/profiles" style={{ color: '#fff' }}>Profiles</Link>
             <Link to="/jobs" style={{ color: '#fff' }}>Jobs</Link>
             <Link to="/hackathons" style={{ color: '#fff' }}>Events</Link>
             <Link to="/about" style={{ color: '#fff' }}>About Us</Link>

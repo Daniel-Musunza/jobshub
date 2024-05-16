@@ -15,58 +15,26 @@ const Hackathons = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  const { loading, success } = useSelector(
-    (state) => state.hackathons
-  )
+  const [title, setTitle] = useState('');
+  const [loading, setLoading] = useState(false);
   const { data: hackathons, isLoading, isSuccess } = useQuery(
     'hackathons', // The query key
     hackathonService.gethackathons // Fetch function
   );
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [introduction, setIntroduction] = useState('');
   const [filteredEvents, setFilteredEvents] = useState([]);
 
 
-
-
-  const handleDescriptionChange = (value) => {
-
-    setDescription(value); // Update the state with the new content
-  };
-
-  const handleHackathonSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = {
-      title,
-      introduction,
-      description
-    }
-
-    try {
-      await dispatch(addhackathon(formData));
-
-      toast.success("Hackathon Posted Successfully ...");
-    } catch (error) {
-      toast.error("Failed to Post !")
-      console.log(error);
-    }
-
-
-
-
-  };
   const handleDelete = async (e, id) => {
+    setLoading(true)
     e.preventDefault();
-    try{
+    try {
       await dispatch(deletehackathon(id));
-      toast.success("hackathon Deleted Successfully ...");
-    }catch(error){
+      toast.success("Event Deleted Successfully ...");
+    } catch (error) {
       toast.error("Failed to Delete !");
       console.log(error);
     }
-
+    setLoading(false)
   }
 
   const handleSearch = (e) => {
@@ -80,69 +48,35 @@ const Hackathons = () => {
     }
     setFilteredEvents(newEvents);
   };
-  if (isLoading || loading) {
+  if (isLoading) {
     return <Spinner />;
   }
   return (
     <div >
 
-      {user && user.userType == "admin" && (
-
-        <div className='post-jobs'>
-
-          <section className='heading' >
-
-            <h1>
-              Post Event
-            </h1>
-          </section>
-          <section className='form'>
-
-            <form onSubmit={handleHackathonSubmit} method="POST" enctype="multipart/form-data">
-              <div className='form-group'>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder="Event Title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </div>
-              <div className='form-group'>
-                <label htmlFor="introduction">Short Intro</label>
-                <textarea
-                  className='form-control'
-                  name="introduction"
-                  id=""
-                  rows="5"
-                  placeholder='Short Intro'
-                  value={introduction}
-                  onChange={(e) => setIntroduction(e.target.value)}></textarea>
-              </div>
-              <div className='editor'>
-                <ReactQuill
-                  value={description}
-                  placeholder="Write the Description here ( For images and Links Just Paste)"
-                  onChange={handleDescriptionChange} // Use the callback to handle content changes
-                  className='editor'
-                />
-              </div>
-              <div className='form-group' style={{ marginTop: '20px' }}>
-                <button
-                  className='form-control'
-                  id="submit"
-                  type="submit">
-                  Submit
-                </button>
-              </div>
-            </form>
-          </section>
-
-        </div>
-      )}
       <div class="heading" style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>Events</h2>
+        {user && (
+            <div className='form-group' style={{ padding: '10px' }}>
+              <Link to="/post-events">
+                <button
+                  className="btn "
+                  style={{
+                    backgroundColor: '#2b82c4',
+                    color: '#FFF'
+                  }}
+                >
+                  Post events
+                </button>
+
+              </Link>
+            </div>
+          )}
+          
         <form style={{ display: 'flex', flexWrap: 'wrap' }} onSubmit={handleSearch}>
+
+         
+
           <div className='form-group' style={{ padding: '10px' }}>
             <input
               type='text'
@@ -177,8 +111,8 @@ const Hackathons = () => {
                   {user && user.userType == "admin" && (
                     <button onClick={(e) => handleDelete(e, hackathon?.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', zIndex: '999' }}><i class="fa-solid fa-trash-can"></i></button>
                   )}
-                  <p className="card-title">{hackathon?.title}</p>
-                  <p className="card-body">{hackathon?.introduction.length > 150 ? hackathon?.introduction.slice(0, 150) + '...' : hackathon?.introduction}</p>
+                  <p className="card3-title">{hackathon?.title}</p>
+                  <p className="card3-body">{hackathon?.introduction.length > 150 ? hackathon?.introduction.slice(0, 150) + '...' : hackathon?.introduction}</p>
                   <h4>
                     Posted on:{" "}
                     <span>
@@ -190,7 +124,7 @@ const Hackathons = () => {
                     </span>
                   </h4>
                   <Link to={`/more-details/${hackathon?.id}/hackathon`}>
-                    <button className="btn">
+                    <button className="card3-btn">
                       More Details
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -232,11 +166,17 @@ const Hackathons = () => {
               .sort((a, b) => new Date(b?.date) - new Date(a?.date))
               .map((hackathon) => (
                 <div className="hackathon" key={hackathon?.id}>
+                   {loading ? (
+                    <h3 style={{color: '#fff'}}>deleting ...</h3>
+                  ) : (
+                    <>
                   {user && user.userType == "admin" && (
+                    
                     <button onClick={(e) => handleDelete(e, hackathon?.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', zIndex: '999' }}><i class="fa-solid fa-trash-can"></i></button>
                   )}
-                  <p className="card-title">{hackathon?.title}</p>
-                  <p className="card-body">{hackathon?.introduction.length > 150 ? hackathon?.introduction.slice(0, 150) + '...' : hackathon?.introduction}</p>
+                  </>)}
+                  <p className="card3-title">{hackathon?.title}</p>
+                  <p className="card3-body">{hackathon?.introduction.length > 150 ? hackathon?.introduction.slice(0, 150) + '...' : hackathon?.introduction}</p>
 
                   <h4>
                     Posted on:{" "}
@@ -249,7 +189,7 @@ const Hackathons = () => {
                     </span>
                   </h4>
                   <Link to={`/more-details/${hackathon?.id}/hackathon`}>
-                    <button className="btn">
+                    <button className="card3-btn">
                       More Details
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

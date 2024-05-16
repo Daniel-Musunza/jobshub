@@ -88,7 +88,7 @@ if (isLoading) {
             <>
               <h2>{item?.title}</h2>
               {item?.imageFile && (
-                <img src={URL.createObjectURL(new Blob([new Uint8Array(item?.imageFile.data)],{type: 'image/jpeg', }))} alt={item?.title} />
+                <img src={item.imageFile} alt={item?.title} />
               )}
               {item?.profileImage && (
                 <img src={URL.createObjectURL(new Blob([new Uint8Array(item?.profileImage.data)],{type: 'image/jpeg', }))} alt="" 
