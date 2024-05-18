@@ -5,8 +5,10 @@ const API_URL = 'https://njookaziapi.qualityasoftwares.com/api/jobs/';
 // Get user jobs
 const getjobs = async () => {
   const response = await axios.get(API_URL)
-
-return response.data
+  if (response.data) {
+    localStorage.setItem('jobs', JSON.stringify(response.data))
+  }
+  return response.data
 }
 
 const addjob = async (jobData, token) => {
@@ -16,7 +18,7 @@ const addjob = async (jobData, token) => {
     },
   }
 
-  const response = await axios.post(API_URL , jobData, config)
+  const response = await axios.post(API_URL, jobData, config)
 
   return response.data
 }
@@ -36,7 +38,7 @@ const editjob = async (formData, token) => {
     throw error;
   }
 };
-const deletejob = async ( id, token) => {
+const deletejob = async (id, token) => {
 
   const config = {
     headers: {

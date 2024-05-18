@@ -4,8 +4,10 @@ import axios from 'axios'
 const API_URL = 'https://njookaziapi.qualityasoftwares.com/api/users/'
 const getUsers = async () => {
   const response = await axios.get(API_URL + 'getUsers/')
-
-return response.data
+  if (response.data) {
+    localStorage.setItem('profiles', JSON.stringify(response.data))
+  }
+  return response.data
 }
 // Register user
 const register = async (userData) => {

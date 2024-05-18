@@ -17,10 +17,19 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  let { data: jobs, isLoading, isSuccess } = useQuery(
-    'jobs', // The query key
-    jobService.getjobs // Fetch function
-  );
+  const [jobs, setJobs] = useState(() => {
+    const savedJobs = localStorage.getItem('jobs');
+    return savedJobs ? JSON.parse(savedJobs) : [];
+  });
+
+  const { data: localjobs, isSuccess } = useQuery('jobs',  jobService.getjobs );
+
+  useEffect(() => {
+    if (isSuccess && localjobs && localjobs.length > 0) {
+      setJobs(localjobs);// Save fetched users to localStorage
+    }
+  }, [localjobs, isSuccess]);
+
 
 
   const [loading, setLoading] = useState(null);
@@ -194,7 +203,7 @@ const Dashboard = () => {
           </div>
         </div>
       )}
-      {isLoading && (
+      {jobs?.length<1 && (
       <>
         <h3 style={{ textAlign: 'center', color: '#fff' }}>loading...</h3>
         <div class="main-container m-container">

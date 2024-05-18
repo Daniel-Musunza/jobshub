@@ -11,21 +11,39 @@ import Spinner from '../components/Spinner';
 
 const MoreDetails = () => {
 
-  const { data: users, isLoading, isSuccess} = useQuery(
-		'users', // The query key
-		authService.getUsers // Fetch function
-	  );
+  const [users, setUsers] = useState(() => {
+    const savedUsers = localStorage.getItem('profiles');
+    return savedUsers ? JSON.parse(savedUsers) : [];
+  });
 
-  const { data: jobs} = useQuery(
-		'jobs', // The query key
-		jobService.getjobs // Fetch function
-	  );
-  const { data: hackathons} = useQuery(
-		'hackathons', // The query key
-		hackathonService.gethackathons // Fetch function
-	  );
+  const { data: profiles, isSuccess } = useQuery('users', authService.getUsers);
 
-    
+  const [jobs, setJobs] = useState(() => {
+    const savedJobs = localStorage.getItem('jobs');
+    return savedJobs ? JSON.parse(savedJobs) : [];
+  });
+
+  const { data: localjobs } = useQuery('jobs', jobService.getjobs);
+
+
+
+  const [hackathons, setHackathons] = useState(() => {
+    const savedEvents = localStorage.getItem('events');
+    return savedEvents ? JSON.parse(savedEvents) : [];
+  });
+
+  const { data: events } = useQuery('hackathons', hackathonService.gethackathons);
+
+
+  useEffect(() => {
+      setJobs(localjobs);
+      setUsers(profiles);
+      setHackathons(events);
+  }, [profiles]);
+
+
+
+
   const { id, type } = useParams();
   const [item, setItem] = useState(null);
 
@@ -47,7 +65,7 @@ const MoreDetails = () => {
     }
   };
 
-  useEffect(async() => {
+  useEffect(async () => {
 
 
     await handleSetItem();
@@ -57,25 +75,21 @@ const MoreDetails = () => {
   function formatPhoneNumber(phoneNumber) {
     // Remove leading '0' or '254'
     let cleanedNumber = phoneNumber.replace(/^0+|^(254)/, '');
-    
+
     // Prepend '+254' to the number if it doesn't start with '+'
     if (!cleanedNumber.startsWith('+')) {
-        cleanedNumber = '+254' + cleanedNumber;
+      cleanedNumber = '+254' + cleanedNumber;
     }
 
     return cleanedNumber;
-}
+  }
 
-
-if (isLoading) {
-  return <Spinner />;
-}
 
   return (
 
     <div>
 
-      
+
       <div class="heading">
         <h2>More Details</h2>
       </div>
@@ -91,25 +105,25 @@ if (isLoading) {
                 <img src={item.imageFile} alt={item?.title} />
               )}
               {item?.profileImage && (
-                <img src={URL.createObjectURL(new Blob([new Uint8Array(item?.profileImage.data)],{type: 'image/jpeg', }))} alt="" 
-                style={{
-                  width: '100px',
-                  height: '100px', // Ensure the height matches the width for a perfect circle
-                  marginRight: '20px',
-                  borderRadius: '50%', // Make it circular
-                  cursor: 'pointer',
-                  objectFit: 'cover', // Maintain aspect ratio and cover the entire area
-                }} />
+                <img src={URL.createObjectURL(new Blob([new Uint8Array(item?.profileImage.data)], { type: 'image/jpeg', }))} alt=""
+                  style={{
+                    width: '100px',
+                    height: '100px', // Ensure the height matches the width for a perfect circle
+                    marginRight: '20px',
+                    borderRadius: '50%', // Make it circular
+                    cursor: 'pointer',
+                    objectFit: 'cover', // Maintain aspect ratio and cover the entire area
+                  }} />
               )}
               <h3>{item?.name}</h3>
               <p>{item?.location}</p>
-              {item?.link &&(
+              {item?.link && (
                 <p>CV/LinkedIn/Portfolio Link: <a href={item?.link}>{item?.link}</a></p>
               )}
 
 
               {type == 'job' ? (
-                <a href={`mailto: ${item?.email}`}><button className="btn">
+                <a href={`mailto: ${item?.email}`}><button className="card3-btn">
                   Apply Now
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -144,18 +158,18 @@ if (isLoading) {
 
               {item?.casualJobs && (
                 <>
-                  <h4><span style={{color: '#2b82c4'}}>Casual Jobs can do:</span>  <p>{item?.casualJobs}</p></h4>
-                 
+                  <h4><span style={{ color: '#2b82c4' }}>Casual Jobs can do:</span>  <p>{item?.casualJobs}</p></h4>
+
 
                 </>
               )}
               {item?.proffessionalJobs && (
                 <>
-                  <h4><span style={{color: '#2b82c4'}}>Proffession: </span> <p>{item?.proffessionalJobs}</p></h4>
-                 
+                  <h4><span style={{ color: '#2b82c4' }}>Proffession: </span> <p>{item?.proffessionalJobs}</p></h4>
+
                 </>
               )}
-               <h4><span style={{color: '#2b82c4'}}>About </span> </h4>
+              <h4><span style={{ color: '#2b82c4' }}>About </span> </h4>
               <div>{item?.introduction} </div>
               <div dangerouslySetInnerHTML={{ __html: item?.description }} />
             </>

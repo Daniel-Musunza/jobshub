@@ -7,7 +7,7 @@ import { addjob } from '../features/jobs/jobSlice';
 import { subscribe } from '../features/subscriptions/subscriptionSlice';
 import Spinner from '../components/Spinner'
 import { useNavigate, Link } from 'react-router-dom'
-
+import { logout, reset } from '../features/auth/authSlice'
 
 import '../newStyles.css'
 import app from '../firebase';
@@ -96,7 +96,6 @@ function Home() {
         // Now you can dispatch your API call with the formData
     }
 
-
     const handleSubscribe = async (e) => {
         e.preventDefault();
         const newEmail = {
@@ -104,6 +103,12 @@ function Home() {
         }
         await dispatch(subscribe(newEmail));
         alert("Subscribed successfully ..")
+    }
+
+    const onLogout = async () => {
+        await dispatch(logout());
+        await dispatch(reset());
+        navigate('/')
     }
 
     return (
@@ -155,9 +160,12 @@ function Home() {
                                     </form> */}
                                 </div>
                                 <div class="quote_btn-container ml-0 ml-lg-4 d-flex justify-content-center">
-                                    <Link to="/register">
-                                        Get Started
-                                    </Link>
+                                    {user ? (
+                                            <a href="" onClick={onLogout}>Log Out</a>
+                                    ) : (
+                                        <Link to="/register">
+                                            Get Started
+                                        </Link>)}
                                 </div>
                             </div>
                         </nav>
@@ -185,7 +193,7 @@ function Home() {
                                             <div class="img-box">
                                                 <div class="play_btn">
                                                     <Link to="/login">
-                                                        <img src="images/Login.png" alt="" width="50px" />
+                                                        <img src="images/Login.png" alt="Log In" width="50px" />
                                                     </Link>
                                                 </div>
 
@@ -361,7 +369,7 @@ function Home() {
                         </div>
 
                         <div class="btn-box">
-                            <Link to="/profiles">
+                            <Link to="/profiles" style={{ textAlign: 'center' }}>
                                 Explore Casual Worker Profiles
                             </Link>
 
@@ -589,7 +597,7 @@ function Home() {
                                 </div>
                             </div> */}
                         </div>
-                        <div class="row" style={{ paddingTop: '20px' }}>
+                        <div class="row" style={{ paddingTop: '20px', backgroundColor: '#fff', borderRadius: '70%' }}>
                             <div class="col-lg-4">
                                 <h5>
                                     Subscribe Newsletter
@@ -651,6 +659,7 @@ function Home() {
                                     </ul>
                                 </div>
                             </div>
+
                             <div class="col-lg-4">
                                 <h5>
                                     Address

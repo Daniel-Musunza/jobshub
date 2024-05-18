@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,7 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Footer from './components/Footer';
-import TechBlogs from './pages/TechBlogs';
+import Profiles from './pages/Profiles';
 import Hackathons from './pages/Hackathons';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -35,7 +36,7 @@ function FooterControl() {
   const location = useLocation();
 
   if (
-    location.pathname === '/'||
+    location.pathname === '/' ||
     location.pathname === '/login' ||
     location.pathname === '/forgotpassword' ||
     location.pathname.startsWith('/passwordreset/') ||
@@ -47,45 +48,56 @@ function FooterControl() {
   return <Footer />;
 }
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   const { user } = useSelector((state) => state.auth);
 
   return (
     <>
-    <Router>
-      <HeaderControl /> {/* Render header outside of Routes */}
-      <div>
-        <Routes>
-          {/* Routes with footer */}
-          <Route path='/' element={<Home />} />
-          <Route path='/jobs' element={<Dashboard />} />
-          <Route path='/profiles' element={<TechBlogs />} />
-          <Route path='/hackathons' element={<Hackathons />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/contact' element={<Contact />} />
-          <Route path='/post-jobs' element={<PostJobs/>} />
-          <Route path='/post-events' element={<PostEvents />} />
-          <Route path='/more-details/:id/:type' element={<MoreDetails />} />
-          
-          {/* Protect the profile route */}
-          <Route path='/profile' element={user ? <ProfileView /> : <Navigate to="/" />} />
-  
-          {/* Routes without footer */}
-          <Route path='/login' element={<Login />} />
-          <Route path='/forgotpassword' element={<ForgotPassword />} />
-          <Route path='/passwordreset/:email' element={<PasswordReset />} />
-          <Route path='/register' element={<Register />} />
-            
-          {/* Redirect unmatched routes to dashboard */}
-          <Route path='*' element={<Navigate to="/" />} />
-        </Routes>
-      </div>
-      <FooterControl /> {/* Render footer outside of Routes */}
-    </Router>
-    <ToastContainer />
-  </>
-  
+      <Router>
+
+        <HeaderControl />
+        <ScrollToTop />{/* Render header outside of Routes */}
+        <div>
+          <Routes>
+            {/* Routes with footer */}
+            <Route path='/' element={<Home />} />
+            <Route path='/jobs' element={<Dashboard />} />
+            <Route path='/profiles' element={<Profiles />} />
+            <Route path='/hackathons' element={<Hackathons />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/contact' element={<Contact />} />
+            <Route path='/post-jobs' element={<PostJobs />} />
+            <Route path='/post-events' element={<PostEvents />} />
+            <Route path='/more-details/:id/:type' element={<MoreDetails />} />
+
+            {/* Protect the profile route */}
+            <Route path='/profile' element={user ? <ProfileView /> : <Navigate to="/" />} />
+
+            {/* Routes without footer */}
+            <Route path='/login' element={<Login />} />
+            <Route path='/forgotpassword' element={<ForgotPassword />} />
+            <Route path='/passwordreset/:email' element={<PasswordReset />} />
+            <Route path='/register' element={<Register />} />
+
+            {/* Redirect unmatched routes to dashboard */}
+            <Route path='*' element={<Navigate to="/" />} />
+          </Routes>
+        </div>
+        <FooterControl /> {/* Render footer outside of Routes */}
+      </Router>
+      <ToastContainer />
+    </>
+
   );
 }
 

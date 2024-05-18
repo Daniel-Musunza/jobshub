@@ -15,12 +15,24 @@ const Hackathons = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
+  const [hackathons, setHackathons] = useState(() => {
+    const savedEvents = localStorage.getItem('events');
+    return savedEvents ? JSON.parse(savedEvents) : [];
+  });
+
+  const { data: events, isSuccess } = useQuery('hackathons', hackathonService.gethackathons);
+
+  useEffect(() => {
+    if (isSuccess && events && events.length > 0) {
+      setHackathons(events);// Save fetched users to localStorage
+    }
+  }, [events, isSuccess]);
+
+
   const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(false);
-  const { data: hackathons, isLoading, isSuccess } = useQuery(
-    'hackathons', // The query key
-    hackathonService.gethackathons // Fetch function
-  );
+
+
   const [filteredEvents, setFilteredEvents] = useState([]);
 
 
@@ -157,7 +169,7 @@ const Hackathons = () => {
           </div>
         </div>
       )}
-      {isLoading && (
+      {hackathons?.length < 1 && (
         <>
           <h3 style={{ textAlign: 'center', color: '#fff' }}>loading...</h3>
           <div class="main-container m-container">

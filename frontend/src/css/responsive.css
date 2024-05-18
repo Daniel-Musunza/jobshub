@@ -90,6 +90,7 @@
 }
 
 @media (max-width: 768px) {
+    
     .blog_section .blog_box-cover {
         flex-direction: column;
     }

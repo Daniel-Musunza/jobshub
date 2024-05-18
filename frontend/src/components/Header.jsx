@@ -50,7 +50,7 @@ function Header() {
 
       <div className="logo" style={{ marginLeft: '20px' }}>
         <a href="#">
-          <img src="img/logo.png" alt="Kunakazi" width="80px" />
+          <img src="img/logo.png" alt="MENU"  onClick={toggleMenu} width="80px" />
         </a>
       </div>
 

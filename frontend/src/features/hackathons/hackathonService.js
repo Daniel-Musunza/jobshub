@@ -5,8 +5,10 @@ const API_URL = 'https://njookaziapi.qualityasoftwares.com/api/hackathons/'
 // Get user hackathons
 const gethackathons = async () => {
   const response = await axios.get(API_URL)
-
-return response.data
+  if (response.data) {
+    localStorage.setItem('events', JSON.stringify(response.data))
+  }
+  return response.data
 }
 
 const addhackathon = async (hackathonData, token) => {
@@ -16,7 +18,7 @@ const addhackathon = async (hackathonData, token) => {
     },
   }
 
-  const response = await axios.post(API_URL , hackathonData, config)
+  const response = await axios.post(API_URL, hackathonData, config)
 
   return response.data
 };
