@@ -100,7 +100,7 @@ const Contact = () => {
           <div className="contact-form">
             <p>Have questions or feedback? Reach out to us!</p>
             {/* <h3 className="team">Our Team</h3> */}
-            <div className="team">
+            {/* <div className="team">
 
               <div className="team-member">
                 <img src="img/profile.jpg" alt=""
@@ -144,7 +144,7 @@ const Contact = () => {
                 <h5>Marketing Manager and Events Organizer</h5>
                 <a href="tel: +254714494787"><i class="fa-solid fa-phone"></i> +254714494787</a>
               </div>
-            </div>
+            </div> */}
 
 
             <form onSubmit={handleSubmit}>

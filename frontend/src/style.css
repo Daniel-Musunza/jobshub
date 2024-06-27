@@ -359,11 +359,11 @@ h4 span {
 }
 
 .card3-btn:hover {
-    letter-spacing: 2px;
+    /* letter-spacing: 2px; */
     opacity: 1;
 }
 
-.card3-btn:hover>.icon {
+.card3-btn:hover .icon {
     transform: translateX(30%);
     animation: none;
 }

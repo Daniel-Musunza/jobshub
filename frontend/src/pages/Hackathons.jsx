@@ -207,7 +207,7 @@ const Hackathons = () => {
                     <h3 style={{ color: '#fff' }}>deleting ...</h3>
                   ) : (
                     <>
-                      {user && user.userType == "admin" && (
+                      {user && user.id == hackathon.user_id && (
 
                         <button onClick={(e) => handleDelete(e, hackathon?.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', zIndex: '999' }}><i class="fa-solid fa-trash-can"></i></button>
                       )}

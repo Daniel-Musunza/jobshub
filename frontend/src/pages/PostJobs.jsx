@@ -70,7 +70,8 @@ function PostJobs() {
                         title: title,
                         email: email,
                         description: description,
-                        introduction: introduction
+                        introduction: introduction,
+                        user_id: user.id
                     }
 
                     await dispatch(addjob(formData));

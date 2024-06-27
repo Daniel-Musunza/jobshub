@@ -80,7 +80,8 @@ function Home() {
                         title: title,
                         email: email,
                         description: description,
-                        introduction: introduction
+                        introduction: introduction,
+                        user_id: user.id
                     }
 
                     await dispatch(addjob(formData));
@@ -193,7 +194,7 @@ function Home() {
                                             <div class="img-box">
                                                 <div class="play_btn">
                                                     <Link to="/login">
-                                                        <img src="images/Login.png" alt="Log In" width="50px" />
+                                                        <img src="img/login.png" alt="Log In" width="50px" />
                                                     </Link>
                                                 </div>
 

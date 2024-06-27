@@ -9,7 +9,7 @@ const gethackathons = asyncHandler(async (req, res) => {
 
 const addhackathon = async (req, res) => {
   try {
-    const { title, introduction, description } = req.body;
+    const { title, introduction, description, user_id} = req.body;
 
     // Check if title is missing
     if (!title) {
@@ -23,8 +23,8 @@ const addhackathon = async (req, res) => {
     const date = newdate.toISOString().slice(0, 19).replace('T', ' ');
     // Insert the file data into the database
     const inserthackathonQuery = `
-      INSERT INTO hackathons (title, introduction, description, date) 
-      VALUES (?, ?, ?, ?)
+      INSERT INTO hackathons (title, introduction, description, date, user_id) 
+      VALUES (?, ?, ?, ?, ?)
     `;
 
     const result = await db.query(inserthackathonQuery, [
@@ -32,6 +32,7 @@ const addhackathon = async (req, res) => {
       introduction,
       description,
       date,
+      user_id
     ]);
 
     const newhackathon = {
@@ -40,6 +41,7 @@ const addhackathon = async (req, res) => {
       introduction,
       description,
       date,
+      user_id
     };
 
     res.status(200).json(newhackathon);
@@ -82,7 +84,7 @@ const edithackathon = async (req, res) => {
     const { 
       title,
       introduction,
-      description,
+      description
      } = req.body;
      const date = Date.now();
 

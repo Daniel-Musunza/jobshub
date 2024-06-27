@@ -242,7 +242,7 @@ const Dashboard = () => {
                     <h3 style={{ color: '#fff' }}>deleting ...</h3>
                   ) : (
                     <>
-                      {user && user.userType == "admin" && (
+                      {user && user.id == job.user_id && (
                         <button onClick={(e) => handleDelete(e, job?.id)} style={{ color: 'red', background: '#e0ffff', width: '30px', borderRadius: '50px', fontSize: '20px', position: 'fixed' }}><i class="fa-solid fa-trash-can"></i></button>
                       )}
                     </>

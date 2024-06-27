@@ -36,7 +36,8 @@ function PostEvents() {
         const formData = {
             title,
             introduction,
-            description
+            description,
+            user_id: user.id
         }
 
         try {
